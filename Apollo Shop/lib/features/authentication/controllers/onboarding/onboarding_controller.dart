@@ -1,3 +1,4 @@
+import 'package:apolloshop/features/authentication/screens/login/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,7 @@ class OnBoardingController extends GetxController {
 
   void nextPage() {
     if (currentPageIndex.value == 2) {
-      // Get.to(LoginScreen());
+      Get.to(const LoginScreen());
     } else {
       int page = currentPageIndex.value + 1;
       pageController.jumpToPage(page);
@@ -24,7 +25,6 @@ class OnBoardingController extends GetxController {
   }
 
   void skipPage() {
-    currentPageIndex.value = 2;
-    pageController.jumpTo(2);
+    Get.to(const LoginScreen());
   }
 }
