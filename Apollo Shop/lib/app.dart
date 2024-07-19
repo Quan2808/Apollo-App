@@ -1,5 +1,4 @@
-import 'package:apolloshop/navigation_menu.dart';
-import 'package:apolloshop/utils/constants/text_strings.dart';
+import 'package:apolloshop/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:apolloshop/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -10,21 +9,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: TTexts.appName,
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
+      home: const OnBoardingScreen(),
       debugShowCheckedModeBanner: false,
-      // initialBinding: GeneralBindings(),
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'Awesome! 🎊 Project Structure is set up and running. \n Happy T Coding 🎊',
-            textAlign: TextAlign.center,
-          ),
-        ),
-        bottomNavigationBar: NavigationMenu(),
-      ),
     );
   }
 }
