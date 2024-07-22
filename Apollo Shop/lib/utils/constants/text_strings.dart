@@ -10,7 +10,6 @@ class TTexts {
   static const String appName = "T-Store";
   static const String tContinue = "Continue";
 
-
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";
   static const String onBoardingTitle2 = "Select Payment Method";

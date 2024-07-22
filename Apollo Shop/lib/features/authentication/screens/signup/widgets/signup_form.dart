@@ -1,8 +1,10 @@
+import 'package:apolloshop/features/authentication/screens/signup/verify_email.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/constants/text_strings.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SignupForm extends StatelessWidget {
@@ -12,7 +14,6 @@ class SignupForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
         child: Column(
       children: [
@@ -76,14 +77,14 @@ class SignupForm extends StatelessWidget {
         const SizedBox(
           height: TSizes.spaceBtwInputFields,
         ),
-        TermAndConditionCheckbox(),
+        const TermAndConditionCheckbox(),
         const SizedBox(
           height: TSizes.spaceBtwSections,
         ),
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () => Get.to(() => const VerifyEmailScreen()),
             child: const Text(TTexts.createAccount),
           ),
         )

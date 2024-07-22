@@ -1,4 +1,5 @@
 import 'package:apolloshop/features/authentication/screens/signup/signup.dart';
+import 'package:apolloshop/navigation_menu.dart';
 import 'package:apolloshop/utils/constants/text_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,23 +34,24 @@ class LoginForm extends StatelessWidget {
                 labelText: TTexts.password,
                 suffixIcon: Icon(Iconsax.eye_slash)),
           ),
-          const SizedBox(
-            height: TSizes.spaceBtwInputFields / 2,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                  onPressed: () {}, child: const Text(TTexts.forgetPassword))
-            ],
-          ),
+          // const SizedBox(
+          //   height: TSizes.spaceBtwInputFields / 2,
+          // ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     TextButton(
+          //         onPressed: () {}, child: const Text(TTexts.forgetPassword))
+          //   ],
+          // ),
           const SizedBox(
             height: TSizes.spaceBtwSections,
           ),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-                onPressed: () {}, child: const Text(TTexts.signIn)),
+                onPressed: () => Get.to(() => const NavigationMenu()),
+                child: const Text(TTexts.signIn)),
           ),
           const SizedBox(
             height: TSizes.spaceBtwItems,
