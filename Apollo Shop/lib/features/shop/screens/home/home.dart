@@ -2,6 +2,8 @@ import 'dart:core';
 
 import 'package:apolloshop/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/search_container.dart';
+import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
+import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_categories.dart';
@@ -16,49 +18,60 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             /// Header
             const PrimaryHeaderContainer(
-                child: Column(
-              children: [
-                /// Appbar
-                HomeAppBar(),
-                SizedBox(height: TSizes.spaceBtwSections),
+              child: Column(
+                children: [
+                  /// App bar
+                  HomeAppBar(),
+                  SizedBox(height: TSizes.spaceBtwSections),
 
-                /// Search bar
-                SearchContainer(text: 'Search in Store'),
-                SizedBox(height: TSizes.spaceBtwSections),
+                  /// Search bar
+                  SearchContainer(text: 'Search in Store'),
+                  SizedBox(height: TSizes.spaceBtwSections),
 
-                /// Categories
-                Padding(
-                  padding: EdgeInsets.only(left: TSizes.defaultSpace),
-                  child: Column(
-                    children: [
-                      /// Heading
-                      SectionHeading(
-                        title: "Popular Categories",
-                        showActionButton: false,
-                        textColor: TColors.white,
-                      ),
-                      SizedBox(height: TSizes.spaceBtwItems),
+                  /// Categories
+                  Padding(
+                    padding: EdgeInsets.only(left: TSizes.defaultSpace),
+                    child: Column(
+                      children: [
+                        /// Heading
+                        SectionHeading(
+                          title: "Popular Categories",
+                          showActionButton: false,
+                          textColor: TColors.white,
+                        ),
+                        SizedBox(height: TSizes.spaceBtwItems),
 
-                      /// Categories
-                      HomeCategories(),
-                    ],
-                  ),
-                )
-              ],
-            )),
+                        /// Categories
+                        HomeCategories(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
 
             /// Body
             Padding(
-                padding: EdgeInsets.all(TSizes.defaultSpace),
-                child: PromoSlider(
-                  banners: [TImages.promoBanner1, TImages.promoBanner3],
-                ))
+              padding: const EdgeInsets.all(TSizes.defaultSpace),
+              child: Column(
+                children: [
+                  const PromoSlider(
+                    banners: [TImages.promoBanner1, TImages.promoBanner2],
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwSections),
+                  GridLayout(
+                    itemCount: 4,
+                    itemBuilder: (_, index) => const ProductCardVertical(),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

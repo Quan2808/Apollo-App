@@ -18,7 +18,8 @@ class RoundedImage extends StatelessWidget {
     this.borderRadius = TSizes.md,
   });
 
-  final double? width, height;
+  final double? width;
+  final double? height;
   final String imageUrl;
   final bool applyImageRadius;
   final BoxBorder? border;
@@ -28,7 +29,6 @@ class RoundedImage extends StatelessWidget {
   final bool isNetworkImage;
   final VoidCallback? onPressed;
   final double borderRadius;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,19 +38,21 @@ class RoundedImage extends StatelessWidget {
         height: height,
         padding: padding,
         decoration: BoxDecoration(
-            border: border,
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius)),
+          border: border,
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
         child: ClipRRect(
-            borderRadius: applyImageRadius
-                ? BorderRadius.circular(borderRadius)
-                : BorderRadius.zero,
-            child: Image(
-              fit: fit,
-              image: isNetworkImage
-                  ? NetworkImage(imageUrl)
-                  : AssetImage(imageUrl) as ImageProvider,
-            )),
+          borderRadius: applyImageRadius
+              ? BorderRadius.circular(borderRadius)
+              : BorderRadius.zero,
+          child: Image(
+            fit: fit,
+            image: isNetworkImage
+                ? NetworkImage(imageUrl)
+                : AssetImage(imageUrl) as ImageProvider,
+          ),
+        ),
       ),
     );
   }
