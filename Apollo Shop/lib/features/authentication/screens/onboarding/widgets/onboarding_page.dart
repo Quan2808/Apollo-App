@@ -10,7 +10,7 @@ class OnBoardingPage extends StatelessWidget {
     required this.subTitle,
   });
 
-  final image, title, subTitle;
+  final String image, title, subTitle;
 
   @override
   Widget build(BuildContext context) {

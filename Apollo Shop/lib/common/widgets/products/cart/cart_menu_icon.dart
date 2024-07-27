@@ -2,15 +2,14 @@ import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-
 class CartCounterIcon extends StatelessWidget {
   const CartCounterIcon({
     super.key,
-    required this.iconColor,
+    this.iconColor,
     required this.onPressed,
   });
 
-  final Color iconColor;
+  final Color? iconColor;
   final VoidCallback onPressed;
 
   @override
@@ -32,12 +31,12 @@ class CartCounterIcon extends StatelessWidget {
                 color: TColors.black, borderRadius: BorderRadius.circular(100)),
             child: Center(
                 child: Text(
-                  '2',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge!
-                      .apply(color: TColors.white, fontSizeFactor: 0.8),
-                )),
+              '2',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .apply(color: TColors.white, fontSizeFactor: 0.8),
+            )),
           ),
         )
       ],

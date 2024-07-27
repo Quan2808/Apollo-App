@@ -1,6 +1,7 @@
 import 'package:apolloshop/common/styles/shadow_style.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:apolloshop/common/widgets/images/rounded_images.dart';
+import 'package:apolloshop/common/widgets/images/rounded_image.dart';
+import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_price_text.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
@@ -47,65 +48,47 @@ class ProductCardVertical extends StatelessWidget {
             const SizedBox(height: TSizes.spaceBtwItems / 2),
 
             /// Details
-            Padding(
-              padding: const EdgeInsets.only(left: TSizes.sm),
+            const Padding(
+              padding: EdgeInsets.only(left: TSizes.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const ProductTitleText(
-                    title: 'Product name',
-                    smallSize: true,
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwItems / 2),
-                  Row(
-                    children: [
-                      Text(
-                        'Brand',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      const SizedBox(width: TSizes.xs),
-                      const Icon(
-                        Iconsax.verify5,
-                        color: TColors.primary,
-                        size: TSizes.iconXs,
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    /// Price
-                    children: [
-                      const ProductPriceText(
-                        price: '12.0',
-                        isLarge: true,
-                      ),
-
-                      /// Add to cart
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: TColors.dark,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(TSizes.cardRadiusMd),
-                            bottomRight:
-                                Radius.circular(TSizes.productImageRadius),
-                          ),
-                        ),
-                        child: const SizedBox(
-                          width: TSizes.iconLg * 1.2,
-                          height: TSizes.iconLg * 1.2,
-                          child: Center(
-                            child: Icon(Iconsax.add, color: TColors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  ProductTitleText(title: 'Product name', smallSize: true),
+                  SizedBox(height: TSizes.spaceBtwItems / 2),
+                  BrandTitleWithVerifiedIcon(title: 'Brand'),
                 ],
               ),
-            )
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              /// Price
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: TSizes.sm),
+                  child: ProductPriceText(price: '12.0', isLarge: true),
+                ),
+
+                /// Add to cart
+                Container(
+                  decoration: const BoxDecoration(
+                    color: TColors.dark,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(TSizes.cardRadiusMd),
+                      bottomRight: Radius.circular(TSizes.productImageRadius),
+                    ),
+                  ),
+                  child: const SizedBox(
+                    width: TSizes.iconLg * 1.2,
+                    height: TSizes.iconLg * 1.2,
+                    child: Center(
+                      child: Icon(Iconsax.add, color: TColors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
