@@ -5,13 +5,14 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ApolloAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ApolloAppBar(
-      {super.key,
-      this.title,
-      this.showBackArrow = false,
-      this.leadingIcon,
-      this.actions,
-      this.leadingOnPressed});
+  const ApolloAppBar({
+    super.key,
+    this.title,
+    this.showBackArrow = false,
+    this.leadingIcon,
+    this.actions,
+    this.leadingOnPressed,
+  });
 
   final Widget? title;
   final bool showBackArrow;
