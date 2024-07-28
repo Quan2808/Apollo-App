@@ -3,9 +3,11 @@ import 'package:apolloshop/common/widgets/custom_shapes/containers/primary_heade
 import 'package:apolloshop/common/widgets/list_title/settings_menu_title.dart';
 import 'package:apolloshop/common/widgets/list_title/user_profile_title.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/features/personalization/screen/profile/profile.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -34,7 +36,9 @@ class SettingsScreen extends StatelessWidget {
                   ),
 
                   /// User Profile
-                  const UserProfileTitle(),
+                  UserProfileTitle(
+                    onPressed: () => Get.to(() => const ProfileScreen()),
+                  ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                 ],
               ),
