@@ -1,3 +1,4 @@
+import 'package:apolloshop/features/personalization/screen/settings/settings.dart';
 import 'package:apolloshop/features/shop/screens/home/home.dart';
 import 'package:apolloshop/features/shop/screens/store/store.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
@@ -29,7 +30,8 @@ class NavigationMenu extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.shop), label: 'Store'),
-            NavigationDestination(icon: Icon(Iconsax.heart), label: 'Wishlist'),
+            NavigationDestination(
+                icon: Icon(Iconsax.clipboard_text), label: 'Orders'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'User'),
           ],
         ),
@@ -46,6 +48,6 @@ class NavigationController extends GetxController {
     const HomeScreen(),
     const StoreScreen(),
     Container(color: Colors.orange),
-    Container(color: Colors.blue),
+    const SettingsScreen(),
   ];
 }

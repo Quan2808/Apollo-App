@@ -51,7 +51,8 @@ class HomeScreen extends StatelessWidget {
                         HomeCategories(),
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(height: TSizes.spaceBtwSections),
                 ],
               ),
             ),
@@ -65,6 +66,8 @@ class HomeScreen extends StatelessWidget {
                     banners: [TImages.promoBanner1, TImages.promoBanner2],
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
+                  SectionHeading(title: 'Popular Products', onPressed: () {}),
+                  const SizedBox(height: TSizes.spaceBtwItems / 1.5),
                   GridLayout(
                     itemCount: 4,
                     itemBuilder: (_, index) => const ProductCardVertical(),

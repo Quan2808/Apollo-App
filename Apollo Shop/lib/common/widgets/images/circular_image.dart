@@ -1,5 +1,4 @@
 import 'package:apolloshop/utils/constants/colors.dart';
-import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';

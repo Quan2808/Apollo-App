@@ -11,20 +11,16 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
+
     return ApolloAppBar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(TTexts.homeAppbarTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelMedium!
-                  .apply(color: TColors.grey)),
+              style: theme.labelMedium!.apply(color: TColors.grey)),
           Text(TTexts.homeAppbarSubTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .apply(color: TColors.white)),
+              style: theme.headlineMedium!.apply(color: TColors.white)),
         ],
       ),
       actions: [

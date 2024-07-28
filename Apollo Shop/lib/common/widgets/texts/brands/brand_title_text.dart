@@ -1,8 +1,5 @@
-import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/enums.dart';
-import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class BrandTitleText extends StatelessWidget {
   const BrandTitleText({
