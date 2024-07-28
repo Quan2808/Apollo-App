@@ -1,6 +1,5 @@
 import 'package:apolloshop/common/widgets/images/circular_image.dart';
 import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
-import 'package:apolloshop/common/widgets/texts/products/product_price_text.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/enums.dart';
@@ -19,20 +18,9 @@ class ProductMetaData extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// Price
-        const Row(
-          children: [
-            ProductPriceText(
-              price: '123',
-              isLarge: true,
-            )
-          ],
-        ),
-        const SizedBox(height: TSizes.spaceBtwItems / 1.5),
-
         /// Title
         const ProductTitleText(title: 'Product name'),
-        const SizedBox(height: TSizes.spaceBtwItems / 1.5),
+        const SizedBox(height: TSizes.spaceBtwItems / 2),
 
         /// Brand
         Row(
