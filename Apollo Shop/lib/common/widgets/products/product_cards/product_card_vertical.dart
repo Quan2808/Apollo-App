@@ -4,11 +4,13 @@ import 'package:apolloshop/common/widgets/images/rounded_image.dart';
 import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_price_text.dart';
+import 'package:apolloshop/features/shop/screens/product_details/product_detail.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProductCardVertical extends StatelessWidget {
@@ -19,7 +21,7 @@ class ProductCardVertical extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.to(() => const ProductDetailScreen()),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),

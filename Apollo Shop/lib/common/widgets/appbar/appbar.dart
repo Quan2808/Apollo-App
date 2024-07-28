@@ -41,10 +41,7 @@ class ApolloAppBar extends StatelessWidget implements PreferredSizeWidget {
             : leadingIcon != null
                 ? IconButton(
                     onPressed: leadingOnPressed,
-                    icon: Icon(
-                      leadingIcon,
-                      color: dark ? TColors.white : TColors.black,
-                    ),
+                    icon: Icon(leadingIcon),
                   )
                 : null,
         title: title,

@@ -3,15 +3,12 @@ import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/features/personalization/screen/profile/widgets/profile_menu.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: const ApolloAppBar(
         showBackArrow: true,
