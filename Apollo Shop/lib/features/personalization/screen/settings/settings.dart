@@ -3,6 +3,7 @@ import 'package:apolloshop/common/widgets/custom_shapes/containers/primary_heade
 import 'package:apolloshop/common/widgets/list_title/settings_menu_title.dart';
 import 'package:apolloshop/common/widgets/list_title/user_profile_title.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/features/personalization/screen/address/address.dart';
 import 'package:apolloshop/features/personalization/screen/profile/profile.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -57,10 +58,11 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   /// Settings menu
-                  const SettingsMenuTitle(
+                  SettingsMenuTitle(
                     icon: Iconsax.safe_home,
                     title: 'My Addresses',
                     subtitle: 'Set shopping delivery address',
+                    onTap: () => Get.to(() => const UserAddressScreen()),
                   ),
                   const SettingsMenuTitle(
                     icon: Iconsax.shopping_cart,
