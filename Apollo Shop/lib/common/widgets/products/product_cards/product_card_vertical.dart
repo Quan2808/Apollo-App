@@ -1,9 +1,8 @@
-import 'package:apolloshop/common/styles/shadow_style.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
 import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
-import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_price_text.dart';
+import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/features/shop/screens/product_details/product_detail.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
@@ -26,7 +25,7 @@ class ProductCardVertical extends StatelessWidget {
         width: 180,
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          boxShadow: [ShadowStyle.verticalProductShadow],
+          // boxShadow: [ShadowStyle.verticalProductShadow],
           borderRadius: BorderRadius.circular(TSizes.productImageRadius),
           color: dark ? TColors.darkerGrey : TColors.white,
         ),
