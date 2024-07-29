@@ -5,6 +5,7 @@ import 'package:apolloshop/common/widgets/list_title/user_profile_title.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/features/personalization/screen/address/address.dart';
 import 'package:apolloshop/features/personalization/screen/profile/profile.dart';
+import 'package:apolloshop/features/shop/screens/cart/cart.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +65,11 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: 'Set shopping delivery address',
                     onTap: () => Get.to(() => const UserAddressScreen()),
                   ),
-                  const SettingsMenuTitle(
+                  SettingsMenuTitle(
                     icon: Iconsax.shopping_cart,
                     title: 'My Cart',
                     subtitle: 'Add, remove products and move to checkout',
+                    onTap: () => Get.to(() => const CartScreen()),
                   ),
                   const SettingsMenuTitle(
                     icon: Iconsax.clipboard_text,
