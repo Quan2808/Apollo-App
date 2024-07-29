@@ -1,9 +1,9 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
-import 'package:apolloshop/common/widgets/products/cart/cart_item.dart';
-import 'package:apolloshop/common/widgets/products/cart/product_quantity_adjuster.dart';
-import 'package:apolloshop/common/widgets/texts/products/product_price_text.dart';
+import 'package:apolloshop/features/shop/screens/cart/widgets/cart_items.dart';
+import 'package:apolloshop/features/shop/screens/checkout/checkout.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -11,38 +11,24 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar
       appBar: ApolloAppBar(
         showBackArrow: true,
-        title: Text('Cart', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
-        child: ListView.separated(
-          shrinkWrap: true,
-          itemCount: 10,
-          separatorBuilder: (_, index) =>
-              const SizedBox(height: TSizes.spaceBtwSections),
-          itemBuilder: (_, index) => const Column(
-            children: [
-              CartItem(),
-              SizedBox(height: TSizes.spaceBtwItems),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  /// Add Remove Buttons
-                  ProductQuantityAdjuster(),
-                  ProductPriceText(price: '25'),
-                ],
-              )
-            ],
-          ),
-        ),
+      body: const Padding(
+        padding: EdgeInsets.all(TSizes.defaultSpace),
+
+        // Items in Cart
+        child: CartItems(),
       ),
+
+      // Checkout
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: () {},
-          child: Text('Checkout \$256'),
+          onPressed: () => Get.to(() => const CheckoutScreen()),
+          child: const Text('Checkout \$25'),
         ),
       ),
     );
