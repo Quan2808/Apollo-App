@@ -6,6 +6,7 @@ import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/features/personalization/screen/address/address.dart';
 import 'package:apolloshop/features/personalization/screen/profile/profile.dart';
 import 'package:apolloshop/features/shop/screens/cart/cart.dart';
+import 'package:apolloshop/features/shop/screens/order/order.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -71,10 +72,12 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: 'Add, remove products and move to checkout',
                     onTap: () => Get.to(() => const CartScreen()),
                   ),
-                  const SettingsMenuTitle(
+                  SettingsMenuTitle(
                     icon: Iconsax.clipboard_text,
                     title: 'My Orders',
                     subtitle: 'In-Process and Completed Orders',
+                    onTap: () =>
+                        Get.to(() => const OrderScreen(isNavigationBar: false)),
                   ),
 
                   /// Logout button
