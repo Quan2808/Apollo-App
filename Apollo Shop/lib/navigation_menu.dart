@@ -1,5 +1,6 @@
 import 'package:apolloshop/features/personalization/screen/settings/settings.dart';
 import 'package:apolloshop/features/shop/screens/home/home.dart';
+import 'package:apolloshop/features/shop/screens/order/order.dart';
 import 'package:apolloshop/features/shop/screens/store/store.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
@@ -47,7 +48,11 @@ class NavigationController extends GetxController {
   final screens = [
     const HomeScreen(),
     const StoreScreen(),
-    Container(color: Colors.orange),
+    const OrderScreen(isNavigationBar: true),
     const SettingsScreen(),
   ];
+
+  void goToTab(int index) {
+    selectedIndex.value = index;
+  }
 }
