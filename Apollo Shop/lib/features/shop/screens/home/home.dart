@@ -77,6 +77,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems / 1.5),
                   GridLayout(
+                    mainAxisExtent: 231,
                     itemCount: 4,
                     itemBuilder: (_, index) => const ProductCardVertical(),
                   )

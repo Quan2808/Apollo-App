@@ -26,6 +26,7 @@ class SortableProducts extends StatelessWidget {
 
         // Products
         GridLayout(
+            mainAxisExtent: 231,
             itemCount: 4,
             itemBuilder: (_, index) => const ProductCardVertical()),
       ],
