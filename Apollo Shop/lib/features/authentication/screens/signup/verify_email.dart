@@ -25,9 +25,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 image: const AssetImage(TImages.deliveredEmailIllustration),
                 width: THelperFunctions.screenWidth() * 0.6,
               ),
-              const SizedBox(
-                height: TSizes.spaceBtwSections,
-              ),
+              const SizedBox(height: TSizes.spaceBtwSections),
 
               ///Title & Subtitle
               Text(
@@ -35,17 +33,13 @@ class VerifyEmailScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: TSizes.spaceBtwSections,
-              ),
+              const SizedBox(height: TSizes.spaceBtwSections),
               Text(
                 TTexts.confirmEmailSubTitle,
                 style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: TSizes.spaceBtwSections,
-              ),
+              const SizedBox(height: TSizes.spaceBtwSections),
 
               ///Buttons
               SizedBox(

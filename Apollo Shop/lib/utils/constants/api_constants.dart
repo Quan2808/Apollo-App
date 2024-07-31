@@ -1,5 +1,3 @@
-
-/* -- LIST OF Constants used in APIs -- */
-
-// Example
-const String tSecretAPIKey = "cwt_live_b2da6ds3df3e785v8ddc59198f7615ba";
+class ApiConstants {
+  static const String baseApiUrl = "http://10.0.2.2:9999/api";
+}

@@ -1,5 +1,18 @@
-
 class TValidator {
+  static String? validateEmptyText(String? field, String? value) {
+    if (value == null || value.isEmpty) {
+      return '$field is required.';
+    }
+
+    final RegExp nameRegExp = RegExp(r'^[a-zA-ZÀ-ÖØ-ÿ]+(?: [a-zA-ZÀ-ÖØ-ÿ]+)*$');
+
+    if (!nameRegExp.hasMatch(value)) {
+      return '$field is not valid. Only letters and single spaces between words are allowed.';
+    }
+
+    return null;
+  }
+
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required.';
@@ -57,6 +70,4 @@ class TValidator {
 
     return null;
   }
-
-// Add more custom validators as needed for your specific requirements.
 }
