@@ -1,6 +1,9 @@
-import 'package:apollodeliver/Screens/HomeScreen.dart';
-import 'package:apollodeliver/Screens/LoginScreen.dart';
-import 'package:flutter/material.dart'; // Create this screen for after login
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'Screens/HomeScreen.dart';
+import 'Screens/LoginScreen.dart';
+import 'Screens/ShipperProfileScreen.dart';
+import 'Screens/OrderManagementScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +21,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         '/home': (context) => HomeScreen(),
+        // '/shipperProfile': (context) => ShipperProfileScreen(),
+        '/orderManagement': (context) => OrderManagementScreen(),
       },
     );
   }
