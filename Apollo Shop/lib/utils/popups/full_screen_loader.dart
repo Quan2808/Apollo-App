@@ -11,7 +11,7 @@ class TFullScreenLoader {
       context: Get.overlayContext!,
       barrierDismissible: false,
       builder: (_) => PopScope(
-        canPop: false,
+        canPop: true,
         child: Container(
           color: THelperFunctions.isDarkMode(Get.context!)
               ? TColors.dark

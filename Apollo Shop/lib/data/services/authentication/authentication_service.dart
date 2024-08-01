@@ -7,7 +7,7 @@ class AuthenticationService {
   AuthenticationService(this._baseUrl);
 
   Future<void> register({
-    required String fullName,
+    required String clientName,
     required String email,
     required String phoneNumber,
     required String password,
@@ -17,23 +17,19 @@ class AuthenticationService {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'clientName': fullName,
+      body: jsonEncode({
+        'clientName': clientName,
         'email': email,
-        'phoneNumber': phoneNumber,
+        // 'phoneNumber': phoneNumber,
         'password': password,
       }),
     );
 
     if (response.statusCode == 200) {
-      // Successfully registered, parse the response if needed
-      final responseBody = jsonDecode(response.body);
-      print('Registration successful: $responseBody');
-      // You can handle the parsed response here
+      jsonDecode(response.body);
     } else {
       // Handle errors
-      final responseBody = jsonDecode(response.body);
-      print('Error response: $responseBody');
+      jsonDecode(response.body);
       throw Exception(
           'Failed to register. Status code: ${response.statusCode}');
     }

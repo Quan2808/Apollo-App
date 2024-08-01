@@ -28,17 +28,24 @@ class SignupController extends GetxController {
 
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
-      if (!isConnected) return;
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
 
       // Form Validation
-      if (!signupFormKey.currentState!.validate()) return;
+      if (!signupFormKey.currentState!.validate()) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
 
       // Privacy Policy Check
       if (!privacyPolicy.value) {
         Loaders.warningSnackBar(
-            title: 'Accept privacy policy',
-            message:
-                'In order to create account, you must have to read and accept the Privacy Policy & Terms of Use .');
+          title: 'Accept privacy policy',
+          message:
+              'In order to create account, you must have to read and accept the Privacy Policy & Terms of Use .',
+        );
       }
 
       // Register & Save User
@@ -49,7 +56,7 @@ class SignupController extends GetxController {
         password: password.text.trim(),
       );
 
-// Remove Loader
+      // Remove Loader
       TFullScreenLoader.stopLoading();
 
       // Show Success Message
@@ -59,10 +66,11 @@ class SignupController extends GetxController {
       );
 
       // Move to Verify Email Screen
-      Get.to(() => const VerifyEmailScreen());
+      Get.to(() => VerifyEmailScreen(email: email.text.trim()));
     } catch (e) {
       // Remove Loader
       TFullScreenLoader.stopLoading();
+
       // Show some Generic Error to user
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
