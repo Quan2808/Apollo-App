@@ -1,42 +1,41 @@
-import 'package:apollodeliver/Screens/HomeScreen.dart';
-import 'package:flutter/material.dart';
-import 'package:apollodeliver/Dto/ShipperLoginDTO.dart';
+import 'package:apollodeliver/Dto/ShipperRegisterDTO.dart';
 import 'package:apollodeliver/Services/ApiService.dart';
+import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> login(BuildContext context) async {
+  Future<void> register() async {
+    final name = nameController.text;
     final email = emailController.text;
     final password = passwordController.text;
 
     final authService = AuthService();
-    final loginDTO = ShipperLoginDTO(email: email, password: password);
+    final registerDTO = ShipperRegisterDTO(shipperName: name, email: email, password: password);
 
     try {
-      final response = await authService.loginShipper(loginDTO);
-      // Xử lý JWT token (Lưu trữ, chuyển hướng, v.v.)
-      print('Access Token: ${response.accessToken}');
-
-      // Chuyển hướng đến HomeScreen
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ));
+      await authService.registerShipper(registerDTO);
+      // Xử lý sau khi đăng ký thành công (chuyển hướng, thông báo, v.v.)
+      print('Registration successful');
     } catch (e) {
-      print('Login failed: $e');
-      // Hiển thị thông báo lỗi cho người dùng nếu cần
+      print('Registration failed: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(title: Text('Register')),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
             TextField(
               controller: emailController,
               decoration: InputDecoration(labelText: 'Email'),
@@ -48,8 +47,8 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => login(context), // Truyền BuildContext vào
-              child: Text('Login'),
+              onPressed: register,
+              child: Text('Register'),
             ),
           ],
         ),
