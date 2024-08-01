@@ -22,7 +22,7 @@ class UserModel {
       email: json['email'] ?? '',
       phoneNumber: json['phoneNumber'] ?? '',
       password: json['password'] ?? '',
-      enabled: json['enabled'] ?? true,
+      // enabled: json['enabled'] ?? true,
     );
   }
 

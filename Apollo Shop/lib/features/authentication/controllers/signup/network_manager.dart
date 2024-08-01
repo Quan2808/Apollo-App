@@ -39,8 +39,7 @@ class NetworkManager extends GetxController {
       } else {
         return true;
       }
-    } on PlatformException catch (e) {
-      print(e.toString());
+    } on PlatformException catch (_) {
       return false;
     }
   }

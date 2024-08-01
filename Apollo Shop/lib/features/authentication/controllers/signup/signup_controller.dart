@@ -19,8 +19,7 @@ class SignupController extends GetxController {
   final password = TextEditingController();
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
-  // Signup
-  void signup() async {
+  void performSignUp() async {
     try {
       // Start Loading
       TFullScreenLoader.openLoadingDialog(
@@ -53,7 +52,7 @@ class SignupController extends GetxController {
       }
 
       // Register & Save User
-      await AuthenticationRepository.instance.register(
+      await AuthenticationRepository.instance.signUp(
         fullName: fullName.text.trim(),
         email: email.text.trim(),
         phoneNumber: phoneNumber.text.trim(),

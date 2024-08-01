@@ -6,7 +6,35 @@ class AuthenticationService {
 
   AuthenticationService(this._baseUrl);
 
-  Future<void> register({
+  Future<Map<String, dynamic>> signIn({
+    required String email,
+    required String password,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      return {
+        'user': data['user'],
+        'accessToken': data['accessToken'],
+      };
+    } else {
+      final Map<String, dynamic> errorData = jsonDecode(response.body);
+      final errorMessage = errorData['message'] ?? 'An error occurred';
+      throw Exception('Failed to sign in: $errorMessage');
+    }
+  }
+
+  Future<void> signUp({
     required String clientName,
     required String email,
     required String phoneNumber,

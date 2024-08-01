@@ -4,12 +4,6 @@ class TValidator {
       return '$field is required.';
     }
 
-    final RegExp nameRegExp = RegExp(r'^[a-zA-ZÀ-ÖØ-ÿ]+(?: [a-zA-ZÀ-ÖØ-ÿ]+)*$');
-
-    if (!nameRegExp.hasMatch(value)) {
-      return '$field is not valid. Only letters and single spaces between words are allowed.';
-    }
-
     return null;
   }
 

@@ -19,7 +19,7 @@ class TFullScreenLoader {
           width: double.infinity,
           height: double.infinity,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 250),
               AnimationLoaderWidget(text: text, animation: animation),

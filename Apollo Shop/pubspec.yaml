@@ -20,6 +20,7 @@ dependencies:
   connectivity_plus: ^5.0.1
   flutter_native_splash: ^2.3.2
   smooth_page_indicator: ^1.2.0
+  flutter_secure_storage: ^5.0.2
 
   # Icons
   iconsax: ^0.0.8
