@@ -24,7 +24,9 @@ class SignupController extends GetxController {
     try {
       // Start Loading
       TFullScreenLoader.openLoadingDialog(
-          'We are processing your information...', TImages.banner1);
+        'We are processing your information...',
+        TImages.docerAnimation,
+      );
 
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -46,6 +48,8 @@ class SignupController extends GetxController {
           message:
               'In order to create account, you must have to read and accept the Privacy Policy & Terms of Use .',
         );
+        TFullScreenLoader.stopLoading();
+        return;
       }
 
       // Register & Save User

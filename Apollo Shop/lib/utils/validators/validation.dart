@@ -13,6 +13,20 @@ class TValidator {
     return null;
   }
 
+  static String? validateFullName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Full Name is required.';
+    }
+
+    final RegExp nameRegExp = RegExp(r'^[a-zA-ZÀ-ÖØ-ÿ]+(?: [a-zA-ZÀ-ÖØ-ÿ]+)*$');
+
+    if (!nameRegExp.hasMatch(value)) {
+      return 'Full Name is not valid. Only letters and single spaces between words are allowed.';
+    }
+
+    return null;
+  }
+
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required.';

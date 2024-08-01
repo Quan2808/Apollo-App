@@ -1,8 +1,6 @@
-import 'package:apolloshop/data/models/user_model.dart';
 import 'package:apolloshop/data/services/authentication/authentication_service.dart';
 import 'package:apolloshop/features/authentication/screens/login/login.dart';
 import 'package:apolloshop/features/authentication/screens/onboarding/onboarding.dart';
-import 'package:apolloshop/navigation_menu.dart';
 import 'package:apolloshop/utils/constants/api_constants.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -15,7 +13,7 @@ class AuthenticationRepository extends GetxController {
   final AuthenticationService _authService =
       AuthenticationService(ApiConstants.baseApiUrl);
   final deviceStorage = GetStorage();
-  UserModel? _currentUser;
+  // UserModel? _currentUser;
 
   @override
   void onReady() {
@@ -24,19 +22,21 @@ class AuthenticationRepository extends GetxController {
   }
 
   screenRedirect() async {
-    final user = currentUser;
-    if (user != null) {
-      if (user.enabled) {
-        Get.offAll(() => const NavigationMenu());
-      } else {
-        Get.offAll(() => const LoginScreen());
-      }
-    } else {
-      deviceStorage.writeIfNull('isFirstTime', true);
-      deviceStorage.read('isFirstTime') != true
-          ? Get.offAll(() => const LoginScreen())
-          : Get.offAll(() => const OnBoardingScreen());
-    }
+    // final user = currentUser;
+    // if (user != null) {
+    //   if (user.enabled) {
+    //     Get.offAll(() => const NavigationMenu());
+    //   } else {
+    //     Get.offAll(() => const LoginScreen());
+    //   }
+    // } else {
+    //   Get.offAll(() => const OnBoardingScreen());
+    // }
+
+    deviceStorage.writeIfNull('firstStartUp', true);
+    deviceStorage.read('firstStartUp') != true
+        ? Get.offAll(() => const LoginScreen())
+        : Get.offAll(() => const OnBoardingScreen());
   }
 
   /* ----------------------- AUTHENTICATION ----------------------- */
@@ -61,17 +61,17 @@ class AuthenticationRepository extends GetxController {
   }
 
   // Sign Out
-  Future<void> signOut() async {
-    // try {
-    //   await _authService.signOut();
-    //   Get.offAll(() => const LoginScreen());
-    //   _currentUser = null;
-    // } catch (e) {
-    //   throw 'Something went wrong. Please try again';
-    // }
-  }
-
-  UserModel? get currentUser => _currentUser;
-
-  Future<bool> get isSignedIn async => _currentUser != null;
+  // Future<void> signOut() async {
+  //   // try {
+  //   //   await _authService.signOut();
+  //   //   Get.offAll(() => const LoginScreen());
+  //   //   _currentUser = null;
+  //   // } catch (e) {
+  //   //   throw 'Something went wrong. Please try again';
+  //   // }
+  // }
+  //
+  // UserModel? get currentUser => _currentUser;
+  //
+  // Future<bool> get isSignedIn async => _currentUser != null;
 }

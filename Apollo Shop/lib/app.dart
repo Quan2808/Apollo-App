@@ -16,7 +16,9 @@ class App extends StatelessWidget {
       initialBinding: GeneralBindings(),
       home: const Scaffold(
         backgroundColor: TColors.primary,
-        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+        body: Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );

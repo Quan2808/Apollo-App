@@ -30,7 +30,7 @@ class NetworkManager extends GetxController {
   }
 
   /// Check the internet connection status.
-  /// Returns ⁠ true ⁠ if connected, ⁠ false ⁠ otherwise.
+  /// Returns 'true' if connected, 'false' otherwise.
   Future<bool> isConnected() async {
     try {
       final result = await _connectivity.checkConnectivity();
@@ -39,7 +39,8 @@ class NetworkManager extends GetxController {
       } else {
         return true;
       }
-    } on PlatformException catch (_) {
+    } on PlatformException catch (e) {
+      print(e.toString());
       return false;
     }
   }

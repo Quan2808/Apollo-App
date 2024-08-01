@@ -24,7 +24,7 @@ class SignupForm extends StatelessWidget {
           TextFormField(
             controller: controller.fullName,
             validator: (value) =>
-                TValidator.validateEmptyText('Full name', value),
+                TValidator.validateFullName(value),
             decoration: const InputDecoration(
               labelText: 'Full name',
               prefixIcon: Icon(Iconsax.user),

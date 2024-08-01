@@ -11,32 +11,26 @@ class TFullScreenLoader {
       context: Get.overlayContext!,
       barrierDismissible: false,
       builder: (_) => PopScope(
-        canPop: true,
+        canPop: false,
         child: Container(
           color: THelperFunctions.isDarkMode(Get.context!)
               ? TColors.dark
               : TColors.white,
           width: double.infinity,
           height: double.infinity,
-          child: Center(
-            // Center widget to make sure content is centered
-            child: SingleChildScrollView(
-              // Allow content to scroll if it exceeds screen height
-              child: Column(
-                mainAxisSize:
-                    MainAxisSize.min, // Avoid taking unnecessary space
-                children: [
-                  AnimationLoaderWidget(text: text, animation: animation),
-                ],
-              ),
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 250),
+              AnimationLoaderWidget(text: text, animation: animation),
+            ],
           ),
         ),
       ),
     );
   }
 
-  static void stopLoading() {
+  static stopLoading() {
     Navigator.of(Get.overlayContext!).pop();
   }
 }

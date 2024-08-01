@@ -13,7 +13,8 @@ class AnimationLoaderWidget extends StatelessWidget {
     this.onActionPressed,
   });
 
-  final String text, animation;
+  final String text;
+  final String animation;
   final bool showAction;
   final String? actionText;
   final VoidCallback? onActionPressed;
@@ -40,8 +41,9 @@ class AnimationLoaderWidget extends StatelessWidget {
                   width: 250,
                   child: OutlinedButton(
                     onPressed: onActionPressed,
-                    style:
-                        OutlinedButton.styleFrom(backgroundColor: TColors.dark),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: TColors.dark,
+                    ),
                     child: Text(
                       actionText!,
                       style: Theme.of(context).textTheme.bodyMedium!.apply(
