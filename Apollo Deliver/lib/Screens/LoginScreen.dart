@@ -1,57 +1,120 @@
-import 'package:apollodeliver/Screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:apollodeliver/Dto/ShipperLoginDTO.dart';
-import 'package:apollodeliver/Services/ApiService.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
 
-  Future<void> login(BuildContext context) async {
-    final email = emailController.text;
-    final password = passwordController.text;
+class _LoginScreenState extends State<LoginScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  String _errorMessage = '';
 
-    final authService = AuthService();
-    final loginDTO = ShipperLoginDTO(email: email, password: password);
-
-    try {
-      final response = await authService.loginShipper(loginDTO);
-      // Xử lý JWT token (Lưu trữ, chuyển hướng, v.v.)
-      print('Access Token: ${response.accessToken}');
-
-      // Chuyển hướng đến HomeScreen
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ));
-    } catch (e) {
-      print('Login failed: $e');
-      // Hiển thị thông báo lỗi cho người dùng nếu cần
+  Future<void> _login() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
     }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final url = Uri.parse('http://172.16.3.115:9999/api/login/shipper');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      if (responseData['accessToken'] != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwtToken', responseData['accessToken']);
+        await prefs.setString('role', 'SHIPPER');
+
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        setState(() {
+          _errorMessage = 'Login failed: Invalid JWT token received';
+        });
+      }
+    } else {
+      setState(() {
+        _errorMessage = 'Login failed. Please try again.';
+      });
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      appBar: AppBar(
+        title: Text('Shipper Login'),
+      ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => login(context), // Truyền BuildContext vào
-              child: Text('Login'),
-            ),
-          ],
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              if (_errorMessage.isNotEmpty)
+                Text(
+                  _errorMessage,
+                  style: TextStyle(color: Colors.red),
+                ),
+              SizedBox(height: 20),
+              if (_isLoading)
+                CircularProgressIndicator()
+              else
+                ElevatedButton(
+                  onPressed: _login,
+                  child: Text('Login'),
+                ),
+            ],
+          ),
         ),
       ),
     );
