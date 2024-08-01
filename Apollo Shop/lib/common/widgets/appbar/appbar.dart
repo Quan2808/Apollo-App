@@ -35,7 +35,7 @@ class ApolloAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () => Get.back(),
                 icon: Icon(
                   Iconsax.arrow_left,
-                  color: dark ? TColors.white : TColors.black,
+                  color: dark ? TColors.white : TColors.dark,
                 ),
               )
             : leadingIcon != null
