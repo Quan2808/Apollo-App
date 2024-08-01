@@ -7,17 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
-  const VerifyEmailScreen({
-    super.key,
-    this.email,
-  });
-
-  final String? email;
+  const VerifyEmailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -27,31 +20,23 @@ class VerifyEmailScreen extends StatelessWidget {
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
-              // Image
+              ///Image
               Image(
                 image: const AssetImage(TImages.deliveredEmailIllustration),
                 width: THelperFunctions.screenWidth() * 0.6,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              // Title & Subtitle
+              ///Title & Subtitle
               Text(
                 TTexts.confirmEmail,
-                style: textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              Text(
-                email ?? '',
-                style: textTheme.labelLarge,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
+              const SizedBox(height: TSizes.spaceBtwSections),
               Text(
                 TTexts.confirmEmailSubTitle,
-                style: textTheme.labelMedium,
+                style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),

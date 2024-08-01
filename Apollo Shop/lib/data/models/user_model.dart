@@ -4,7 +4,6 @@ class UserModel {
   final String email;
   final String phoneNumber;
   final String password;
-  final bool enabled;
 
   UserModel({
     required this.id,
@@ -12,7 +11,6 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.password,
-    this.enabled = true,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +20,6 @@ class UserModel {
       email: json['email'] ?? '',
       phoneNumber: json['phoneNumber'] ?? '',
       password: json['password'] ?? '',
-      enabled: json['enabled'] ?? true,
     );
   }
 
@@ -33,7 +30,6 @@ class UserModel {
       'email': email,
       'phoneNumber': phoneNumber,
       'password': password,
-      'enabled': enabled,
     };
   }
 
@@ -43,7 +39,6 @@ class UserModel {
     String? email,
     String? phoneNumber,
     String? password,
-    bool? enabled,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -51,7 +46,6 @@ class UserModel {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       password: password ?? this.password,
-      enabled: enabled ?? this.enabled,
     );
   }
 }
