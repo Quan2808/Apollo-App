@@ -1,4 +1,4 @@
-import 'package:apolloshop/data/services/authentication_service.dart';
+import 'package:apolloshop/data/services/authentication/authentication_service.dart';
 import 'package:get/get.dart';
 
 class UserRepository extends GetxController {
