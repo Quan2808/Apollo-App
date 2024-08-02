@@ -5,6 +5,7 @@ import 'package:apolloshop/common/widgets/custom_shapes/containers/search_contai
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/features/shop/controllers/category_controller.dart';
 import 'package:apolloshop/features/shop/screens/brands/all_brands.dart';
 import 'package:apolloshop/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
@@ -19,9 +20,10 @@ class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final categories = CategoryController.instance.categories;
 
     return DefaultTabController(
-      length: 4,
+      length: categories.length,
       child: Scaffold(
         /// App bar
         appBar: ApolloAppBar(
@@ -75,23 +77,15 @@ class StoreScreen extends StatelessWidget {
               ),
 
               /// Tabs
-              bottom: const ApolloTabBar(
-                tabs: [
-                  Tab(child: Text('Category Tab')),
-                  Tab(child: Text('Category Tab')),
-                  Tab(child: Text('Category Tab')),
-                  Tab(child: Text('Category Tab')),
-                ],
+              bottom: ApolloTabBar(
+                tabs: categories
+                    .map((e) => Tab(child: Text(e.attribute)))
+                    .toList(),
               ),
             ),
           ],
-          body: const TabBarView(
-            children: [
-              CategoryTab(),
-              CategoryTab(),
-              CategoryTab(),
-              CategoryTab(),
-            ],
+          body: TabBarView(
+            children: categories.map((e) => CategoryTab(category: e)).toList(),
           ),
         ),
       ),
