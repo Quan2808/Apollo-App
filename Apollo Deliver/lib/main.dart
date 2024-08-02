@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'Screens/HomeScreen.dart';
 import 'Screens/LoginScreen.dart';
+import 'Screens/RegisterScreen.dart';
+import 'Screens/HomeScreen.dart';
 import 'Screens/ShipperProfileScreen.dart';
 import 'Screens/OrderManagementScreen.dart';
 
@@ -20,8 +20,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
         '/home': (context) => HomeScreen(),
-        // '/shipperProfile': (context) => ShipperProfileScreen(),
+        '/shipperProfile': (context) {
+          final int shipperId = ModalRoute.of(context)!.settings.arguments as int;
+          return ShipperProfileScreen(id: shipperId);
+        },
         '/orderManagement': (context) => OrderManagementScreen(),
       },
     );
