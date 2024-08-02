@@ -1,3 +1,4 @@
+import 'package:apolloshop/data/repositories/authentication/authentication_repository.dart';
 import 'package:apolloshop/features/authentication/screens/login/login.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -60,7 +61,9 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () => Get.to(() => const LoginScreen()),
+                  onPressed: () async {
+                    await AuthenticationRepository.instance.screenRedirect();
+                  },
                   child: const Text("Back To ${TTexts.signIn}"),
                 ),
               )
