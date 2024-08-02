@@ -12,17 +12,17 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.password,
-    this.enabled = true,
+    required this.enabled,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] ?? '',
-      fullName: json['fullName'] ?? '',
+      id: json['id'].toString(),
+      fullName: json['clientName'] ?? '',
       email: json['email'] ?? '',
-      phoneNumber: json['phoneNumber'] ?? '',
-      password: json['password'] ?? '',
-      // enabled: json['enabled'] ?? true,
+      phoneNumber: json['phoneNumber'] ?? '',  // Có thể là null hoặc không tồn tại
+      password: '',
+      enabled: json['enabled'] ?? false,  // Có thể là null hoặc không tồn tại
     );
   }
 

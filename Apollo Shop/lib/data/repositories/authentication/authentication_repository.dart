@@ -46,9 +46,9 @@ class AuthenticationRepository extends GetxController {
       if (isFirstTime) {
         Get.offAll(() => const OnBoardingScreen());
       } else {
-        Get.offAll(() => const OnBoardingScreen());
+        // Get.offAll(() => const OnBoardingScreen());
 
-        // Get.offAll(() => const LoginScreen());
+        Get.offAll(() => const LoginScreen());
       }
     }
   }
@@ -73,8 +73,36 @@ class AuthenticationRepository extends GetxController {
 
   /* ----------------------- AUTHENTICATION ----------------------- */
 
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _authService.signIn(
+        email: email,
+        password: password,
+      );
+
+      // Lưu accessToken
+      accessToken.value = response['accessToken'];
+      await _secureStorage.write(key: 'accessToken', value: accessToken.value);
+
+      // Fetch user info using the token
+      await _fetchUserInfo();
+
+      Get.offAll(() => const NavigationMenu());
+    } catch (e) {
+      if (kDebugMode) {
+        print('====================== BEGIN PROBLEMS ======================');
+        print(e.toString());
+        print('====================== END PROBLEMS ======================');
+      }
+      rethrow;
+    }
+  }
+
   // Sign In
-  Future<UserModel> signIn({
+  Future<UserModel> signIn2({
     required String email,
     required String password,
   }) async {
@@ -134,6 +162,21 @@ class AuthenticationRepository extends GetxController {
 
     deviceStorage.write('firstStartUp', false);
     Get.offAll(() => const LoginScreen());
+  }
+
+  Future<void> _fetchUserInfo() async {
+    try {
+      final userInfo = await _authService.fetchUserInfo(accessToken.value);
+      _currentUser.value = userInfo;
+      await _secureStorage.write(key: 'user', value: jsonEncode(_currentUser.value!.toJson()));
+    } catch (e) {
+      if (kDebugMode) {
+        print('====================== BEGIN PROBLEMS ======================');
+        print(e.toString());
+        print('====================== END PROBLEMS ======================');
+      }
+      rethrow;
+    }
   }
 
   Future<void> _saveUserAndToken(UserModel user, String token) async {
