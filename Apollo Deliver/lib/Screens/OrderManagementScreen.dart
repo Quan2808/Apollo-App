@@ -8,7 +8,7 @@ class OrderManagementScreen extends StatelessWidget {
         title: Text('Order Management'),
       ),
       body: Center(
-        child: Text('This is the Order Management Screen'),
+        child: Text('Order management screen'),
       ),
     );
   }
