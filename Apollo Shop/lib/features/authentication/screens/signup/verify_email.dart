@@ -1,11 +1,9 @@
 import 'package:apolloshop/data/repositories/authentication/authentication_repository.dart';
-import 'package:apolloshop/features/authentication/screens/login/login.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/constants/text_strings.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({

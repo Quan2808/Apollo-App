@@ -6,16 +6,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
-  // Widgets Binding
   final WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
-
-  // GetX Local Storage
   await GetStorage.init();
-
-  // Await Splash until other items Load
   FlutterNativeSplash.preserve(widgetsBinding: binding);
-
-  // Initialize AuthenticationRepository
   Get.put(AuthenticationRepository());
   runApp(const App());
 }

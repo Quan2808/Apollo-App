@@ -14,9 +14,9 @@ class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
   final AuthenticationService _authService =
-  AuthenticationService(ApiConstants.baseApiUrl);
-  final deviceStorage = GetStorage();
+      AuthenticationService(ApiConstants.baseApiUrl);
   final _secureStorage = const FlutterSecureStorage();
+  final deviceStorage = GetStorage();
 
   // Create an instance of UserRepository
   late final UserRepository _userRepository;
@@ -68,7 +68,8 @@ class AuthenticationRepository extends GetxController {
       );
 
       _userRepository.accessToken.value = response['accessToken'];
-      await _secureStorage.write(key: 'accessToken', value: _userRepository.accessToken.value);
+      await _secureStorage.write(
+          key: 'accessToken', value: _userRepository.accessToken.value);
 
       await _userRepository.fetchUserInfo();
     } catch (e) {
@@ -99,6 +100,7 @@ class AuthenticationRepository extends GetxController {
   Future<void> signOut() async {
     await _userRepository.signOut();
     deviceStorage.write('firstStartUp', false);
-    Get.offAll(() => const LoginScreen());
+    screenRedirect();
+    // Get.offAll(() => const LoginScreen());
   }
 }

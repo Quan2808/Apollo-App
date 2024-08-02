@@ -20,9 +20,9 @@ class UserModel {
       id: json['id'].toString(),
       fullName: json['clientName'] ?? '',
       email: json['email'] ?? '',
-      phoneNumber: json['phoneNumber'] ?? '',  // Có thể là null hoặc không tồn tại
+      phoneNumber: json['phoneNumber'] ?? '',
       password: '',
-      enabled: json['enabled'] ?? false,  // Có thể là null hoặc không tồn tại
+      enabled: json['enabled'] ?? false,
     );
   }
 
@@ -54,4 +54,13 @@ class UserModel {
       enabled: enabled ?? this.enabled,
     );
   }
+
+  static UserModel empty() => UserModel(
+        id: '',
+        fullName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        enabled: false,
+      );
 }
