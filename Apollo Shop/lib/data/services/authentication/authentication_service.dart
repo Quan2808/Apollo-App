@@ -69,7 +69,7 @@ class AuthenticationService {
       body: jsonEncode({
         'clientName': clientName,
         'email': email,
-        // 'phoneNumber': phoneNumber,
+        'phoneNumber': phoneNumber,
         'password': password,
       }),
     );

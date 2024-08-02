@@ -37,7 +37,6 @@ class UserRepository extends GetxController {
       await _secureStorage.write(
           key: 'user', value: jsonEncode(_currentUser.value!.toJson()));
     } catch (e) {
-      print('Error fetching user info: $e');
       rethrow;
     }
   }
