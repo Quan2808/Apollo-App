@@ -53,26 +53,9 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  // screenRedirect() async {
-  //   // final user = currentUser;
-  //   // if (user != null) {
-  //   //   if (user.enabled) {
-  //   //     Get.offAll(() => const NavigationMenu());
-  //   //   } else {
-  //   //     Get.offAll(() => const LoginScreen());
-  //   //   }
-  //   // } else {
-  //   //   Get.offAll(() => const OnBoardingScreen());
-  //   // }
-  //
-  //   deviceStorage.writeIfNull('firstStartUp', true);
-  //   deviceStorage.read('firstStartUp') != true
-  //       ? Get.offAll(() => const LoginScreen())
-  //       : Get.offAll(() => const OnBoardingScreen());
-  // }
-
   /* ----------------------- AUTHENTICATION ----------------------- */
 
+  // Sign In
   Future<void> signIn({
     required String email,
     required String password,
@@ -83,7 +66,7 @@ class AuthenticationRepository extends GetxController {
         password: password,
       );
 
-      // Lưu accessToken
+      // Save accessToken
       accessToken.value = response['accessToken'];
       await _secureStorage.write(key: 'accessToken', value: accessToken.value);
 
@@ -98,37 +81,6 @@ class AuthenticationRepository extends GetxController {
         print('====================== END PROBLEMS ======================');
       }
       rethrow;
-    }
-  }
-
-  // Sign In
-  Future<UserModel> signIn2({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final response = await _authService.signIn(
-        email: email,
-        password: password,
-      );
-
-      final user = UserModel.fromJson(response['user']);
-
-      _currentUser.value = user;
-
-      // Save token and user info
-      accessToken.value = response['accessToken'];
-      await _saveUserAndToken(user, response['accessToken']);
-
-      return user;
-    } catch (e) {
-      if (kDebugMode) {
-        print('====================== BEGIN PROBLEMS ======================');
-        print(e.toString());
-        print('====================== END PROBLEMS ======================');
-      }
-      rethrow;
-      // throw 'Invalid email or password';
     }
   }
 
@@ -177,11 +129,6 @@ class AuthenticationRepository extends GetxController {
       }
       rethrow;
     }
-  }
-
-  Future<void> _saveUserAndToken(UserModel user, String token) async {
-    await _secureStorage.write(key: 'user', value: jsonEncode(user.toJson()));
-    await _secureStorage.write(key: 'accessToken', value: token);
   }
 
   UserModel? get currentUser => _currentUser.value;
