@@ -6,6 +6,7 @@ import 'package:apolloshop/features/authentication/screens/login/login.dart';
 import 'package:apolloshop/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:apolloshop/navigation_menu.dart';
 import 'package:apolloshop/utils/constants/api_constants.dart';
+import 'package:apolloshop/utils/helpers/helper_exception.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -31,27 +32,26 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> screenRedirect() async {
-    final storedUser = await _secureStorage.read(key: 'user');
-    final storedToken = await _secureStorage.read(key: 'accessToken');
-    if (storedUser != null && storedToken != null) {
-      try {
+    try {
+      final storedUser = await _secureStorage.read(key: 'user');
+      final storedToken = await _secureStorage.read(key: 'accessToken');
+      if (storedUser != null && storedToken != null) {
         _currentUser.value = UserModel.fromJson(jsonDecode(storedUser));
         accessToken.value = storedToken;
         Get.offAll(() => const NavigationMenu());
-      } catch (e) {
-        await signOut();
-      }
-    } else {
-      bool isFirstTime = deviceStorage.read('firstStartUp') ?? true;
-      if (isFirstTime) {
-        Get.offAll(() => const OnBoardingScreen());
       } else {
-        // Get.offAll(() => const OnBoardingScreen());
-
-        Get.offAll(() => const LoginScreen());
+        bool isFirstTime = deviceStorage.read('firstStartUp') ?? true;
+        if (isFirstTime) {
+          Get.offAll(() => const OnBoardingScreen());
+        } else {
+          Get.offAll(() => const LoginScreen());
+        }
       }
+    } catch (e) {
+      await signOut();
     }
   }
+
 
   /* ----------------------- AUTHENTICATION ----------------------- */
 
@@ -72,15 +72,8 @@ class AuthenticationRepository extends GetxController {
 
       // Fetch user info using the token
       await _fetchUserInfo();
-
-      Get.offAll(() => const NavigationMenu());
     } catch (e) {
-      if (kDebugMode) {
-        print('====================== BEGIN PROBLEMS ======================');
-        print(e.toString());
-        print('====================== END PROBLEMS ======================');
-      }
-      rethrow;
+      throw HelperException.getLoginException(e.toString());
     }
   }
 

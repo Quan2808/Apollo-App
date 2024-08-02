@@ -3,6 +3,7 @@ import 'package:apolloshop/common/widgets/custom_shapes/containers/primary_heade
 import 'package:apolloshop/common/widgets/list_title/settings_menu_title.dart';
 import 'package:apolloshop/common/widgets/list_title/user_profile_title.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/data/repositories/authentication/authentication_repository.dart';
 import 'package:apolloshop/features/personalization/screen/address/address.dart';
 import 'package:apolloshop/features/personalization/screen/profile/profile.dart';
 import 'package:apolloshop/features/shop/screens/cart/cart.dart';
@@ -85,7 +86,9 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await AuthenticationRepository.instance.signOut();
+                      },
                       child: const Text('Logout'),
                     ),
                   ),
