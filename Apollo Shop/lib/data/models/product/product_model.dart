@@ -7,7 +7,7 @@ class ProductModel {
   int id;
   String title;
   String description;
-  String mainPicture;
+  String thumbnail;
   String status;
   CategoryModel? category;
   StoreCategoryModel? storeCategory;
@@ -18,7 +18,7 @@ class ProductModel {
     required this.id,
     required this.title,
     required this.description,
-    required this.mainPicture,
+    required this.thumbnail,
     required this.status,
     this.category,
     this.storeCategory,
@@ -31,7 +31,7 @@ class ProductModel {
       id: 0,
       title: '',
       description: '',
-      mainPicture: '',
+      thumbnail: '',
       status: '',
       category: null,
       storeCategory: null,
@@ -45,7 +45,7 @@ class ProductModel {
       id: json['id'] ?? 0,
       title: json['title'] ?? '',
       description: json['description'] ?? '',
-      mainPicture: json['mainPicture'] ?? '',
+      thumbnail: json['mainPicture'] ?? '',
       status: json['status'] ?? '',
       category: json['category'] != null
           ? CategoryModel.fromJson(json['category'])
@@ -67,7 +67,7 @@ class ProductModel {
       'id': id,
       'title': title,
       'description': description,
-      'mainPicture': mainPicture,
+      'mainPicture': thumbnail,
       'status': status,
       'category': category?.toJson(),
       'storeCategory': storeCategory?.toJson(),

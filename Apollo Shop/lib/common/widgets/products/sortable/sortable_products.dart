@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
-import 'package:apolloshop/features/shop/controllers/product_controller.dart';
+import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';

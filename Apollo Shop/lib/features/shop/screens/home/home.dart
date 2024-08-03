@@ -8,7 +8,7 @@ import 'package:apolloshop/common/widgets/shimmers/vertical_product_shimmer.dart
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/repositories/product/product_repository.dart';
 import 'package:apolloshop/data/services/product/product_service.dart';
-import 'package:apolloshop/features/shop/controllers/product_controller.dart';
+import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/features/shop/screens/all_products/all_products.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_categories.dart';

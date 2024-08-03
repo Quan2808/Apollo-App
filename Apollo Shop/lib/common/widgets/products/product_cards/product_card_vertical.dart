@@ -42,7 +42,7 @@ class ProductCardVertical extends StatelessWidget {
               child: Stack(
                 children: [
                   RoundedImage(
-                    imageUrl: product.mainPicture,
+                    imageUrl: product.thumbnail,
                     applyImageRadius: true,
                     isNetworkImage: true,
                   ),
@@ -75,8 +75,6 @@ class ProductCardVertical extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ProductTitleText(title: product.title, smallSize: true),
-                      // const SizedBox(height: TSizes.spaceBtwItems / 2),
                       BrandTitleWithVerifiedIcon(title: product.store!.name),
                     ],
                   ),

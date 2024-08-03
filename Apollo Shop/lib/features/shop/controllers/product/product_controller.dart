@@ -25,7 +25,7 @@ class ProductController extends GetxController {
 
       // Assign fetched Products to the observable list
       products.assignAll(
-        getProducts.where((e) => e.mainPicture.isNotEmpty).toList(),
+        getProducts.where((e) => e.thumbnail.isNotEmpty).toList(),
       );
     } catch (e) {
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
