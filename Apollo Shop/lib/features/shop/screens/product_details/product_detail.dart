@@ -1,4 +1,5 @@
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
@@ -12,7 +13,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+  const ProductDetailScreen({
+    super.key,
+    required this.product,
+  });
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
