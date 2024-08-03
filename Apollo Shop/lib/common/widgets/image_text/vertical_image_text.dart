@@ -14,7 +14,8 @@ class VerticalImageText extends StatelessWidget {
     this.isNetworkImage = true,
   });
 
-  final String title, image;
+  final String title;
+  final String? image;
   final Color textColor;
   final Color? backgroundColor;
   final bool isNetworkImage;
@@ -40,11 +41,15 @@ class VerticalImageText extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Center(
-                child: Image(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                  color: TColors.dark,
-                ),
+                child: image != null && image!.isNotEmpty
+                    ? Image(
+                        image: isNetworkImage
+                            ? NetworkImage(image!)
+                            : AssetImage(image!) as ImageProvider,
+                        fit: BoxFit.cover,
+                        color: TColors.dark,
+                      )
+                    : const Icon(Icons.error, color: TColors.dark),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),

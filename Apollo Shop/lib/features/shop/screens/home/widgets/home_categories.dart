@@ -1,6 +1,5 @@
 import 'package:apolloshop/common/widgets/image_text/vertical_image_text.dart';
 import 'package:apolloshop/common/widgets/shimmers/category_shimmer.dart';
-import 'package:apolloshop/common/widgets/shimmers/shimmer_effect.dart';
 import 'package:apolloshop/data/repositories/category/category_repository.dart';
 import 'package:apolloshop/data/services/category/category_service.dart';
 import 'package:apolloshop/features/shop/controllers/category_controller.dart';
@@ -41,7 +40,9 @@ class HomeCategories extends StatelessWidget {
           height: 80,
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: categoryController.categories.length,
+            itemCount: categoryController.categories.length > 8
+                ? 8
+                : categoryController.categories.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (_, index) {
               final category = categoryController.categories[index];
