@@ -1,4 +1,4 @@
-import 'package:apolloshop/data/models/product_model.dart';
+import 'package:apolloshop/data/models/product/product_model.dart';
 
 class CategoryModel {
   int id;
