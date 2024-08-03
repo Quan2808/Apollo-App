@@ -19,7 +19,11 @@ class CategoryController extends GetxController {
   Future<void> fetchCategories() async {
     try {
       isLoading.value = true;
+
+      // Fetch categories
       final getCategories = await _categoryRepository.getCategories();
+
+      // Assign fetched categories to the observable list
       categories.assignAll(getCategories);
     } catch (e) {
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());

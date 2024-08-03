@@ -73,6 +73,7 @@ class AuthenticationRepository extends GetxController {
 
       await _userRepository.fetchUserInfo();
     } catch (e) {
+      print(e.toString());
       throw HelperException.getAuthErrorMessage(e.toString());
     }
   }

@@ -17,9 +17,9 @@ class CategoryShimmer extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: itemCount,
+        scrollDirection: Axis.horizontal,
         separatorBuilder: (_, __) =>
             const SizedBox(width: TSizes.spaceBtwItems),
-        scrollDirection: Axis.horizontal,
         itemBuilder: (_, __) {
           return const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
