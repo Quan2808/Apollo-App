@@ -1,5 +1,6 @@
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,6 +12,7 @@ class SortableProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final products = ProductController.instance.products;
     return Column(
       children: [
         // Drop down
@@ -26,9 +28,12 @@ class SortableProducts extends StatelessWidget {
 
         // Products
         GridLayout(
-            mainAxisExtent: 231,
-            itemCount: 4,
-            itemBuilder: (_, index) => const ProductCardVertical()),
+          mainAxisExtent: 271,
+          itemCount: products.length,
+          itemBuilder: (_, index) => ProductCardVertical(
+            product: products[index],
+          ),
+        ),
       ],
     );
   }

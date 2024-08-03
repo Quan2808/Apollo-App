@@ -1,4 +1,4 @@
-import 'package:apolloshop/data/models/user_model.dart';
+import 'package:apolloshop/data/models/user/user_model.dart';
 import 'package:apolloshop/data/repositories/user/user_repository.dart';
 import 'package:apolloshop/data/services/authentication/authentication_service.dart';
 import 'package:apolloshop/utils/constants/api_constants.dart';

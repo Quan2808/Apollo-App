@@ -22,12 +22,17 @@ class PromoSlider extends StatelessWidget {
     return Column(
       children: [
         CarouselSlider(
-            options: CarouselOptions(
-              viewportFraction: 1,
-              onPageChanged: (index, reason) =>
-                  controller.updatePageIndicator(index),
-            ),
-            items: banners.map((e) => RoundedImage(imageUrl: e)).toList()),
+          options: CarouselOptions(
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 3),
+            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+            autoPlayCurve: Curves.fastOutSlowIn,
+            viewportFraction: 1,
+            onPageChanged: (index, reason) =>
+                controller.updatePageIndicator(index),
+          ),
+          items: banners.map((e) => RoundedImage(imageUrl: e)).toList(),
+        ),
         const SizedBox(height: TSizes.spaceBtwItems),
         Center(
           child: Obx(
