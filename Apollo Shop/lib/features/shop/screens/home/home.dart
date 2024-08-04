@@ -6,8 +6,6 @@ import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:apolloshop/common/widgets/shimmers/vertical_product_shimmer.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
-import 'package:apolloshop/data/repositories/product/product_repository.dart';
-import 'package:apolloshop/data/services/product/product_service.dart';
 import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/features/shop/screens/all_products/all_products.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_appbar.dart';
@@ -24,8 +22,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProductService());
-    Get.put(ProductRepository());
     final controller = Get.put(ProductController());
 
     return Scaffold(

@@ -2,8 +2,6 @@ import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/curved_edges/curved_edges_widget.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
-import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
-import 'package:apolloshop/data/services/variant/variant_service.dart';
 import 'package:apolloshop/features/shop/controllers/product/image_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -22,9 +20,6 @@ class ProductImageSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-
-    Get.put(VariantService());
-    Get.put(VariantRepository());
 
     final controller = Get.put(ImageController());
 

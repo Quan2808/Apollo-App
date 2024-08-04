@@ -1,7 +1,5 @@
 import 'package:apolloshop/common/widgets/image_text/vertical_image_text.dart';
 import 'package:apolloshop/common/widgets/shimmers/category_shimmer.dart';
-import 'package:apolloshop/data/repositories/category/category_repository.dart';
-import 'package:apolloshop/data/services/category/category_service.dart';
 import 'package:apolloshop/features/shop/controllers/category_controller.dart';
 import 'package:apolloshop/features/shop/screens/sub_category/sub_categories.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +12,6 @@ class HomeCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(CategoryService());
-    Get.put(CategoryRepository());
     final categoryController = Get.put(CategoryController());
     return Obx(() {
       if (categoryController.isLoading.value) {

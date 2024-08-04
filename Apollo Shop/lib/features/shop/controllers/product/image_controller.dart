@@ -22,11 +22,6 @@ class ImageController extends GetxController {
     selectedProductImage.value = product.thumbnail;
 
     // Get All Images from Variants if not null
-    if (product.variants.isNotEmpty) {
-      images.addAll(product.variants.map((variant) => variant.img));
-    }
-    images.addAll(product.variants.map((variant) => variant.img));
-
     List<VariantModel> variants =
         await _variantRepository.getVariantsByProductId(product.id);
 
