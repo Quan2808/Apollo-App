@@ -15,6 +15,7 @@ class ProductImageSlider extends StatelessWidget {
     super.key,
     required this.product,
   });
+
   final ProductModel product;
 
   @override
@@ -41,7 +42,7 @@ class ProductImageSlider extends StatelessWidget {
                     height: 400,
                     child: Padding(
                       padding:
-                      const EdgeInsets.all(TSizes.productImageRadius * 2),
+                          const EdgeInsets.all(TSizes.productImageRadius * 2),
                       child: Center(
                         child: Obx(() {
                           final image = controller.selectedProductImage.value;
@@ -51,12 +52,12 @@ class ProductImageSlider extends StatelessWidget {
                               imageUrl: image,
                               progressIndicatorBuilder:
                                   (context, url, progress) =>
-                                  CircularProgressIndicator(
-                                    value: progress.progress,
-                                    color: TColors.primary,
-                                  ),
+                                      CircularProgressIndicator(
+                                value: progress.progress,
+                                color: TColors.primary,
+                              ),
                               errorWidget: (context, url, error) =>
-                              const Icon(Icons.error, color: TColors.error),
+                                  const Icon(Icons.error, color: TColors.error),
                             ),
                           );
                         }),
@@ -72,34 +73,36 @@ class ProductImageSlider extends StatelessWidget {
                     child: SizedBox(
                       height: 80,
                       child: ListView.separated(
-                        itemCount: images.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        separatorBuilder: (_, __) => const SizedBox(
-                          width: TSizes.spaceBtwItems,
-                        ),
-                        itemBuilder: (_, index) {
-                          final image = images[index];
-                          final isSelected = controller.selectedProductImage.value == image;
+                          itemCount: images.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          separatorBuilder: (_, __) => const SizedBox(
+                                width: TSizes.spaceBtwItems,
+                              ),
+                          itemBuilder: (_, index) => Obx(
+                                () {
+                                  final image = images[index];
+                                  final isSelected =
+                                      controller.selectedProductImage.value ==
+                                          image;
 
-                          return GestureDetector(
-                            onTap: () {
-                              controller.selectedProductImage.value = image;
-                            },
-                            child: RoundedImage(
-                              width: 80,
-                              backgroundColor:
-                              dark ? TColors.black : TColors.white,
-                              border: Border.all(
-                                  color: isSelected ? TColors.primary : Colors.transparent),
-                              padding: const EdgeInsets.all(TSizes.sm),
-                              isNetworkImage: true,
-                              imageUrl: image,
-                            ),
-                          );
-                        },
-                      ),
+                                  return RoundedImage(
+                                    width: 80,
+                                    backgroundColor:
+                                        dark ? TColors.black : TColors.white,
+                                    border: Border.all(
+                                        color: isSelected
+                                            ? TColors.primary
+                                            : Colors.transparent),
+                                    padding: const EdgeInsets.all(TSizes.sm),
+                                    isNetworkImage: true,
+                                    imageUrl: image,
+                                    onPressed: () => controller
+                                        .selectedProductImage.value = image,
+                                  );
+                                },
+                              )),
                     ),
                   ),
 

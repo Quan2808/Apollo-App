@@ -99,38 +99,38 @@ class ProductAttributes extends StatelessWidget {
           SizedBox(
             height: 80,
             child: ListView.separated(
-              itemCount: hasVariants ? variantController.variants.length : 0,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: const AlwaysScrollableScrollPhysics(),
-              separatorBuilder: (_, __) => const SizedBox(
-                width: TSizes.spaceBtwItems,
-              ),
-              itemBuilder: (_, index) {
-                if (!hasVariants)
-                  return const SizedBox
-                      .shrink(); // Return empty widget if no variants
+                itemCount: hasVariants ? variantController.variants.length : 0,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                separatorBuilder: (_, __) => const SizedBox(
+                      width: TSizes.spaceBtwItems,
+                    ),
+                itemBuilder: (_, index) => Obx(
+                      () {
+                        if (!hasVariants) {
+                          return const SizedBox
+                              .shrink(); // Return empty widget if no variants
+                        }
 
-                final variant = variantController.variants[index];
-                final isSelected =
-                    variantController.selectedVariant.value == variant;
+                        final variant = variantController.variants[index];
+                        final isSelected =
+                            variantController.selectedVariant.value == variant;
 
-                return GestureDetector(
-                  onTap: () {
-                    variantController.selectedVariant.value = variant;
-                  },
-                  child: RoundedImage(
-                    width: 80,
-                    backgroundColor: dark ? TColors.black : TColors.white,
-                    border: Border.all(
-                        color: isSelected ? TColors.primary : TColors.grey),
-                    padding: const EdgeInsets.all(TSizes.sm),
-                    isNetworkImage: true,
-                    imageUrl: variant.img,
-                  ),
-                );
-              },
-            ),
+                        return RoundedImage(
+                          width: 80,
+                          backgroundColor: dark ? TColors.black : TColors.white,
+                          border: Border.all(
+                              color:
+                                  isSelected ? TColors.primary : TColors.grey),
+                          padding: const EdgeInsets.all(TSizes.sm),
+                          isNetworkImage: true,
+                          imageUrl: variant.img,
+                          onPressed: () =>
+                              variantController.selectedVariant.value = variant,
+                        );
+                      },
+                    )),
           ),
         ],
       );
