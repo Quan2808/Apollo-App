@@ -47,7 +47,7 @@ class ProductDetailScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   /// Attribute
-                  const ProductAttributes(),
+                  ProductAttributes(product: product),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Checkout Button
