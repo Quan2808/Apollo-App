@@ -1,5 +1,6 @@
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RoundedImage extends StatelessWidget {
   const RoundedImage({
@@ -28,6 +29,7 @@ class RoundedImage extends StatelessWidget {
   final bool isNetworkImage;
   final VoidCallback? onPressed;
   final double borderRadius;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -45,12 +47,21 @@ class RoundedImage extends StatelessWidget {
           borderRadius: applyImageRadius
               ? BorderRadius.circular(borderRadius)
               : BorderRadius.zero,
-          child: Image(
-            fit: fit,
-            image: isNetworkImage
-                ? NetworkImage(imageUrl)
-                : AssetImage(imageUrl) as ImageProvider,
-          ),
+          child: isNetworkImage
+              ? CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: fit,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Center(
+                    child: Icon(Icons.error, color: Colors.red),
+                  ),
+                )
+              : Image.asset(
+                  imageUrl,
+                  fit: fit,
+                ),
         ),
       ),
     );

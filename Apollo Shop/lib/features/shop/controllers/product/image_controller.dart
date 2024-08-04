@@ -50,7 +50,15 @@ class ImageController extends GetxController {
                 vertical: TSizes.defaultSpace * 2,
                 horizontal: TSizes.defaultSpace,
               ),
-              child: CachedNetworkImage(imageUrl: image),
+              child: CachedNetworkImage(
+                imageUrl: image,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: Icon(Icons.error, color: Colors.red),
+                ),
+              ),
             ),
             const SizedBox(height: TSizes.spaceBtwSections),
             Align(

@@ -60,6 +60,8 @@ class ProductImageSlider extends StatelessWidget {
                                 value: progress.progress,
                                 color: TColors.primary,
                               ),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error, color: TColors.error),
                             ),
                           );
                         }),
@@ -111,7 +113,7 @@ class ProductImageSlider extends StatelessWidget {
             ),
           );
         } else {
-          return Center(child: Text('No images available'));
+          return const Center(child: Text('No images available'));
         }
       },
     );
