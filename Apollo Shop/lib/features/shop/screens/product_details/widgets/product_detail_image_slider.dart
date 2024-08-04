@@ -2,6 +2,8 @@ import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/curved_edges/curved_edges_widget.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
+import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
+import 'package:apolloshop/data/services/variant/variant_service.dart';
 import 'package:apolloshop/features/shop/controllers/product/image_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -21,78 +23,97 @@ class ProductImageSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
 
+    Get.put(VariantService());
+    Get.put(VariantRepository());
+
     final controller = Get.put(ImageController());
-    final images = controller.getProductImages(product);
 
-    return CurvedEdgeWidget(
-      child: Container(
-        color: dark ? TColors.darkerGrey : TColors.light,
-        child: Stack(
-          children: [
-            /// Main Large Image
-            SizedBox(
-              height: 400,
-              child: Padding(
-                padding: const EdgeInsets.all(TSizes.productImageRadius * 2),
-                child: Center(
-                  child: Obx(() {
-                    final image = controller.selectedProductImage.value;
-                    return GestureDetector(
-                      onTap: () => controller.showEnlargeImage(image),
-                      child: CachedNetworkImage(
-                        imageUrl: image,
-                        progressIndicatorBuilder: (context, url, progress) =>
-                            CircularProgressIndicator(
-                          value: progress.progress,
-                          color: TColors.primary,
-                        ),
+    return FutureBuilder<List<String>>(
+      future: controller.getProductImages(product),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasData) {
+          final images = snapshot.data!;
+
+          return CurvedEdgeWidget(
+            child: Container(
+              color: dark ? TColors.darkerGrey : TColors.light,
+              child: Stack(
+                children: [
+                  /// Main Large Image
+                  SizedBox(
+                    height: 400,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.all(TSizes.productImageRadius * 2),
+                      child: Center(
+                        child: Obx(() {
+                          final image = controller.selectedProductImage.value;
+                          return GestureDetector(
+                            onTap: () => controller.showEnlargeImage(image),
+                            child: CachedNetworkImage(
+                              imageUrl: image,
+                              progressIndicatorBuilder:
+                                  (context, url, progress) =>
+                                      CircularProgressIndicator(
+                                value: progress.progress,
+                                color: TColors.primary,
+                              ),
+                            ),
+                          );
+                        }),
                       ),
-                    );
-                  }),
-                ),
-              ),
-            ),
-
-            /// Image Slider
-            Positioned(
-              right: 0,
-              bottom: 30,
-              left: TSizes.defaultSpace,
-              child: SizedBox(
-                height: 80,
-                child: ListView.separated(
-                  itemCount: images.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  separatorBuilder: (_, __) => const SizedBox(
-                    width: TSizes.spaceBtwItems,
+                    ),
                   ),
-                  itemBuilder: (_, index) => Obx(() {
-                    final imageSelected =
-                        controller.selectedProductImage.value == images[index];
-                    return RoundedImage(
-                      width: 80,
-                      backgroundColor: dark ? TColors.black : TColors.white,
-                      border: Border.all(
-                          color: imageSelected
-                              ? TColors.primary
-                              : Colors.transparent),
-                      padding: const EdgeInsets.all(TSizes.sm),
-                      isNetworkImage: true,
-                      imageUrl: images[index],
-                      onPressed: () =>
-                          controller.selectedProductImage.value = images[index],
-                    );
-                  }),
-                ),
+
+                  /// Image Slider
+                  Positioned(
+                    right: 0,
+                    bottom: 30,
+                    left: TSizes.defaultSpace,
+                    child: SizedBox(
+                      height: 80,
+                      child: ListView.separated(
+                        itemCount: images.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        separatorBuilder: (_, __) => const SizedBox(
+                          width: TSizes.spaceBtwItems,
+                        ),
+                        itemBuilder: (_, index) {
+                          final imageSelected =
+                              controller.selectedProductImage.value ==
+                                  images[index];
+                          return RoundedImage(
+                            width: 80,
+                            backgroundColor:
+                                dark ? TColors.black : TColors.white,
+                            border: Border.all(
+                                color: imageSelected
+                                    ? TColors.primary
+                                    : Colors.transparent),
+                            padding: const EdgeInsets.all(TSizes.sm),
+                            isNetworkImage: true,
+                            imageUrl: images[index],
+                            onPressed: () => controller
+                                .selectedProductImage.value = images[index],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  const ApolloAppBar(showBackArrow: true),
+                ],
               ),
             ),
-
-            const ApolloAppBar(showBackArrow: true),
-          ],
-        ),
-      ),
+          );
+        } else {
+          return Center(child: Text('No images available'));
+        }
+      },
     );
   }
 }

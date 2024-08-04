@@ -1,4 +1,6 @@
 import 'package:apolloshop/data/models/product/product_model.dart';
+import 'package:apolloshop/data/models/product/variant_model.dart';
+import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -7,24 +9,28 @@ import 'package:get/get.dart';
 class ImageController extends GetxController {
   static ImageController get instance => Get.find();
 
+  final VariantRepository _variantRepository = VariantRepository.instance;
+
   // Variables
   RxString selectedProductImage = ''.obs;
+  RxList<String> variantImages = <String>[].obs;
 
   // Get All Images from Product and Variants
-  List<String> getProductImages(ProductModel product) {
-    // Use Set to add unique images only
+  Future<List<String>> getProductImages(ProductModel product) async {
     Set<String> images = {};
-
-    // Load thumbnail
     images.add(product.thumbnail);
-
-    // Assign Thumbnail and Selected Image
     selectedProductImage.value = product.thumbnail;
 
     // Get All Images from Variants if not null
     if (product.variants.isNotEmpty) {
       images.addAll(product.variants.map((variant) => variant.img));
     }
+    images.addAll(product.variants.map((variant) => variant.img));
+
+    List<VariantModel> variants =
+        await _variantRepository.getVariantsByProductId(product.id);
+
+    images.addAll(variants.map((variant) => variant.img).toList());
 
     return images.toList();
   }
