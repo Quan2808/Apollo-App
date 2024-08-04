@@ -77,7 +77,11 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
                   SectionHeading(
                     title: 'Popular Products',
-                    onPressed: () => Get.to(() => const AllProductsScreen()),
+                    onPressed: () => Get.to(
+                      () => const AllProductsScreen(
+                        title: 'All Products',
+                      ),
+                    ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems / 1.5),
                   Obx(() {
