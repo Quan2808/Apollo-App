@@ -12,17 +12,23 @@ class SortableProducts extends StatelessWidget {
   const SortableProducts({
     super.key,
     this.store,
+    this.category,
   });
 
   final StoreModel? store;
+  final CategoryModel? category;
 
   @override
   Widget build(BuildContext context) {
     final productController = ProductController.instance;
 
-    // Filter products based on the store passed
+    // Filter products based on store and category
     if (store != null) {
       productController.filterByStore(store!);
+    }
+
+    if (category != null) {
+      productController.filterByCategory(category!);
     }
 
     return Obx(() {
@@ -33,7 +39,7 @@ class SortableProducts extends StatelessWidget {
             decoration: const InputDecoration(
               prefixIcon: Icon(Iconsax.sort),
             ),
-            hint: const Text('Sort by'), // Placeholder text
+            hint: const Text('Sort by'),
             onChanged: (value) {
               if (value != null) {
                 productController.sortProducts(value);
@@ -51,32 +57,63 @@ class SortableProducts extends StatelessWidget {
           ),
           const SizedBox(height: TSizes.spaceBtwSections),
 
-          // Dropdown for category filter
-          DropdownButtonFormField<CategoryModel>(
-            isExpanded: true,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Iconsax.category),
-            ),
-            hint: const Text('Select Category'), // Placeholder text
-            onChanged: (CategoryModel? category) {
-              if (category != null) {
-                productController.filterByCategory(category);
-              }
-            },
-            items: [
-              const DropdownMenuItem<CategoryModel>(
-                value: null,
-                child: Text('All Categories'),
+          // Conditionally display the category filter dropdown
+          if (category == null) ...[
+            DropdownButtonFormField<CategoryModel>(
+              isExpanded: true,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Iconsax.category),
               ),
-              ...productController.filteredCategories.map(
-                (category) => DropdownMenuItem(
-                  value: category,
-                  child: Text(category.attribute),
+              hint: const Text('Select Category'),
+              onChanged: (CategoryModel? category) {
+                if (category != null) {
+                  productController.filterByCategory(category);
+                }
+              },
+              items: [
+                const DropdownMenuItem<CategoryModel>(
+                  value: null,
+                  child: Text('All Categories'),
                 ),
+                ...productController.filteredCategories.map(
+                  (category) => DropdownMenuItem(
+                    value: category,
+                    child: Text(category.attribute),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: TSizes.spaceBtwSections),
+          ],
+
+          // Conditionally display the store filter dropdown
+          if (store == null) ...[
+            DropdownButtonFormField<StoreModel>(
+              isExpanded: true,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Iconsax.category),
               ),
-            ],
-          ),
-          const SizedBox(height: TSizes.spaceBtwSections),
+              hint: const Text('Select Store'),
+              onChanged: (StoreModel? store) {
+                if (store != null) {
+                  productController.filterByStore(store);
+                }
+              },
+              items: [
+                const DropdownMenuItem<StoreModel>(
+                  value: null,
+                  child: Text('All Stores'),
+                ),
+                ...productController.filteredStores.map(
+                  (store) => DropdownMenuItem(
+                    value: store,
+                    child: Text(store.name),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: TSizes.spaceBtwSections),
+          ],
 
           // Search Field
           Padding(

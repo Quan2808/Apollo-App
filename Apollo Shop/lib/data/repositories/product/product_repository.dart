@@ -11,4 +11,12 @@ class ProductRepository extends GetxService {
     final categoriesData = await _service.getProducts();
     return categoriesData.map((data) => ProductModel.fromJson(data)).toList();
   }
+
+  Future<List<ProductModel>> getProductsByCategory(int categoryId) async {
+    final productsData = await _service.getProducts();
+    return productsData
+        .where((data) => data['categoryId'] == categoryId)
+        .map((data) => ProductModel.fromJson(data))
+        .toList();
+  }
 }

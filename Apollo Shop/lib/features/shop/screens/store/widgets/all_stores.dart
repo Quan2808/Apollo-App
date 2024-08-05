@@ -1,8 +1,7 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
-import 'package:apolloshop/common/widgets/stores/store_card.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/shimmers/store_shimmer.dart';
-import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/common/widgets/stores/store_card.dart';
 import 'package:apolloshop/features/shop/controllers/store/store_controller.dart';
 import 'package:apolloshop/features/shop/screens/store/widgets/store_products.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';

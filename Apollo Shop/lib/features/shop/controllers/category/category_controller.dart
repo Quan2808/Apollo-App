@@ -1,5 +1,6 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/data/models/category/category_model.dart';
+import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/data/repositories/category/category_repository.dart';
 import 'package:apolloshop/data/repositories/product/product_repository.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,9 @@ class CategoryController extends GetxController {
   final isLoading = false.obs;
   final CategoryRepository _categoryRepository = Get.find();
   final ProductRepository _productRepository = Get.find();
+
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
+  RxList<ProductModel> products = <ProductModel>[].obs;
 
   @override
   void onInit() {
@@ -42,6 +45,17 @@ class CategoryController extends GetxController {
 
       // Assign filtered categories to the observable list
       categories.assignAll(filteredCategories);
+
+      // Fetch products by each category and assign to the appropriate category
+      for (final category in filteredCategories) {
+        final categoryProducts =
+            await _productRepository.getProductsByCategory(category.id);
+        category.products =
+            categoryProducts; // Assuming your CategoryModel has a `products` field
+      }
+
+      // Update products observable list with products from selected category or use the latest fetched products
+      // Note: You may want to update this based on user interaction or other logic.
     } catch (e) {
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
