@@ -1,4 +1,4 @@
-import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
+import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/utils/constants/enums.dart';
@@ -19,10 +19,10 @@ class ProductMetaData extends StatelessWidget {
         ProductTitleText(title: product.title),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
 
-        /// Brand
+        /// Store
         Row(
           children: [
-            BrandTitleWithVerifiedIcon(
+            StoreTitleWithVerifiedIcon(
               title: product.store != null ? product.store!.name : '',
               textSize: TextSizes.medium,
             ),

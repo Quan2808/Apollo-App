@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
-import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
+import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/features/shop/screens/product_details/product_detail.dart';
@@ -69,13 +69,13 @@ class ProductCardVertical extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /// Brand
+                /// Store
                 Padding(
                   padding: const EdgeInsets.only(left: TSizes.sm * 2),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BrandTitleWithVerifiedIcon(title: product.store!.name),
+                      StoreTitleWithVerifiedIcon(title: product.store!.name),
                     ],
                   ),
                 ),

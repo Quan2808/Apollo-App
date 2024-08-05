@@ -42,7 +42,7 @@ class ProductDetailScreen extends StatelessWidget {
                   const ProductDetailRating(),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
-                  /// Price, Title Stock & Brand
+                  /// Price, Title Stock & Stores
                   ProductMetaData(product: product),
                   const SizedBox(height: TSizes.spaceBtwItems),
 

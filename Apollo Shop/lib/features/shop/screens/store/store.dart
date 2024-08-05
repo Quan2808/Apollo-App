@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/appbar/tabbar.dart';
-import 'package:apolloshop/common/widgets/brands/brand_card.dart';
+import 'package:apolloshop/common/widgets/stores/store_card.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/cart/cart_menu_icon.dart';
@@ -63,14 +63,14 @@ class StoreScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: TSizes.spaceBtwSections),
 
-                    /// Featured Brands
+                    /// Featured Stores
                     SectionHeading(
-                      title: 'Featured Brands',
+                      title: 'Featured Stores',
                       onPressed: () => Get.to(() => const AllStoresScreen()),
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems / 1.5),
 
-                    /// Brand GRID
+                    /// Stores GRID
                     Obx(() {
                       if (storeController.isLoading.value) {
                         return const StoreShimmer();

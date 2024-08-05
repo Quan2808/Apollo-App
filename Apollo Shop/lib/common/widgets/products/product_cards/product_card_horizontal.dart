@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
-import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
+import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
@@ -59,7 +59,7 @@ class ProductCardHorizontal extends StatelessWidget {
                           title: 'Long Long Long Long Product Title',
                           smallSize: true),
                       SizedBox(height: TSizes.spaceBtwItems / 2),
-                      BrandTitleWithVerifiedIcon(title: 'Brand')
+                      StoreTitleWithVerifiedIcon(title: 'Store')
                     ],
                   ),
                   const Spacer(),

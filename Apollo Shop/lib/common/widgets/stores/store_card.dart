@@ -1,5 +1,5 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
+import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/data/models/store/store_model.dart';
 import 'package:apolloshop/utils/constants/enums.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -35,7 +35,7 @@ class StoreCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BrandTitleWithVerifiedIcon(
+                  StoreTitleWithVerifiedIcon(
                       title: store.name, textSize: TextSizes.large),
                   Text(
                     /// Product quantity

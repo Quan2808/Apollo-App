@@ -1,10 +1,10 @@
-import 'package:apolloshop/common/widgets/brands/brand_show_case.dart';
+import 'package:apolloshop/common/widgets/stores/store_show_case.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/models/category/category_model.dart';
 import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
-import 'package:apolloshop/utils/constants/image_strings.dart';
+import 'package:apolloshop/features/shop/controllers/store/store_controller.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -18,32 +18,29 @@ class CategoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = ProductController.instance.products;
+    final storesForCategory =
+        StoreController.instance.getStoresByCategory(category.id);
+    ProductController.instance.filterByCategory(category);
+    final products = ProductController.instance.filteredProducts;
+
     return ListView(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       children: [
         Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
-              /// Brands
-              const BrandShowcase(
-                images: [
-                  TImages.productImage1,
-                  TImages.productImage2,
-                  TImages.productImage3,
-                ],
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              /// Products
+              ...storesForCategory.map((store) => StoreShowcase(
+                    store: store,
+                  )),
+              const SizedBox(height: TSizes.spaceBtwSections),
               SectionHeading(
                 title: 'You might like',
+                showActionButton: false,
                 onPressed: () {},
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
-
               GridLayout(
                 mainAxisExtent: 271,
                 itemCount: products.length,

@@ -8,17 +8,20 @@ class StoreController extends GetxController {
   static StoreController get instance => Get.find();
 
   final isLoading = false.obs;
+
   final RxList<StoreModel> stores = <StoreModel>[].obs;
   final RxList<StoreModel> featuredStores = <StoreModel>[].obs;
   final RxMap<int, List<StoreModel>> storesByCategory =
       <int, List<StoreModel>>{}.obs;
   final RxMap<int, int> productsCountByStore = <int, int>{}.obs;
+  final RxMap<int, List<String>> productThumbnailsByStore = <int, List<String>>{}.obs;
 
   final StoreRepository _storeRepository = Get.find();
   final ProductRepository _productRepository = Get.find();
 
   @override
   void onInit() {
+    fetchProductThumbnailsByStore();
     fetchStores();
     fetchStoresByCategory();
     fetchProductsCountByStore();
@@ -103,4 +106,44 @@ class StoreController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> fetchProductThumbnailsByStore() async {
+    try {
+      isLoading.value = true;
+
+      // Fetch all products
+      final products = await _productRepository.getProducts();
+
+      // Group product thumbnails by store
+      final Map<int, List<String>> groupedThumbnails = {};
+      for (var product in products) {
+        if (product.store != null) {
+          final storeId = product.store!.id;
+          if (!groupedThumbnails.containsKey(storeId)) {
+            groupedThumbnails[storeId] = [];
+          }
+          if (groupedThumbnails[storeId]!.length < 3) {
+            groupedThumbnails[storeId]!.add(product.thumbnail);
+          }
+        }
+      }
+
+      // Assign grouped thumbnails to the observable map
+      productThumbnailsByStore.assignAll(groupedThumbnails);
+    } catch (e) {
+      Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  List<String> getProductThumbnailsByStore(int storeId) {
+    return productThumbnailsByStore[storeId] ?? [];
+  }
+
+  List<StoreModel> getStoresByCategory(int categoryId) {
+    return storesByCategory[categoryId] ?? [];
+  }
+
+
 }

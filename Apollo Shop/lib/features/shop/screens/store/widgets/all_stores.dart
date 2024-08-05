@@ -1,5 +1,5 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
-import 'package:apolloshop/common/widgets/brands/brand_card.dart';
+import 'package:apolloshop/common/widgets/stores/store_card.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/shimmers/store_shimmer.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
@@ -18,21 +18,15 @@ class AllStoresScreen extends StatelessWidget {
 
     return Scaffold(
       // App bar
-      appBar: const ApolloAppBar(title: Text('Brand'), showBackArrow: true),
+      appBar:
+          const ApolloAppBar(title: Text('All Stores'), showBackArrow: true),
 
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
-              // Heading
-              const SectionHeading(
-                title: 'Brands',
-                showActionButton: false,
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              // Brands
+              // Stores
               Obx(() {
                 if (storeController.isLoading.value) {
                   return const StoreShimmer();
