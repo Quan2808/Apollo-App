@@ -1,4 +1,4 @@
-import 'package:apolloshop/data/models/product/category_model.dart';
+import 'package:apolloshop/data/models/category/category_model.dart';
 import 'package:apolloshop/data/services/category/category_service.dart';
 import 'package:get/get.dart';
 

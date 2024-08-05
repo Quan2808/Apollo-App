@@ -4,9 +4,11 @@ import 'package:apolloshop/common/widgets/brands/brand_card.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/cart/cart_menu_icon.dart';
+import 'package:apolloshop/common/widgets/shimmers/store_shimmer.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
-import 'package:apolloshop/features/shop/controllers/category_controller.dart';
-import 'package:apolloshop/features/shop/screens/brands/all_brands.dart';
+import 'package:apolloshop/features/shop/controllers/category/category_controller.dart';
+import 'package:apolloshop/features/shop/controllers/store/store_controller.dart';
+import 'package:apolloshop/features/shop/screens/store/widgets/all_stores.dart';
 import 'package:apolloshop/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -21,6 +23,7 @@ class StoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final categories = CategoryController.instance.categories;
+    final storeController = Get.put(StoreController());
 
     return DefaultTabController(
       length: categories.length,
@@ -29,7 +32,11 @@ class StoreScreen extends StatelessWidget {
         appBar: ApolloAppBar(
           title:
               Text('Store', style: Theme.of(context).textTheme.headlineMedium),
-          actions: [CartCounterIcon(onPressed: () {})],
+          actions: [
+            CartCounterIcon(
+              onPressed: () {},
+            ),
+          ],
         ),
         body: NestedScrollView(
           /// Header
@@ -58,20 +65,45 @@ class StoreScreen extends StatelessWidget {
 
                     /// Featured Brands
                     SectionHeading(
-                        title: 'Featured Brands',
-                        onPressed: () => Get.to(() => const AllBrandsScreen())),
+                      title: 'Featured Brands',
+                      onPressed: () => Get.to(() => const AllStoresScreen()),
+                    ),
                     const SizedBox(height: TSizes.spaceBtwItems / 1.5),
 
                     /// Brand GRID
-                    GridLayout(
-                      itemCount: 4,
-                      mainAxisExtent: 80,
-                      itemBuilder: (_, index) {
-                        return const BrandCard(
-                          showBorder: false,
+                    Obx(() {
+                      if (storeController.isLoading.value) {
+                        return const StoreShimmer();
+                      }
+
+                      if (storeController.featuredStores.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'No Data Found!',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .apply(color: Colors.white),
+                          ),
                         );
-                      },
-                    ),
+                      }
+
+                      return GridLayout(
+                        itemCount: storeController.featuredStores.length,
+                        mainAxisExtent: 80,
+                        itemBuilder: (_, index) {
+                          final store = storeController.featuredStores[index];
+                          final productCount =
+                              storeController.productsCountByStore[store.id] ??
+                                  0;
+                          return StoreCard(
+                            store: store,
+                            showBorder: false,
+                            productCount: productCount, // Pass productCount
+                          );
+                        },
+                      );
+                    })
                   ],
                 ),
               ),

@@ -1,5 +1,5 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
-import 'package:apolloshop/data/models/product/category_model.dart';
+import 'package:apolloshop/data/models/category/category_model.dart';
 import 'package:apolloshop/data/repositories/category/category_repository.dart';
 import 'package:get/get.dart';
 

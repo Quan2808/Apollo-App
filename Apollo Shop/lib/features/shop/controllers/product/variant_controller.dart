@@ -9,8 +9,9 @@ class VariantController extends GetxController {
   final isLoading = false.obs;
   final VariantRepository _variantRepository = Get.find();
   RxList<VariantModel> variants = <VariantModel>[].obs;
-  final int productId;
   Rx<VariantModel?> selectedVariant = Rx<VariantModel?>(null);
+  final int productId;
+
   VariantController(this.productId);
 
   @override

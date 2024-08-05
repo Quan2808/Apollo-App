@@ -1,8 +1,10 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
-import 'package:apolloshop/data/models/product/category_model.dart';
+import 'package:apolloshop/data/models/category/category_model.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
+import 'package:apolloshop/data/models/store/store_model.dart';
 import 'package:apolloshop/data/repositories/category/category_repository.dart';
 import 'package:apolloshop/data/repositories/product/product_repository.dart';
+import 'package:apolloshop/data/repositories/store/store_repository.dart';
 import 'package:get/get.dart';
 
 class ProductController extends GetxController {
@@ -11,9 +13,13 @@ class ProductController extends GetxController {
   final isLoading = false.obs;
   final ProductRepository _productRepository = Get.find();
   final CategoryRepository _categoryRepository = Get.find();
+  final StoreRepository _storeRepository = Get.find();
   RxList<ProductModel> products = <ProductModel>[].obs;
   RxList<ProductModel> filteredProducts = <ProductModel>[].obs;
-  RxList<CategoryModel> categories = <CategoryModel>[].obs;
+  RxList<CategoryModel> filteredCategories = <CategoryModel>[].obs;
+  RxList<StoreModel> filteredStores = <StoreModel>[].obs;
+
+  StoreModel? currentStore;
 
   @override
   void onInit() {
@@ -28,15 +34,22 @@ class ProductController extends GetxController {
       // Fetch Products
       final getProducts = await _productRepository.getProducts();
       final getCategories = await _categoryRepository.getCategories();
+      final getStores = await _storeRepository.getStores();
 
       // Assign fetched Products to the observable list
       products.assignAll(
         getProducts.where((e) => e.thumbnail.isNotEmpty).toList(),
       );
+
       filteredProducts.assignAll(products);
-      categories.assignAll(getCategories);
-      categories.sort((a, b) =>
+
+      filteredCategories.assignAll(getCategories);
+      filteredCategories.sort((a, b) =>
           a.attribute.toLowerCase().compareTo(b.attribute.toLowerCase()));
+
+      filteredStores.assignAll(getStores);
+      filteredStores
+          .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     } catch (e) {
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
@@ -63,6 +76,13 @@ class ProductController extends GetxController {
   void filterByCategory(CategoryModel category) {
     filteredProducts.value = products.where((product) {
       return product.category?.id == category.id;
+    }).toList();
+  }
+
+  void filterByStore(StoreModel store) {
+    currentStore = store;
+    filteredProducts.value = products.where((product) {
+      return product.store?.id == store.id;
     }).toList();
   }
 

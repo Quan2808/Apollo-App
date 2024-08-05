@@ -1,5 +1,5 @@
 import 'package:apolloshop/data/models/product/product_model.dart';
-import 'package:apolloshop/data/models/product/store_model.dart';
+import 'package:apolloshop/data/models/store/store_model.dart';
 
 class StoreCategoryModel {
   int id;

@@ -1,6 +1,7 @@
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
-import 'package:apolloshop/data/models/product/category_model.dart';
+import 'package:apolloshop/data/models/category/category_model.dart';
+import 'package:apolloshop/data/models/store/store_model.dart';
 import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,19 @@ import 'package:iconsax/iconsax.dart';
 class SortableProducts extends StatelessWidget {
   const SortableProducts({
     super.key,
+    this.store,
   });
+
+  final StoreModel? store;
 
   @override
   Widget build(BuildContext context) {
     final productController = ProductController.instance;
+
+    // Filter products based on the store passed
+    if (store != null) {
+      productController.filterByStore(store!);
+    }
 
     return Obx(() {
       return Column(
@@ -54,12 +63,18 @@ class SortableProducts extends StatelessWidget {
                 productController.filterByCategory(category);
               }
             },
-            items: productController.categories
-                .map((category) => DropdownMenuItem(
-                      value: category,
-                      child: Text(category.attribute),
-                    ))
-                .toList(),
+            items: [
+              const DropdownMenuItem<CategoryModel>(
+                value: null,
+                child: Text('All Categories'),
+              ),
+              ...productController.filteredCategories.map(
+                (category) => DropdownMenuItem(
+                  value: category,
+                  child: Text(category.attribute),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: TSizes.spaceBtwSections),
 

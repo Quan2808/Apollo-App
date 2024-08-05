@@ -1,6 +1,6 @@
-import 'package:apolloshop/data/models/product/category_model.dart';
-import 'package:apolloshop/data/models/product/store_category_model.dart';
-import 'package:apolloshop/data/models/product/store_model.dart';
+import 'package:apolloshop/data/models/category/category_model.dart';
+import 'package:apolloshop/data/models/store/store_category_model.dart';
+import 'package:apolloshop/data/models/store/store_model.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
 
 class ProductModel {
