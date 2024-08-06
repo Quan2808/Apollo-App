@@ -10,15 +10,6 @@ class VariantController extends GetxController {
   final VariantRepository _variantRepository = Get.find();
   RxList<VariantModel> variants = <VariantModel>[].obs;
   Rx<VariantModel?> selectedVariant = Rx<VariantModel?>(null);
-  final int productId;
-
-  VariantController(this.productId);
-
-  @override
-  void onInit() {
-    fetchVariantsByProduct(productId);
-    super.onInit();
-  }
 
   Future<void> fetchVariantsByProduct(int productId) async {
     try {
@@ -32,6 +23,11 @@ class VariantController extends GetxController {
       variants.assignAll(
         getVariants.where((e) => e.img.isNotEmpty).toList(),
       );
+
+      // Set the first variant as selected if available
+      if (variants.isNotEmpty) {
+        selectedVariant.value = variants.first;
+      }
     } catch (e) {
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {

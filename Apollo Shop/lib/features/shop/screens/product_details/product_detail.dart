@@ -1,5 +1,6 @@
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
+import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
@@ -22,8 +23,10 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final variantController = Get.put(VariantController(), permanent: true);
     return Scaffold(
-      bottomNavigationBar: const BottomAddToCart(),
+      bottomNavigationBar:
+          BottomAddToCart(variant: variantController.variants.first),
       body: SingleChildScrollView(
         child: Column(
           children: [

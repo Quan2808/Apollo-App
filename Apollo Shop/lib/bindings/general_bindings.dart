@@ -9,6 +9,8 @@ import 'package:apolloshop/data/services/product/product_service.dart';
 import 'package:apolloshop/data/services/store/store_service.dart';
 import 'package:apolloshop/data/services/variant/variant_service.dart';
 import 'package:apolloshop/features/authentication/network/network_manager.dart';
+import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
+import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
 import 'package:get/get.dart';
 
 /// The `GeneralBindings` class is responsible for setting up dependency injection
@@ -26,6 +28,7 @@ class GeneralBindings extends Bindings {
     // Register VariantService and its corresponding repository.
     Get.put(VariantService());
     Get.put(VariantRepository());
+    Get.put(VariantController());
 
     // Register CategoryService and its corresponding repository.
     Get.put(CategoryService());
@@ -38,5 +41,7 @@ class GeneralBindings extends Bindings {
     // Register CartService and its corresponding repository.
     Get.put(CartService());
     Get.put(CartRepository());
+
+    Get.put(CartController());
   }
 }

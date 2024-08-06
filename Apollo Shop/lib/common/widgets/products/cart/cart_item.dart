@@ -1,9 +1,8 @@
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
-import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_attribute_text.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
+import 'package:apolloshop/data/models/cart/cart_line_model.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
-import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,10 @@ import 'package:flutter/material.dart';
 class CartItem extends StatelessWidget {
   const CartItem({
     super.key,
+    required this.cartLine,
   });
+
+  final CartLineModel cartLine;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,8 @@ class CartItem extends StatelessWidget {
       children: [
         /// Image
         RoundedImage(
-          imageUrl: TImages.productImage1,
+          isNetworkImage: true,
+          imageUrl: cartLine.variant!.img,
           width: 60,
           height: 60,
           padding: const EdgeInsets.all(TSizes.sm),
@@ -30,17 +33,17 @@ class CartItem extends StatelessWidget {
         const SizedBox(width: TSizes.spaceBtwItems),
 
         /// Title, Attribute & Price
-        const Expanded(
+        Expanded(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StoreTitleWithVerifiedIcon(title: 'All Store'),
+              // StoreTitleWithVerifiedIcon(title: 'All Store'),
               Flexible(
-                child: ProductTitleText(title: 'Product name', maxLines: 1),
-              ),
+                  child: ProductTitleText(
+                      title: cartLine.variant!.name, maxLines: 1)),
               Flexible(
-                child: ProductAttributeText(title: 'Variant'),
+                child: ProductAttributeText(title: cartLine.variant!.name),
               ),
             ],
           ),

@@ -5,8 +5,10 @@ import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/models/category/category_model.dart';
 import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/features/shop/controllers/store/store_controller.dart';
+import 'package:apolloshop/features/shop/screens/sub_category/sub_categories.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CategoryTab extends StatelessWidget {
   const CategoryTab({
@@ -37,8 +39,9 @@ class CategoryTab extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
               SectionHeading(
                 title: 'You might like',
-                showActionButton: false,
-                onPressed: () {},
+                // showActionButton: false,
+                onPressed: () =>
+                    Get.to(() => SubCategoriesScreen(category: category)),
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
               GridLayout(

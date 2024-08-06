@@ -1,4 +1,6 @@
 import 'package:apolloshop/common/widgets/icons/circular_icon.dart';
+import 'package:apolloshop/data/models/product/variant_model.dart';
+import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
@@ -6,10 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class BottomAddToCart extends StatelessWidget {
-  const BottomAddToCart({super.key});
+  const BottomAddToCart({
+    super.key,
+    required this.variant,
+  });
+
+  final VariantModel variant;
 
   @override
   Widget build(BuildContext context) {
+    final controller = CartController.instance;
+    // controller.updateAlreadyAddedProductCount(variant);
     final dark = THelperFunctions.isDarkMode(context);
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -28,22 +37,29 @@ class BottomAddToCart extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircularIcon(
+              CircularIcon(
                 icon: Iconsax.minus,
                 backgroundColor: TColors.darkGrey,
                 width: 40,
                 height: 40,
                 color: TColors.white,
+                onPressed: () => controller.productQuantityInCart.value < 1
+                    ? null
+                    : controller.productQuantityInCart.value -= 1,
               ),
               const SizedBox(width: TSizes.spaceBtwItems),
-              Text('2', style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                controller.productQuantityInCart.value.toString(),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               const SizedBox(width: TSizes.spaceBtwItems),
-              const CircularIcon(
+              CircularIcon(
                 icon: Iconsax.add,
                 backgroundColor: TColors.black,
                 width: 40,
                 height: 40,
                 color: TColors.white,
+                onPressed: () => controller.productQuantityInCart.value += 1,
               ),
             ],
           ),

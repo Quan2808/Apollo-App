@@ -19,4 +19,9 @@ class ProductRepository extends GetxService {
         .map((data) => ProductModel.fromJson(data))
         .toList();
   }
+
+  Future<ProductModel?> getProductById(int productId) async {
+    final products = await getProducts();
+    return products.firstWhereOrNull((product) => product.id == productId);
+  }
 }

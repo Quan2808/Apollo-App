@@ -53,9 +53,6 @@ class CategoryController extends GetxController {
         category.products =
             categoryProducts; // Assuming your CategoryModel has a `products` field
       }
-
-      // Update products observable list with products from selected category or use the latest fetched products
-      // Note: You may want to update this based on user interaction or other logic.
     } catch (e) {
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {

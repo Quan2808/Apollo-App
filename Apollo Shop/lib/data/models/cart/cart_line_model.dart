@@ -2,16 +2,18 @@ import 'package:apolloshop/data/models/cart/cart_model.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
 
 class CartLineModel {
-  int id;
+  int? id;
   int quantity;
   CartModel? cart;
   VariantModel? variant;
+  Map<String, String>? selectedVariants;
 
   CartLineModel({
-    required this.id,
+    this.id,
     required this.quantity,
     this.cart,
     this.variant,
+    this.selectedVariants,
   });
 
   static CartLineModel empty() {
@@ -27,8 +29,12 @@ class CartLineModel {
     return CartLineModel(
       id: json['id'] ?? 0,
       quantity: json['quantity'] ?? 0,
-      cart: json['cart'] != null ? CartModel.fromJson(json['cart']) : null,
-      variant: json['variant'] != null ? VariantModel.fromJson(json['variant']) : null,
+      cart: json['cartDto'] != null ? CartModel.fromJson(json['cartDto']) : null,
+      variant: json['variantDto'] != null
+          ? VariantModel.fromJson(json['variantDto'])
+          // If it not work, replace to variant
+          // ? VariantModel.fromJson(json['variantDto'])
+          : null,
     );
   }
 
@@ -36,8 +42,8 @@ class CartLineModel {
     return {
       'id': id,
       'quantity': quantity,
-      'cart': cart?.toJson(),
-      'variant': variant?.toJson(),
+      'cartDto': cart?.toJson(),
+      'variantDto': variant?.toJson(),
     };
   }
 
