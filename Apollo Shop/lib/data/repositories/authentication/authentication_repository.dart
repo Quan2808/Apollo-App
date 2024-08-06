@@ -1,5 +1,6 @@
 import 'package:apolloshop/data/repositories/user/user_repository.dart';
 import 'package:apolloshop/data/services/authentication/authentication_service.dart';
+import 'package:apolloshop/data/services/cart/cart_service.dart';
 import 'package:apolloshop/features/authentication/screens/login/login.dart';
 import 'package:apolloshop/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:apolloshop/navigation_menu.dart';
@@ -15,16 +16,18 @@ class AuthenticationRepository extends GetxController {
 
   final AuthenticationService _authService =
       AuthenticationService(ApiConstants.baseApiUrl);
+
   final _secureStorage = const FlutterSecureStorage();
   final deviceStorage = GetStorage();
 
-  // Create an instance of UserRepository
   late final UserRepository _userRepository;
+  late final CartService _cartService;
 
   @override
   void onInit() {
     super.onInit();
     _userRepository = UserRepository(_authService, _secureStorage);
+    _cartService = CartService();
   }
 
   @override
@@ -86,6 +89,13 @@ class AuthenticationRepository extends GetxController {
   }) async {
     try {
       await _authService.signUp(
+        clientName: fullName,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+      );
+
+      await _cartService.postCart(
         clientName: fullName,
         email: email,
         phoneNumber: phoneNumber,
