@@ -4,7 +4,9 @@ import 'package:apolloshop/common/widgets/custom_shapes/containers/primary_heade
 import 'package:apolloshop/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:apolloshop/common/widgets/shimmers/vertical_product_shimmer.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
+import 'package:apolloshop/features/shop/controllers/product/product_controller.dart';
 import 'package:apolloshop/features/shop/screens/all_products/all_products.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:apolloshop/features/shop/screens/home/widgets/home_categories.dart';
@@ -20,6 +22,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -73,14 +77,37 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
                   SectionHeading(
                     title: 'Popular Products',
-                    onPressed: () => Get.to(() => const AllProductsScreen()),
+                    onPressed: () => Get.to(
+                      () => const AllProductsScreen(
+                        title: 'All Products',
+                      ),
+                    ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems / 1.5),
-                  GridLayout(
-                    mainAxisExtent: 231,
-                    itemCount: 4,
-                    itemBuilder: (_, index) => const ProductCardVertical(),
-                  )
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return const VerticalProductShimmer();
+                    }
+                    if (controller.products.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No Data Found!',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: Colors.white),
+                        ),
+                      );
+                    }
+                    return GridLayout(
+                      mainAxisExtent: 271,
+                      itemCount: controller.products.length > 8
+                          ? 6
+                          : controller.products.length,
+                      itemBuilder: (_, index) => ProductCardVertical(
+                          product: controller.products[index]),
+                    );
+                  })
                 ],
               ),
             ),

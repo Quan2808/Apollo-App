@@ -1,6 +1,8 @@
+import 'package:apolloshop/common/widgets/shimmers/shimmer_effect.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CircularImage extends StatelessWidget {
@@ -33,14 +35,24 @@ class CircularImage extends StatelessWidget {
         color: backgroundColor ?? (dark ? TColors.black : TColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
-      child: Center(
-        child: Image(
-          fit: fit,
-          image: isNetworkImage
-              ? NetworkImage(imageUrl)
-              : AssetImage(imageUrl) as ImageProvider,
-          color: overlayColor,
-        ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: isNetworkImage
+            ? CachedNetworkImage(
+                fit: fit,
+                color: overlayColor,
+                imageUrl: imageUrl,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    const ShimmerEffect(width: 55, height: 55),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              )
+            : Center(
+                child: Image(
+                  fit: fit,
+                  image: AssetImage(imageUrl),
+                  color: overlayColor,
+                ),
+              ),
       ),
     );
   }

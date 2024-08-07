@@ -3,7 +3,7 @@ import 'package:apolloshop/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:apolloshop/features/personalization/controllers/user_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/text_strings.dart';
-import 'package:apolloshop/utils/effects/shimmer_effect.dart';
+import 'package:apolloshop/common/widgets/shimmers/shimmer_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

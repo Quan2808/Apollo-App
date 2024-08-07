@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:apolloshop/data/models/user_model.dart';
+import 'package:apolloshop/data/models/user/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthenticationService {
@@ -69,7 +69,7 @@ class AuthenticationService {
       body: jsonEncode({
         'clientName': clientName,
         'email': email,
-        // 'phoneNumber': phoneNumber,
+        'phoneNumber': phoneNumber,
         'password': password,
       }),
     );

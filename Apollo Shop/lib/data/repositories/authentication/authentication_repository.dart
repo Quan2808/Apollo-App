@@ -73,7 +73,7 @@ class AuthenticationRepository extends GetxController {
 
       await _userRepository.fetchUserInfo();
     } catch (e) {
-      throw HelperException.getLoginException(e.toString());
+      throw HelperException.getAuthErrorMessage(e.toString());
     }
   }
 
@@ -92,7 +92,7 @@ class AuthenticationRepository extends GetxController {
         password: password,
       );
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw HelperException.getAuthErrorMessage(e.toString());
     }
   }
 
@@ -101,6 +101,5 @@ class AuthenticationRepository extends GetxController {
     await _userRepository.signOut();
     deviceStorage.write('firstStartUp', false);
     screenRedirect();
-    // Get.offAll(() => const LoginScreen());
   }
 }

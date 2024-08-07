@@ -1,5 +1,5 @@
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
-import 'package:apolloshop/common/widgets/texts/brands/brand_title_with_verified_icon.dart';
+import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_attribute_text.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
@@ -35,7 +35,7 @@ class CartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BrandTitleWithVerifiedIcon(title: 'Brand'),
+              StoreTitleWithVerifiedIcon(title: 'All Store'),
               Flexible(
                 child: ProductTitleText(title: 'Product name', maxLines: 1),
               ),

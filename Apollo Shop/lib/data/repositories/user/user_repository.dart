@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:apolloshop/data/models/user_model.dart';
+import 'package:apolloshop/data/models/user/user_model.dart';
 import 'package:apolloshop/data/services/authentication/authentication_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -37,7 +37,6 @@ class UserRepository extends GetxController {
       await _secureStorage.write(
           key: 'user', value: jsonEncode(_currentUser.value!.toJson()));
     } catch (e) {
-      print('Error fetching user info: $e');
       rethrow;
     }
   }

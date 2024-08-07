@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/circular_container.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
-import 'package:apolloshop/features/shop/controllers/home_controller.dart';
+import 'package:apolloshop/features/shop/controllers/home/home_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -22,12 +22,17 @@ class PromoSlider extends StatelessWidget {
     return Column(
       children: [
         CarouselSlider(
-            options: CarouselOptions(
-              viewportFraction: 1,
-              onPageChanged: (index, reason) =>
-                  controller.updatePageIndicator(index),
-            ),
-            items: banners.map((e) => RoundedImage(imageUrl: e)).toList()),
+          options: CarouselOptions(
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 3),
+            autoPlayAnimationDuration: const Duration(milliseconds: 800),
+            autoPlayCurve: Curves.fastOutSlowIn,
+            viewportFraction: 1,
+            onPageChanged: (index, reason) =>
+                controller.updatePageIndicator(index),
+          ),
+          items: banners.map((e) => RoundedImage(imageUrl: e)).toList(),
+        ),
         const SizedBox(height: TSizes.spaceBtwItems),
         Center(
           child: Obx(
