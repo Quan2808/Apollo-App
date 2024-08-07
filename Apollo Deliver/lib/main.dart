@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Screens/LoginScreen.dart';
 import 'Screens/RegisterScreen.dart';
 import 'Screens/HomeScreen.dart';
 import 'Screens/ShipperProfileScreen.dart';
 import 'Screens/OrderManagementScreen.dart';
+import 'Screens/DeliveryManagementScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,12 +23,31 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
-        '/home': (context) => HomeScreen(),
-        '/shipperProfile': (context) {
-          final int shipperId = ModalRoute.of(context)!.settings.arguments as int;
-          return ShipperProfileScreen(id: shipperId);
-        },
-        '/orderManagement': (context) => OrderManagementScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/home') {
+          final args = settings.arguments as Map<String, String>;
+          return MaterialPageRoute(
+            builder: (context) => HomeScreen(token: args['token']!, email: args['email']!),
+          );
+        } else if (settings.name == '/orderManagement') {
+          final args = settings.arguments as Map<String, String>;
+          return MaterialPageRoute(
+            builder: (context) => OrderManagementScreen(token: args['token']!, email: args['email']!),
+          );
+        } else if (settings.name == '/shipperProfile') {
+          final args = settings.arguments as Map<String, String>;
+          return MaterialPageRoute(
+            builder: (context) => ShipperProfileScreen(token: args['token']!, email: args['email']!),
+          );
+        } else if (settings.name == '/deliveryManagement') {
+          final args = settings.arguments as Map<String, String>;
+          return MaterialPageRoute(
+            builder: (context) => DeliveryManagementScreen(token: args['token']!, email: args['email']!),
+          );
+        }
+        // Add more routes if necessary
+        return null;
       },
     );
   }
