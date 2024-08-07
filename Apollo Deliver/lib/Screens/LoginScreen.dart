@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:apollodeliver/Services/AuthService.dart';
 import 'package:apollodeliver/Widgets/AuthForm.dart';
-import 'package:flutter/material.dart';
+import 'package:apollodeliver/Screens/HomeScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -16,17 +17,16 @@ class LoginScreen extends StatelessWidget {
             child: AuthForm(
               onSubmit: (email, password) async {
                 try {
-                  final response = await AuthService.login(email, password);
-                  final token = response['token'];
-                  final id = response['id'];
-
+                  final token = await AuthService.login(email, password);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Login successful')),
                   );
+                  print('Login successful. Token: $token');
+                  // Navigate to Home Screen and pass the token and email
                   Navigator.pushReplacementNamed(
                     context,
                     '/home',
-                    arguments: id,
+                    arguments: {'token': token, 'email': email},
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(

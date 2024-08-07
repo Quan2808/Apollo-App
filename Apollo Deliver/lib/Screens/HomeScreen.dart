@@ -1,54 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:apollodeliver/Screens/ShipperProfileScreen.dart';
+import 'package:apollodeliver/Screens/OrderManagementScreen.dart';
+import 'package:apollodeliver/Screens/DeliveryManagementScreen.dart';
 
 class HomeScreen extends StatelessWidget {
-  Future<void> _logout(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-    Navigator.pushReplacementNamed(context, '/');
-  }
+  final String token;
+  final String email;
+
+  HomeScreen({required this.token, required this.email});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => _logout(context),
-          ),
-        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              icon: Icon(Icons.person, size: 24),
-              label: Text('Shipper Profile', style: TextStyle(fontSize: 18)),
+            ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/shipperProfile');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShipperProfileScreen(token: token, email: email),
+                  ),
+                );
               },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50), // full width button
-                padding: EdgeInsets.symmetric(vertical: 10),
-                textStyle: TextStyle(fontSize: 18),
-              ),
+              child: Text('Shipper Profile'),
             ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-              icon: Icon(Icons.assignment, size: 24),
-              label: Text('Order Management', style: TextStyle(fontSize: 18)),
+            ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/orderManagement');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrderManagementScreen(token: token, email: email),
+                  ),
+                );
               },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50), // full width button
-                padding: EdgeInsets.symmetric(vertical: 10),
-                textStyle: TextStyle(fontSize: 18),
-              ),
+              child: Text('Order Management'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeliveryManagementScreen(token: token, email: email),
+                  ),
+                );
+              },
+              child: Text('Delivery Management'),
             ),
           ],
         ),

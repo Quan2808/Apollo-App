@@ -6,65 +6,65 @@ import 'package:apollodeliver/Models/User.dart';
 import 'package:apollodeliver/Models/Variant.dart';
 
 class ShopOrder {
-  int? id;
-  User? user;
-  Variant? variant;
-  String? orderDate;
-  DateTime? deliveryDate;
-  String? status;
-  Address? address;
-  PaymentMethod? paymentMethod;
-  ShippingMethod? shippingMethod;
-  int? quantity;
-  double? orderTotal;
-  Set<OrderDelivery>? orderDeliveries;
+  final int? id;
+  late String status;
+  final String orderDate;
+  // final DateTime deliveryDate;
+  final int quantity;
+  final double? orderTotal;
+  final User user;
+  final Variant variant;
+  final Address address;
+  final PaymentMethod paymentMethod;
+  final ShippingMethod shippingMethod;
+  final Set<OrderDelivery>? orderDeliveries;  // Added field
 
   ShopOrder({
     this.id,
-    this.user,
-    this.variant,
-    this.orderDate,
-    this.deliveryDate,
-    this.status,
-    this.address,
-    this.paymentMethod,
-    this.shippingMethod,
-    this.quantity,
+    required this.status,
+    required this.orderDate,
+    // required this.deliveryDate,
+    required this.quantity,
     this.orderTotal,
-    this.orderDeliveries,
+    required this.user,
+    required this.variant,
+    required this.address,
+    required this.paymentMethod,
+    required this.shippingMethod,
+    this.orderDeliveries,  // Added parameter
   });
 
   factory ShopOrder.fromJson(Map<String, dynamic> json) {
     return ShopOrder(
       id: json['id'],
-      user: json['user'] != null ? User.fromJson(json['user']) : null,
-      variant: json['variant'] != null ? Variant.fromJson(json['variant']) : null,
-      orderDate: json['orderDate'],
-      deliveryDate: json['deliveryDate'] != null ? DateTime.parse(json['deliveryDate']) : null,
       status: json['status'],
-      address: json['address'] != null ? Address.fromJson(json['address']) : null,
-      paymentMethod: json['paymentMethod'] != null ? PaymentMethod.fromJson(json['paymentMethod']) : null,
-      shippingMethod: json['shippingMethod'] != null ? ShippingMethod.fromJson(json['shippingMethod']) : null,
+      orderDate: json['orderDate'],
+      // deliveryDate: DateTime.parse(json['deliveryDate']),
       quantity: json['quantity'],
-      orderTotal: json['orderTotal'],
-      orderDeliveries: (json['orderDeliveries'] as List?)
-          ?.map((item) => OrderDelivery.fromJson(item))
+      orderTotal: json['orderTotal']?.toDouble(),
+      user: User.fromJson(json['user']),
+      variant: Variant.fromJson(json['variant']),
+      address: Address.fromJson(json['address']),
+      paymentMethod: PaymentMethod.fromJson(json['paymentMethod']),
+      shippingMethod: ShippingMethod.fromJson(json['shippingMethod']),
+      orderDeliveries: (json['orderDeliveries'] as List<dynamic>?)
+          ?.map((item) => OrderDelivery.fromJson(item as Map<String, dynamic>))
           .toSet(),
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'user': user?.toJson(),
-    'variant': variant?.toJson(),
-    'orderDate': orderDate,
-    'deliveryDate': deliveryDate?.toIso8601String(),
     'status': status,
-    'address': address?.toJson(),
-    'paymentMethod': paymentMethod?.toJson(),
-    'shippingMethod': shippingMethod?.toJson(),
+    'orderDate': orderDate,
+    // 'deliveryDate': deliveryDate.toIso8601String(),
     'quantity': quantity,
     'orderTotal': orderTotal,
-    'orderDeliveries': orderDeliveries?.map((item) => item.toJson()).toList(),
+    'user': user.toJson(),
+    'variant': variant.toJson(),
+    'address': address.toJson(),
+    'paymentMethod': paymentMethod.toJson(),
+    'shippingMethod': shippingMethod.toJson(),
+    'orderDeliveries': orderDeliveries?.map((e) => e.toJson()).toList(),
   };
 }
