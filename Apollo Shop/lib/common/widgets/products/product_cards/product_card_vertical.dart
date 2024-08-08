@@ -23,7 +23,7 @@ class ProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    final variantController = Get.put(VariantController(), permanent: true);
+    final variantController = Get.put(VariantController());
 
     // Fetch variants only if they are not already loaded
     if (variantController.variants.isEmpty) {
@@ -31,7 +31,9 @@ class ProductCardVertical extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () => Get.to(() => ProductDetailScreen(product: product)),
+      onTap: () {
+        Get.to(() => ProductDetailScreen(product: product));
+      },
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -91,12 +93,9 @@ class ProductCardVertical extends StatelessWidget {
                 // Add to cart
                 Obx(
                   () {
-                    if (variantController.variants.isEmpty) {
-                      return Container(); // Or a placeholder widget
-                    }
-
-                    final firstVariant = variantController.variants.first;
-                    return ProductCardAddToCartButton(variant: firstVariant);
+                    return ProductCardAddToCartButton(
+                      variants: variantController.variants,
+                    );
                   },
                 ),
               ],

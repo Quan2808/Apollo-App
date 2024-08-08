@@ -9,24 +9,34 @@ import 'package:iconsax/iconsax.dart';
 class ProductCardAddToCartButton extends StatelessWidget {
   const ProductCardAddToCartButton({
     super.key,
-    required this.variant,
+    required this.variants,
   });
 
-  final VariantModel variant;
+  final List<VariantModel> variants;
 
   @override
   Widget build(BuildContext context) {
     final cartController = CartController.instance;
-    return InkWell(
-      onTap: () {
-        final cartItem = cartController.convertVariantToCartLine(variant, 1);
-        cartController.addAnItemToCart(cartItem);
-      },
-      child: Obx(
-            () {
-          final productQuantityInCart =
-          cartController.getProductQuantityInCart(variant.id);
-          return Container(
+
+    return Obx(
+      () {
+        if (variants.isEmpty) {
+          return Container(); // Or a placeholder widget
+        }
+
+        final firstVariant = variants.first;
+        final productQuantityInCart =
+            cartController.getProductQuantityInCart(firstVariant.id);
+
+        return InkWell(
+          onTap: () {
+            final cartItem = cartController.convertVariantToCartLine(
+              firstVariant,
+              1,
+            );
+            cartController.addAnItemToCart(cartItem);
+          },
+          child: Container(
             decoration: BoxDecoration(
               color: productQuantityInCart > 0 ? TColors.primary : TColors.dark,
               borderRadius: const BorderRadius.only(
@@ -40,18 +50,18 @@ class ProductCardAddToCartButton extends StatelessWidget {
               child: Center(
                 child: productQuantityInCart > 0
                     ? Text(
-                  productQuantityInCart.toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .apply(color: TColors.white),
-                )
+                        productQuantityInCart.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .apply(color: TColors.white),
+                      )
                     : const Icon(Iconsax.add, color: TColors.white),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
 import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class VariantController extends GetxController {
@@ -24,14 +25,32 @@ class VariantController extends GetxController {
         getVariants.where((e) => e.img.isNotEmpty).toList(),
       );
 
-      // Set the first variant as selected if available
+      // Assign Selected Variant if variants exist
       if (variants.isNotEmpty) {
-        selectedVariant.value = variants.first;
+        _setSelectedVariant(productId);
+      } else {
+        resetSelectedVariant();
       }
     } catch (e) {
+      if (kDebugMode) {
+        print("==================== Variants Error ====================");
+        print(e.toString());
+        print("========================================================");
+      }
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void _setSelectedVariant(int productId) {
+    selectedVariant.value = variants.firstWhere(
+      (variant) => variant.product?.id == productId,
+      orElse: () => variants.first,
+    );
+  }
+
+  void resetSelectedVariant() {
+    selectedVariant.value = null;
   }
 }

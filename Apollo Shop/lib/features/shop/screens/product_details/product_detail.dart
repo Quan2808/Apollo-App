@@ -23,10 +23,8 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final variantController = Get.put(VariantController(), permanent: true);
+    final variantController = Get.put(VariantController());
     return Scaffold(
-      bottomNavigationBar:
-          BottomAddToCart(variant: variantController.variants.first),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -98,6 +96,15 @@ class ProductDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: Obx(
+        () {
+          // Kiểm tra nếu variants không rỗng và chọn variant đầu tiên
+          if (variantController.variants.isEmpty) {
+            return const SizedBox.shrink(); // Hoặc placeholder khác
+          }
+          return BottomAddToCart(variant: variantController.variants.first);
+        },
       ),
     );
   }
