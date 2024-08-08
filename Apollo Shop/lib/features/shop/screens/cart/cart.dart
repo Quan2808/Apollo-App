@@ -51,8 +51,11 @@ class CartScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: ElevatedButton(
                 onPressed: () => Get.to(() => const CheckoutScreen()),
-                child: Obx(() => Text(
-                    'Checkout \$${controller.totalCartPrice.value.toStringAsFixed(1)}')),
+                child: Obx(
+                  () => Text(
+                    'Checkout \$${controller.totalCartPrice.value.toStringAsFixed(1)}',
+                  ),
+                ),
               ),
             ),
     );

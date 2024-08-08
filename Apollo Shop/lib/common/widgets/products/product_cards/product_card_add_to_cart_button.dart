@@ -1,5 +1,6 @@
-import 'package:apolloshop/data/models/product/variant_model.dart';
+import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
+import 'package:apolloshop/features/shop/screens/product_details/product_detail.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -9,36 +10,34 @@ import 'package:iconsax/iconsax.dart';
 class ProductCardAddToCartButton extends StatelessWidget {
   const ProductCardAddToCartButton({
     super.key,
-    required this.variants,
+    required this.product,
   });
 
-  final List<VariantModel> variants;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     final cartController = CartController.instance;
 
-    return Obx(
-      () {
-        if (variants.isEmpty) {
-          return Container(); // Or a placeholder widget
+    return InkWell(
+      onTap: () {
+        // If the product have variants, show the product detail for variant selection
+        final cartItem = cartController.convertVariantToCartItem(product, 1);
+        if (product.variants.isNotEmpty) {
+          Get.to(() => ProductDetailScreen(product: product));
+        } else {
+          cartController.addAnItemToCart(cartItem!);
         }
-
-        final firstVariant = variants.first;
-        final productQuantityInCart =
-            cartController.getProductQuantityInCart(firstVariant.id);
-
-        return InkWell(
-          onTap: () {
-            final cartItem = cartController.convertVariantToCartLine(
-              firstVariant,
-              1,
-            );
-            cartController.addAnItemToCart(cartItem);
-          },
-          child: Container(
+      },
+      child: Obx(
+        () {
+          final productQuantityInCart =
+              cartController.getProductQuantity(product);
+          return Container(
             decoration: BoxDecoration(
-              color: productQuantityInCart > 0 ? TColors.primary : TColors.dark,
+              color: cartController.productQuantityInCart > 0
+                  ? TColors.primary
+                  : TColors.dark,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(TSizes.cardRadiusMd),
                 bottomRight: Radius.circular(TSizes.productImageRadius),
@@ -59,9 +58,9 @@ class ProductCardAddToCartButton extends StatelessWidget {
                     : const Icon(Iconsax.add, color: TColors.white),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

@@ -29,7 +29,7 @@ class CartItems extends StatelessWidget {
           return Column(
             children: [
               // Individual cart item widget
-              CartItem(cartLine: item),
+              CartItem(cartItem: item),
               if (showAdjustButton)
                 const SizedBox(height: TSizes.spaceBtwItems),
 
@@ -45,7 +45,8 @@ class CartItems extends StatelessWidget {
                       remove: () => cartController.removeAnItemToCart(item),
                     ),
                     // Widget to display the price of the product
-                    ProductPriceText(price: cartController.totalCartPrice.value.toStringAsFixed(1)),
+                    ProductPriceText(
+                        price: (item.price * item.quantity).toStringAsFixed(1)),
                   ],
                 ),
             ],

@@ -1,10 +1,10 @@
-import 'package:apolloshop/data/models/cart/cart_line_model.dart';
+import 'package:apolloshop/data/models/cart/cart_item_model.dart';
 import 'package:apolloshop/data/models/user/user_model.dart';
 
 class CartModel {
   int id;
   UserModel? user;
-  List<CartLineModel> cartLines;
+  List<CartItemModel> cartLines;
 
   CartModel({
     required this.id,
@@ -26,8 +26,8 @@ class CartModel {
       user: json['user'] != null ? UserModel.fromJson(json['user']) : null,
       cartLines: json['cartLines'] != null
           ? (json['cartLines'] as List)
-          .map((e) => CartLineModel.fromJson(e))
-          .toList()
+              .map((e) => CartItemModel.fromJson(e))
+              .toList()
           : [],
     );
   }
@@ -43,7 +43,7 @@ class CartModel {
   CartModel copyWith({
     int? id,
     UserModel? user,
-    List<CartLineModel>? cartLines,
+    List<CartItemModel>? cartLines,
   }) {
     return CartModel(
       id: id ?? this.id,

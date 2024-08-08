@@ -13,19 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductCardVertical extends StatelessWidget {
-  const ProductCardVertical({
-    super.key,
-    required this.product,
-  });
-
   final ProductModel product;
+
+  const ProductCardVertical({required this.product});
 
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    final variantController = Get.put(VariantController());
+    final variantController = Get.find<VariantController>();
 
-    // Fetch variants only if they are not already loaded
     if (variantController.variants.isEmpty) {
       variantController.fetchVariantsByProduct(product.id);
     }
@@ -58,7 +54,6 @@ class ProductCardVertical extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: TSizes.spaceBtwItems / 2),
 
             // Title
@@ -91,13 +86,7 @@ class ProductCardVertical extends StatelessWidget {
                 const Spacer(),
 
                 // Add to cart
-                Obx(
-                  () {
-                    return ProductCardAddToCartButton(
-                      variants: variantController.variants,
-                    );
-                  },
-                ),
+                ProductCardAddToCartButton(product: product),
               ],
             ),
           ],

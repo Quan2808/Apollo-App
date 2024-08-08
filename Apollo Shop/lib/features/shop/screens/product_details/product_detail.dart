@@ -24,6 +24,11 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final variantController = Get.put(VariantController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (variantController.variants.isEmpty) {
+        variantController.fetchVariantsByProduct(product.id);
+      }
+    });
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -99,11 +104,10 @@ class ProductDetailScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(
         () {
-          // Kiểm tra nếu variants không rỗng và chọn variant đầu tiên
           if (variantController.variants.isEmpty) {
-            return const SizedBox.shrink(); // Hoặc placeholder khác
+            return const SizedBox.shrink();
           }
-          return BottomAddToCart(variant: variantController.variants.first);
+          return BottomAddToCart(product: product);
         },
       ),
     );
