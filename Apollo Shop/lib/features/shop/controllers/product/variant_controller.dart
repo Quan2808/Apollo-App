@@ -10,7 +10,8 @@ class VariantController extends GetxController {
   final isLoading = false.obs;
   final VariantRepository _variantRepository = Get.find();
   RxList<VariantModel> variants = <VariantModel>[].obs;
-  Rx<VariantModel?> selectedVariant = VariantModel.empty().obs;
+  Rx<VariantModel?> selectedVariant = Rx<VariantModel?>(null);
+
   Future<void> fetchVariantsByProduct(int productId) async {
     try {
       isLoading.value = true;
