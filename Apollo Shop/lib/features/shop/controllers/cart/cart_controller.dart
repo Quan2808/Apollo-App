@@ -3,7 +3,6 @@ import 'package:apolloshop/data/models/cart/cart_item_model.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
 import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
-import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,6 +19,9 @@ class CartController extends GetxController {
 
   CartController() {
     loadCartItems();
+    ever(variantController.selectedVariant, (_) {
+      updateSelectedVariantQuantity();
+    });
   }
 
   void addProductToCart(ProductModel product) {
@@ -38,7 +40,7 @@ class CartController extends GetxController {
     }
 
     final selectedCartItem =
-        convertVariantToCartItem(product, productQuantityInCart.value);
+        createCartItemFromVariant(product, productQuantityInCart.value);
 
     if (selectedCartItem != null) {
       int index = cartItems.indexWhere((cartItem) =>
@@ -59,7 +61,7 @@ class CartController extends GetxController {
     }
   }
 
-  CartItemModel? convertVariantToCartItem(ProductModel product, int quantity) {
+  CartItemModel? createCartItemFromVariant(ProductModel product, int quantity) {
     // Fetch variants synchronously. Assuming fetchVariantsByProduct is already complete.
     variantController.fetchVariantsByProduct(product.id);
 
@@ -134,13 +136,11 @@ class CartController extends GetxController {
         .fold(0, (prev, e) => prev + e.quantity);
   }
 
-  int getVariantQuantity(ProductModel product, VariantModel variant) {
+  int getVariantQuantity(VariantModel variant) {
     return cartItems
         .firstWhere(
-            (item) =>
-                item.product?.id == product.id &&
-                item.variant?.id == variant.id,
-            orElse: () => CartItemModel.empty())
+            (item) => item.variant?.id == variant.id,
+        orElse: () => CartItemModel.empty())
         .quantity;
   }
 
@@ -150,7 +150,7 @@ class CartController extends GetxController {
     updateCart();
   }
 
-  void addAnItemToCart(CartItemModel item) {
+  void incrementCartItem(CartItemModel item) {
     int index = cartItems.indexWhere((cartItem) =>
         cartItem.product?.id == item.product?.id &&
         cartItem.variant?.id == item.variant?.id);
@@ -163,7 +163,7 @@ class CartController extends GetxController {
     updateCart();
   }
 
-  void removeAnItemToCart(CartItemModel item) {
+  void decrementCartItem(CartItemModel item) {
     int index = cartItems.indexWhere((cartItem) =>
         cartItem.product?.id == item.product?.id &&
         cartItem.variant?.id == item.variant?.id);
@@ -207,11 +207,22 @@ class CartController extends GetxController {
     }
   }
 
-  void updateAlreadyInCart(ProductModel product) {
-    final variant = variantController.selectedVariant.value;
+  void incrementQuantity() {
+      productQuantityInCart.value += 1;
+      updateSelectedVariantQuantity();
+  }
 
+  void decrementQuantity() {
+    if (variantController.selectedVariant.value != null && productQuantityInCart.value > 0) {
+      productQuantityInCart.value -= 1;
+      updateSelectedVariantQuantity();
+    }
+  }
+
+  void updateSelectedVariantQuantity() {
+    final variant = variantController.selectedVariant.value;
     if (variant != null) {
-      productQuantityInCart.value = getVariantQuantity(product, variant);
+      productQuantityInCart.value = getVariantQuantity(variant);
     } else {
       productQuantityInCart.value = 0;
     }

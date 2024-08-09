@@ -21,11 +21,6 @@ class BottomAddToCart extends StatelessWidget {
     final controller = CartController.instance;
     final dark = THelperFunctions.isDarkMode(context);
 
-    // Update cart quantity outside of build method
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.updateAlreadyInCart(product);
-    });
-
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: TSizes.defaultSpace,
