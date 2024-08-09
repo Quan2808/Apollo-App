@@ -13,9 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductCardVertical extends StatelessWidget {
-  final ProductModel product;
+  const ProductCardVertical({
+    super.key,
+    required this.product,
+  });
 
-  const ProductCardVertical({required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {

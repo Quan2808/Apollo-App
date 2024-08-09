@@ -3,6 +3,8 @@ import 'package:apolloshop/data/models/cart/cart_item_model.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
 import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
+import 'package:apolloshop/utils/constants/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -148,27 +150,10 @@ class CartController extends GetxController {
     updateCart();
   }
 
-  void removeAnItemToCart(CartItemModel item) {
-    int index = cartItems.indexWhere((cartItem) =>
-        cartItem.product?.id == cartItem.product?.id &&
-        cartItem.variant?.id == cartItem.variant?.id);
-
-    if (index >= 0) {
-      if (cartItems[index].quantity > 1) {
-        cartItems[index].quantity -= 1;
-      } else {
-        cartItems[index].quantity == 1
-            ? removeFromCartDialog(index)
-            : cartItems.removeAt(index);
-      }
-      updateCart();
-    }
-  }
-
   void addAnItemToCart(CartItemModel item) {
     int index = cartItems.indexWhere((cartItem) =>
-        cartItem.product?.id == cartItem.product?.id &&
-        cartItem.variant?.id == cartItem.variant?.id);
+        cartItem.product?.id == item.product?.id &&
+        cartItem.variant?.id == item.variant?.id);
 
     if (index >= 0) {
       cartItems[index].quantity += 1;
@@ -178,23 +163,48 @@ class CartController extends GetxController {
     updateCart();
   }
 
+  void removeAnItemToCart(CartItemModel item) {
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.product?.id == item.product?.id &&
+        cartItem.variant?.id == item.variant?.id);
+
+    if (index >= 0) {
+      if (cartItems[index].quantity > 1) {
+        cartItems[index].quantity -= 1;
+      } else {
+        removeFromCartDialog(index);
+      }
+      updateCart();
+    }
+  }
+
   void removeFromCartDialog(int index) {
-    Get.defaultDialog(
-      title: 'Remove from cart',
-      middleText: 'Are you sure you want to remove this item from cart?',
-      textConfirm: 'Yes',
-      textCancel: 'Cancel',
-      onConfirm: () {
-        cartItems.removeAt(index);
-        updateCart();
-        Loaders.successSnackBar(
-          title: 'Success',
-          message: 'Removed from cart',
-        );
-        Get.back();
-      },
-      onCancel: () => Get.back(),
-    );
+    if (index >= 0 && index < cartItems.length) {
+      Get.defaultDialog(
+        title: 'Remove from Cart',
+        middleText: 'Are you sure you want to remove this item from your cart?',
+        textConfirm: 'Yes',
+        textCancel: 'Cancel',
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          cartItems.removeAt(index);
+          updateCart();
+          Loaders.successSnackBar(
+            title: 'Success',
+            message: 'Item has been removed from the cart.',
+          );
+          Navigator.of(Get.overlayContext!).pop();
+        },
+        onCancel: () => Get.closeAllSnackbars(),
+        barrierDismissible: false,
+        radius: 10.0,
+      );
+    } else {
+      Loaders.errorSnackBar(
+        title: 'Error',
+        message: 'Invalid item index. Please try again.',
+      );
+    }
   }
 
   void updateAlreadyInCart(ProductModel product) {

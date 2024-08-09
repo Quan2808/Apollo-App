@@ -18,13 +18,14 @@ class CartItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartController = CartController.instance;
 
-    return Obx(
-      () => ListView.separated(
+    return Obx(() {
+      return ListView.separated(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: cartController.cartItems.length,
         separatorBuilder: (_, index) =>
             const SizedBox(height: TSizes.spaceBtwSections),
-        itemBuilder: (_, index) => Obx(() {
+        itemBuilder: (_, index) {
           final item = cartController.cartItems[index];
           return Column(
             children: [
@@ -51,8 +52,8 @@ class CartItems extends StatelessWidget {
                 ),
             ],
           );
-        }),
-      ),
-    );
+        },
+      );
+    });
   }
 }

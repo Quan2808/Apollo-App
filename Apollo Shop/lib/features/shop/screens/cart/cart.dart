@@ -16,48 +16,40 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = CartController.instance;
 
-    return Scaffold(
-      // AppBar
-      appBar: ApolloAppBar(
-        showBackArrow: true,
-        title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
-      ),
-      body: Obx(
-        () {
-          final emptyWidget = AnimationLoaderWidget(
-            text: 'Whoops! Cart is Empty',
-            animation: TImages.cartAnimation,
-            showAction: true,
-            actionText: 'Let\'s fill it',
-            onActionPressed: () => Get.off(() => const NavigationMenu()),
-          );
-
-          return controller.cartItems.isEmpty
-              ? emptyWidget
+    return Obx(() => Scaffold(
+          // AppBar
+          appBar: ApolloAppBar(
+            showBackArrow: true,
+            title:
+                Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
+          ),
+          body: controller.cartItems.isEmpty
+              ? AnimationLoaderWidget(
+                  text: 'Whoops! Cart is Empty',
+                  animation: TImages.cartAnimation,
+                  showAction: true,
+                  actionText: 'Let\'s fill it',
+                  onActionPressed: () => Get.off(() => const NavigationMenu()),
+                )
               : const SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.all(TSizes.defaultSpace),
-                    // Items in Cart
                     child: CartItems(),
                   ),
-                );
-        },
-      ),
+                ),
 
-      // Checkout
-      bottomNavigationBar: controller.cartItems.isEmpty
-          ? const SizedBox()
-          : Padding(
-              padding: const EdgeInsets.all(TSizes.defaultSpace),
-              child: ElevatedButton(
-                onPressed: () => Get.to(() => const CheckoutScreen()),
-                child: Obx(
-                  () => Text(
-                    'Checkout \$${controller.totalCartPrice.value.toStringAsFixed(1)}',
+          // Checkout
+          bottomNavigationBar: controller.cartItems.isEmpty
+              ? const SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.all(TSizes.defaultSpace),
+                  child: ElevatedButton(
+                    onPressed: () => Get.to(() => const CheckoutScreen()),
+                    child: Text(
+                      'Checkout \$${controller.totalCartPrice.value.toStringAsFixed(1)}',
+                    ),
                   ),
                 ),
-              ),
-            ),
-    );
+        ));
   }
 }
