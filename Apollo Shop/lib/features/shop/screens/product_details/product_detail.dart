@@ -1,5 +1,6 @@
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
+import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:apolloshop/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
@@ -22,8 +23,13 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final variantController = Get.put(VariantController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (variantController.variants.isEmpty) {
+        variantController.fetchVariantsByProduct(product.id);
+      }
+    });
     return Scaffold(
-      bottomNavigationBar: const BottomAddToCart(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -95,6 +101,14 @@ class ProductDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: Obx(
+        () {
+          if (variantController.variants.isEmpty) {
+            return const SizedBox.shrink();
+          }
+          return BottomAddToCart(product: product);
+        },
       ),
     );
   }

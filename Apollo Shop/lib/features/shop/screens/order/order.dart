@@ -22,7 +22,7 @@ class OrderScreen extends StatelessWidget {
           style: isNavigationBar ? theme.headlineMedium : theme.headlineSmall,
         ),
         showBackArrow: isNavigationBar ? false : true,
-        actions: isNavigationBar ? [CartCounterIcon(onPressed: () {})] : null,
+        actions: isNavigationBar ? [const CartCounterIcon()] : null,
       ),
 
       // Body

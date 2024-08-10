@@ -1,6 +1,7 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
 import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class VariantController extends GetxController {
@@ -10,15 +11,6 @@ class VariantController extends GetxController {
   final VariantRepository _variantRepository = Get.find();
   RxList<VariantModel> variants = <VariantModel>[].obs;
   Rx<VariantModel?> selectedVariant = Rx<VariantModel?>(null);
-  final int productId;
-
-  VariantController(this.productId);
-
-  @override
-  void onInit() {
-    fetchVariantsByProduct(productId);
-    super.onInit();
-  }
 
   Future<void> fetchVariantsByProduct(int productId) async {
     try {
@@ -32,10 +24,33 @@ class VariantController extends GetxController {
       variants.assignAll(
         getVariants.where((e) => e.img.isNotEmpty).toList(),
       );
+
+      // Assign Selected Variant if variants exist
+      if (variants.isNotEmpty) {
+        _setSelectedVariant(productId);
+      } else {
+        resetSelectedVariant();
+      }
     } catch (e) {
+      if (kDebugMode) {
+        print("==================== Variants Error ====================");
+        print(e.toString());
+        print("========================================================");
+      }
       Loaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void _setSelectedVariant(int productId) {
+    selectedVariant.value = variants.firstWhere(
+      (variant) => variant.product?.id == productId,
+      orElse: () => variants.first,
+    );
+  }
+
+  void resetSelectedVariant() {
+    selectedVariant.value = null;
   }
 }
