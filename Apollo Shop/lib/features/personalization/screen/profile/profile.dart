@@ -35,6 +35,7 @@ class ProfileScreen extends StatelessWidget {
               value: controller.user.value?.fullName ?? '',
               onPressed: () {},
             ),
+            const Divider(),
 
             // const SizedBox(height: TSizes.spaceBtwItems),
             // const Divider(),
@@ -52,12 +53,13 @@ class ProfileScreen extends StatelessWidget {
               value: controller.user.value?.email ?? '',
               onPressed: () {},
             ),
-
+            const Divider(),
             ProfileMenu(
               title: 'Phone Number',
               value: controller.user.value?.phoneNumber ?? '',
               onPressed: () {},
             ),
+            const Divider(),
 
             // const Divider(),
             // const SizedBox(height: TSizes.spaceBtwItems),

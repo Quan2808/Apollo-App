@@ -50,19 +50,9 @@ class CartService extends GetxService {
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
-    } else if (response.statusCode == 404) {
-      // Handle not found error
-      return null;
     } else {
       throw Exception(
           'Failed to retrieve cart. Status code: ${response.statusCode}');
     }
-  }
-
-  /// Handle common API errors by parsing the response and throwing exceptions.
-  void _handleError(http.Response response) {
-    final errorData = jsonDecode(response.body);
-    throw Exception(
-        'API Error: ${response.statusCode}. Message: ${errorData['message'] ?? 'Unknown error'}');
   }
 }

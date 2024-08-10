@@ -2,6 +2,7 @@ import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/data/models/cart/cart_item_model.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
 import 'package:apolloshop/data/models/product/variant_model.dart';
+import 'package:apolloshop/data/repositories/cart/cart_repository.dart';
 import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class CartController extends GetxController {
   RxInt productQuantityInCart = 0.obs;
   RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final variantController = VariantController.instance;
+  final cartRepo = CartRepository.instance;
 
   CartController() {
     loadCartItems();
@@ -64,6 +66,7 @@ class CartController extends GetxController {
   CartItemModel? createCartItemFromVariant(ProductModel product, int quantity) {
     // Fetch variants synchronously. Assuming fetchVariantsByProduct is already complete.
     variantController.fetchVariantsByProduct(product.id);
+    cartRepo.fetchCurrentCart();
 
     if (variantController.variants.isEmpty) {
       variantController.resetSelectedVariant();
@@ -93,6 +96,7 @@ class CartController extends GetxController {
       variant: variant,
       price: variant.price,
       store: product.store,
+      cart: cartRepo.currentCart,
       selectedVariants: selectedVariants,
     );
   }
@@ -138,9 +142,8 @@ class CartController extends GetxController {
 
   int getVariantQuantity(VariantModel variant) {
     return cartItems
-        .firstWhere(
-            (item) => item.variant?.id == variant.id,
-        orElse: () => CartItemModel.empty())
+        .firstWhere((item) => item.variant?.id == variant.id,
+            orElse: () => CartItemModel.empty())
         .quantity;
   }
 
@@ -208,12 +211,13 @@ class CartController extends GetxController {
   }
 
   void incrementQuantity() {
-      productQuantityInCart.value += 1;
-      updateSelectedVariantQuantity();
+    productQuantityInCart.value += 1;
+    updateSelectedVariantQuantity();
   }
 
   void decrementQuantity() {
-    if (variantController.selectedVariant.value != null && productQuantityInCart.value > 0) {
+    if (variantController.selectedVariant.value != null &&
+        productQuantityInCart.value > 0) {
       productQuantityInCart.value -= 1;
       updateSelectedVariantQuantity();
     }
