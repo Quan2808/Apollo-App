@@ -1,11 +1,12 @@
+import 'package:apollodeliver/Screens/MakeColor/OnboardingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Screens/LoginScreen.dart';
-import 'Screens/RegisterScreen.dart';
-import 'Screens/HomeScreen.dart';
-import 'Screens/ShipperProfileScreen.dart';
-import 'Screens/OrderManagementScreen.dart';
-import 'Screens/DeliveryManagementScreen.dart';
+import 'Screens/MainScreen/LoginScreen.dart';
+import 'Screens/MainScreen/RegisterScreen.dart';
+import 'Screens/MainScreen/HomeScreen.dart';
+import 'Screens/MainScreen/ShipperProfileScreen.dart';
+import 'Screens/MainScreen/OrderManagementScreen.dart';
+import 'Screens/MainScreen/DeliveryManagementScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,9 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/onboarding',
       routes: {
-        '/': (context) => LoginScreen(),
+        '/onboarding': (context) => OnboardingView(),
+        '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
       },
       onGenerateRoute: (settings) {
