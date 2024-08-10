@@ -81,7 +81,9 @@ class CartService extends GetxService {
       body: jsonEncode(cartItem),
     );
 
-    if (response.statusCode != 200 && response.statusCode != 201) {
+    if (response.statusCode != 200 &&
+        response.statusCode != 201 &&
+        response.statusCode != 500) {
       throw Exception(
           'Failed to manage cart line. Status code: ${response.statusCode}');
     }

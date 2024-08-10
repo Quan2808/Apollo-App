@@ -22,7 +22,10 @@ class CartController extends GetxController {
   final cartService = CartService.instance;
 
   @override
-  void onInit() {}
+  void onInit() async {
+    super.onInit();
+    await cartRepo.fetchCartItems();
+  }
 
   CartController() {
     loadCartItems();
@@ -188,8 +191,7 @@ class CartController extends GetxController {
       textCancel: 'Cancel',
       confirmTextColor: Colors.white,
       onConfirm: () {
-        manageCartItem(item.toJson());
-        cartRepo.removeCartItem(item);
+        cartRepo.removeCartItem(item.copyWith(quantity: -1));
         updateCart();
         Loaders.successSnackBar(
           title: 'Success',
@@ -218,9 +220,10 @@ class CartController extends GetxController {
       await cartRepo.fetchCartItems(); // Refresh cart items from server
       updateCart(); // Update UI
     } catch (e) {
+      print(e.toString());
       Loaders.errorSnackBar(
         title: 'Error',
-        message: 'Failed to manage cart item. Please try again.',
+        message: 'An error occurred. Please try again.',
       );
     }
   }
