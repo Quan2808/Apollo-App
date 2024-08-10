@@ -19,4 +19,10 @@ class CartRepository extends GetxController {
       password: password,
     );
   }
+
+  Future<Map<String, dynamic>?> getCart({
+    required String userId,
+  }) async {
+    return await _cartService.getCart(userId: userId);
+  }
 }

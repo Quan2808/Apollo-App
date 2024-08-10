@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/products/cart/cart_menu_icon.dart';
-import 'package:apolloshop/features/personalization/controllers/user_controller.dart';
+import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/text_strings.dart';
 import 'package:apolloshop/common/widgets/shimmers/shimmer_effect.dart';
