@@ -1,5 +1,6 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/loaders/animation_loader.dart';
+import 'package:apolloshop/data/repositories/cart/cart_repository.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
 import 'package:apolloshop/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:apolloshop/features/shop/screens/checkout/checkout.dart';
@@ -14,7 +15,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CartController.instance;
+    final cartController = CartController.instance;
+    final cartRepo = CartRepository.instance;
 
     return Obx(
       () => Scaffold(
@@ -23,7 +25,7 @@ class CartScreen extends StatelessWidget {
           showBackArrow: true,
           title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
         ),
-        body: controller.cartItems.isEmpty
+        body: cartRepo.cartItems.isEmpty
             ? AnimationLoaderWidget(
                 text: 'Whoops! Cart is Empty',
                 animation: TImages.cartAnimation,
@@ -39,14 +41,14 @@ class CartScreen extends StatelessWidget {
               ),
 
         // Checkout
-        bottomNavigationBar: controller.cartItems.isEmpty
+        bottomNavigationBar: cartRepo.cartItems.isEmpty
             ? const SizedBox()
             : Padding(
                 padding: const EdgeInsets.all(TSizes.defaultSpace),
                 child: ElevatedButton(
                   onPressed: () => Get.to(() => const CheckoutScreen()),
                   child: Text(
-                    'Checkout \$${controller.totalCartPrice.value.toStringAsFixed(1)}',
+                    'Checkout \$${cartController.totalCartPrice.value.toStringAsFixed(1)}',
                   ),
                 ),
               ),

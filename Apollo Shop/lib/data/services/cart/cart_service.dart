@@ -39,10 +39,10 @@ class CartService extends GetxService {
 
   /// Get the cart associated with a specific user ID.
   Future<Map<String, dynamic>?> getCart({
-    required String userId,
+    required String user,
   }) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/cart/user/$userId'),
+      Uri.parse('$baseUrl/cart/user/$user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -53,6 +53,37 @@ class CartService extends GetxService {
     } else {
       throw Exception(
           'Failed to retrieve cart. Status code: ${response.statusCode}');
+    }
+  }
+
+  Future<List<dynamic>?> getCartItems(String user) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/cart-lines/$user'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception(
+          'Failed to retrieve cart items. Status code: ${response.statusCode}');
+    }
+  }
+
+  Future<void> manageCartItem(Map<String, dynamic> cartItem) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/cart-lines/manage-cart-line'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(cartItem),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception(
+          'Failed to manage cart line. Status code: ${response.statusCode}');
     }
   }
 }
