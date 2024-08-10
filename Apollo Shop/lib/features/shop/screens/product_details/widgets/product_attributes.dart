@@ -25,7 +25,8 @@ class ProductAttributes extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
 
     // Initialize VariantController with the productId
-    final variantController = Get.put(VariantController(product.id));
+    final variantController = Get.put(VariantController());
+    variantController.fetchVariantsByProduct(product.id);
 
     return Obx(() {
       if (variantController.isLoading.value) {

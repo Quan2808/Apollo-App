@@ -32,10 +32,8 @@ class StoreScreen extends StatelessWidget {
         appBar: ApolloAppBar(
           title:
               Text('Store', style: Theme.of(context).textTheme.headlineMedium),
-          actions: [
-            CartCounterIcon(
-              onPressed: () {},
-            ),
+          actions: const [
+            CartCounterIcon(),
           ],
         ),
         body: NestedScrollView(

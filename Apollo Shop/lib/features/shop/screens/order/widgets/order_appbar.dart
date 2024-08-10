@@ -15,7 +15,7 @@ class OrderAppbar extends StatelessWidget {
     if (isNavigationBar) {
       return ApolloAppBar(
         title: Text('Store', style: Theme.of(context).textTheme.headlineMedium),
-        actions: [CartCounterIcon(onPressed: () {})],
+        actions: const [CartCounterIcon()],
       );
     } else {
       return ApolloAppBar(

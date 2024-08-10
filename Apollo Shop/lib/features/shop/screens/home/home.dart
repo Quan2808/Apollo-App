@@ -78,36 +78,35 @@ class HomeScreen extends StatelessWidget {
                   SectionHeading(
                     title: 'Popular Products',
                     onPressed: () => Get.to(
-                      () => const AllProductsScreen(
-                        title: 'All Products',
-                      ),
+                      () => const AllProductsScreen(title: 'All Products'),
                     ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems / 1.5),
-                  Obx(() {
-                    if (controller.isLoading.value) {
-                      return const VerticalProductShimmer();
-                    }
-                    if (controller.products.isEmpty) {
-                      return Center(
-                        child: Text(
-                          'No Data Found!',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .apply(color: Colors.white),
+                  Obx(
+                    () {
+                      if (controller.isLoading.value) {
+                        return const VerticalProductShimmer();
+                      }
+                      if (controller.products.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'No Data Found!',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .apply(color: Colors.white),
+                          ),
+                        );
+                      }
+                      return GridLayout(
+                        mainAxisExtent: 271,
+                        itemCount: controller.products.length,
+                        itemBuilder: (_, index) => ProductCardVertical(
+                          product: controller.products[index],
                         ),
                       );
-                    }
-                    return GridLayout(
-                      mainAxisExtent: 271,
-                      itemCount: controller.products.length > 8
-                          ? 6
-                          : controller.products.length,
-                      itemBuilder: (_, index) => ProductCardVertical(
-                          product: controller.products[index]),
-                    );
-                  })
+                    },
+                  ),
                 ],
               ),
             ),

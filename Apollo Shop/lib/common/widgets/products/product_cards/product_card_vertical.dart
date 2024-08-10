@@ -1,15 +1,16 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:apolloshop/common/widgets/images/rounded_image.dart';
-import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
+import 'package:apolloshop/common/widgets/products/product_cards/product_card_add_to_cart_button.dart';
 import 'package:apolloshop/common/widgets/texts/products/product_title_text.dart';
+import 'package:apolloshop/common/widgets/texts/stores/store_title_with_verified_icon.dart';
 import 'package:apolloshop/data/models/product/product_model.dart';
+import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
 import 'package:apolloshop/features/shop/screens/product_details/product_detail.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ProductCardVertical extends StatelessWidget {
   const ProductCardVertical({
@@ -22,9 +23,16 @@ class ProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final variantController = Get.find<VariantController>();
+
+    if (variantController.variants.isEmpty) {
+      variantController.fetchVariantsByProduct(product.id);
+    }
 
     return GestureDetector(
-      onTap: () => Get.to(() => ProductDetailScreen(product: product)),
+      onTap: () {
+        Get.to(() => ProductDetailScreen(product: product));
+      },
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -34,7 +42,7 @@ class ProductCardVertical extends StatelessWidget {
         ),
         child: Column(
           children: [
-            /// Thumbnail
+            // Thumbnail
             RoundedContainer(
               height: 180,
               padding: const EdgeInsets.all(TSizes.sm),
@@ -49,7 +57,6 @@ class ProductCardVertical extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: TSizes.spaceBtwItems / 2),
 
             // Title
@@ -69,7 +76,7 @@ class ProductCardVertical extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /// Store
+                // Store
                 Padding(
                   padding: const EdgeInsets.only(left: TSizes.sm * 2),
                   child: Column(
@@ -81,23 +88,8 @@ class ProductCardVertical extends StatelessWidget {
                 ),
                 const Spacer(),
 
-                /// Add to cart
-                Container(
-                  decoration: const BoxDecoration(
-                    color: TColors.dark,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(TSizes.cardRadiusMd),
-                      bottomRight: Radius.circular(TSizes.productImageRadius),
-                    ),
-                  ),
-                  child: const SizedBox(
-                    width: TSizes.iconLg * 1.2,
-                    height: TSizes.iconLg * 1.2,
-                    child: Center(
-                      child: Icon(Iconsax.add, color: TColors.white),
-                    ),
-                  ),
-                ),
+                // Add to cart
+                ProductCardAddToCartButton(product: product),
               ],
             ),
           ],
@@ -106,3 +98,4 @@ class ProductCardVertical extends StatelessWidget {
     );
   }
 }
+
