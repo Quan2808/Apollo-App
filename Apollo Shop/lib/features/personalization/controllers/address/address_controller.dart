@@ -6,6 +6,7 @@ import 'package:apolloshop/utils/constants/api_constants.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/helpers/network_manager.dart';
 import 'package:apolloshop/utils/popups/full_screen_loader.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -88,7 +89,7 @@ class AddressController extends GetxController {
   }
 
   void autosuggest(String text) async {
-    const String apiKey = ApiConstants.map4d_api_key;
+    const String apiKey = ApiConstants.map4dApiKey;
     final String url =
         'http://api.map4d.vn/sdk/autosuggest?key=$apiKey&text=$text&location=10.762622,106.660172&acronym=false';
 
@@ -100,15 +101,17 @@ class AddressController extends GetxController {
             List<String>.from(data['result'].map((item) => item['address']));
         suggestions.value = results;
       } else {
-        throw Exception('Failed to load suggestions');
+        throw Exception('Failed to load suggestions. Please try again later.');
       }
-    } catch (error) {
-      print('Error fetching suggestions: $error');
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching suggestions: $e');
+      }
     }
   }
 
   void calculateDistance(String destination) async {
-    const String apiKey = ApiConstants.map4d_api_key;
+    const String apiKey = ApiConstants.map4dApiKey;
     const String origin = '10.762622,106.660172';
     final String url =
         'http://api.map4d.vn/sdk/route?key=$apiKey&origin=$origin&destination=$destination&mode=car';
@@ -122,14 +125,18 @@ class AddressController extends GetxController {
           final String distance = route['legs'][0]['distance']['text'];
           this.distance.value = distance;
         } else {
-          this.distance.value = "Unable to calculate distance";
+          distance.value =
+              "Unable to calculate distance. Please try again later.";
         }
       } else {
-        throw Exception('Failed to calculate distance');
+        throw Exception(
+            'Failed to calculate distance. Please try again later.');
       }
     } catch (error) {
-      print('Error calculating distance: $error');
-      this.distance.value = "Unable to calculate distance";
+      if (kDebugMode) {
+        print('Error calculating distance: $error');
+      }
+      distance.value = "Unable to calculate distance";
     }
   }
 }

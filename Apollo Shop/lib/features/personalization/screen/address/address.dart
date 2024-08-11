@@ -24,28 +24,26 @@ class UserAddressScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(TSizes.defaultSpace),
-          child: Obx(
-            () => FutureBuilder(
-                // Key to trigger refresh
-                key: Key(ctrl.refreshData.value.toString()),
-                future: ctrl.getUserAddresses(),
-                builder: (context, snapshot) {
-                  final response = THelperFunctions.checkMultiRecordState(
-                      snapshot: snapshot);
-                  if (response != null) return response;
+      body: Padding(
+        padding: const EdgeInsets.all(TSizes.defaultSpace),
+        child: Obx(
+          () => FutureBuilder(
+              // Key to trigger refresh
+              key: Key(ctrl.refreshData.value.toString()),
+              future: ctrl.getUserAddresses(),
+              builder: (context, snapshot) {
+                final response =
+                    THelperFunctions.checkMultiRecordState(snapshot: snapshot);
+                if (response != null) return response;
 
-                  final address = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: address.length,
-                    shrinkWrap: true,
-                    itemBuilder: (_, index) => SingleAddress(
-                        address: address[index], onTap: () => address[index]),
-                  );
-                }),
-          ),
+                final address = snapshot.data!;
+                return ListView.builder(
+                  itemCount: address.length,
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) => SingleAddress(
+                      address: address[index], onTap: () => address[index]),
+                );
+              }),
         ),
       ),
       floatingActionButton: FloatingActionButton(

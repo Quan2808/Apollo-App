@@ -16,6 +16,13 @@ class CartRepository extends GetxService {
   CartModel? get currentCart => _currentCart.value;
   List<CartItemModel> get cartItems => _cartItems;
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await fetchCurrentCart();
+    await fetchCartItems();
+  }
+
   Future<void> fetchCurrentCart() async {
     final userId = UserController.instance.user.value!.id;
     final cartData = await _cartService.getCart(user: userId);

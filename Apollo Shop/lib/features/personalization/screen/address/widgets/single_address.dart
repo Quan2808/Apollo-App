@@ -26,7 +26,6 @@ class SingleAddress extends StatelessWidget {
       final selectedAddressId = ctrl.selectedAddress.value.id;
       final selectedAddress = selectedAddressId == address.id;
       return InkWell(
-        onTap: onTap,
         child: RoundedContainer(
           width: double.infinity,
           showBorder: true,
@@ -48,7 +47,7 @@ class SingleAddress extends StatelessWidget {
                     address.street,
                     softWrap: true,
                   ),
-                  SizedBox(height: TSizes.sm / 2),
+                  const SizedBox(height: TSizes.sm / 2),
                 ],
               )
             ],

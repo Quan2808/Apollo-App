@@ -21,12 +21,6 @@ class CartController extends GetxController {
   final cartRepo = CartRepository.instance;
   final cartService = CartService.instance;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await cartRepo.fetchCartItems();
-  }
-
   CartController() {
     loadCartItems();
     ever(variantController.selectedVariant, (_) {
@@ -220,6 +214,9 @@ class CartController extends GetxController {
       await cartRepo.fetchCartItems(); // Refresh cart items from server
       updateCart(); // Update UI
     } catch (e) {
+      print('=================== Cart Error ====================');
+      print(e.toString());
+      print('=================== Cart Error ====================');
       Loaders.errorSnackBar(
         title: 'Error',
         message: 'An error occurred. Please try again.',
