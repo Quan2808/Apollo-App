@@ -1,9 +1,14 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
+import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/models/address/address_model.dart';
 import 'package:apolloshop/data/repositories/address/address_repository.dart';
 import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
+import 'package:apolloshop/features/personalization/screen/address/add_new_address.dart';
+import 'package:apolloshop/features/personalization/screen/address/widgets/single_address.dart';
 import 'package:apolloshop/utils/constants/api_constants.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
+import 'package:apolloshop/utils/constants/sizes.dart';
+import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:apolloshop/utils/helpers/network_manager.dart';
 import 'package:apolloshop/utils/popups/full_screen_loader.dart';
 import 'package:flutter/foundation.dart';
@@ -138,5 +143,109 @@ class AddressController extends GetxController {
       }
       distance.value = "Unable to calculate distance";
     }
+  }
+
+  // Show Addresses ModelBottomSheet at Checkout
+  Future<dynamic> selectAddressPopup(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (_) => Container(
+        padding: const EdgeInsets.all(TSizes.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SectionHeading(
+              title: 'Select Address',
+              showActionButton: false,
+            ),
+            FutureBuilder(
+              future: getUserAddresses(),
+              builder: (_, snapshot) {
+                final response =
+                    THelperFunctions.checkMultiRecordState(snapshot: snapshot);
+                if (response != null) return response;
+
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (_, index) => SingleAddress(
+                    address: snapshot.data![index],
+                    onTap: () async {
+                      final addresses = await getUserAddresses();
+                      selectedAddress.value = addresses[index];
+                      Get.back();
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: TSizes.defaultSpace * 2),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: const Text('Add New Address'),
+                onPressed: () => Get.to(() => const AddNewAddressScreen()),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> setSelectedAddress(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (_) => SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(TSizes.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionHeading(
+                title: 'Select Address',
+                showActionButton: false,
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              FutureBuilder<List<AddressModel>>(
+                future: getUserAddresses(),
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    return Column(
+                      children: snapshot.data!.map((address) {
+                        return ListTile(
+                          title: Text(address.street),
+                          trailing: address.selectedAddress
+                              ? Icon(Icons.check, color: Colors.green)
+                              : null,
+                          onTap: () async {
+                            selectedAddress.value = address;
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      }).toList(),
+                    );
+                  } else {
+                    return Center(child: Text('No addresses available.'));
+                  }
+                },
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems / 2),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  child: const Text('Add New Address'),
+                  onPressed: () => Get.to(() => const AddNewAddressScreen()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

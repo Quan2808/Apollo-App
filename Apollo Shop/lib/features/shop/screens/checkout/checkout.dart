@@ -1,6 +1,8 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/common/widgets/success_screen/success_screen.dart';
+import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
 import 'package:apolloshop/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_amount_section.dart';
@@ -10,6 +12,7 @@ import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
+import 'package:apolloshop/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +22,11 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final cartCtrl = CartController.instance;
+    final subtotal = cartCtrl.totalCartPrice.value;
+    // final orderCtrl = Get.put(OrderController());
+    final totalAmount = PricingCalculator.calculateTotalPrice(subtotal, '123');
+
     return Scaffold(
       // AppBar
       appBar: ApolloAppBar(
@@ -30,9 +38,7 @@ class CheckoutScreen extends StatelessWidget {
       // Body
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(
-            TSizes.defaultSpace,
-          ),
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
               // Items in Cart
@@ -73,13 +79,21 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: () => Get.to(() => SuccessScreen(
-                image: TImages.successfulPaymentIcon,
-                title: 'Payment Success',
-                subTitle: 'Your item will be shipped soon!',
-                onPressed: () => Get.offAll(() => const NavigationMenu()),
-              )),
-          child: const Text('Checkout \$25'),
+          onPressed: () => Get.to(
+            () => SuccessScreen(
+              image: TImages.successfulPaymentIcon,
+              title: 'Payment Success',
+              subTitle: 'Your item will be shipped soon!',
+              // onPressed: subtotal > 0
+              //     ? () => orderCtrl.processOrder(totalAmount)
+              //     : () => Loaders.warningSnackBar(
+              //           title: 'Empty Cart',
+              //           message:
+              //               'Please add items to your cart to process order',
+              //         ),
+            ),
+          ),
+          child: Text('Checkout \$$totalAmount'),
         ),
       ),
     );
