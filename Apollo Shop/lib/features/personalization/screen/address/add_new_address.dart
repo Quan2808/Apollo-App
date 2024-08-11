@@ -28,13 +28,16 @@ class AddNewAddressScreen extends StatelessWidget {
                     labelText: 'Address',
                   ),
                 ),
-                const SizedBox(height: TSizes.defaultSpace),
-                ElevatedButton(
-                  onPressed: () async {
-                    // Call the method to add a new address
-                    await ctrl.addNewAddress();
-                  },
-                  child: const Text('Save Address'),
+                const SizedBox(height: TSizes.spaceBtwInputFields),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // Call the method to add a new address
+                      await ctrl.addNewAddress();
+                    },
+                    child: const Text('Save Address'),
+                  ),
                 ),
               ],
             ),
