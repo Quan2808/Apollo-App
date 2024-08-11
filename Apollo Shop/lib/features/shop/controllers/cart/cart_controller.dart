@@ -172,7 +172,7 @@ class CartController extends GetxController {
   }
 
   void decrementCartItem(CartItemModel item) {
-    if (cartRepo.getVariantQuantity(item.variant!) > 1) {
+    if (cartRepo.getVariantQuantity(item.variant!) > 0) {
       cartRepo.addCartItem(item.copyWith(quantity: -1));
       updateCart();
       manageCartItem(item
@@ -191,7 +191,7 @@ class CartController extends GetxController {
       textCancel: 'Cancel',
       confirmTextColor: Colors.white,
       onConfirm: () {
-        cartRepo.removeCartItem(item.copyWith(quantity: -1));
+        cartRepo.removeCartItem(item.copyWith(quantity: 0));
         updateCart();
         Loaders.successSnackBar(
           title: 'Success',
