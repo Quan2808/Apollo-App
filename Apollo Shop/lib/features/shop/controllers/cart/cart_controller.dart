@@ -220,7 +220,6 @@ class CartController extends GetxController {
       await cartRepo.fetchCartItems(); // Refresh cart items from server
       updateCart(); // Update UI
     } catch (e) {
-      print(e.toString());
       Loaders.errorSnackBar(
         title: 'Error',
         message: 'An error occurred. Please try again.',
