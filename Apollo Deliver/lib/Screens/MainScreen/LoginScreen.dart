@@ -1,7 +1,7 @@
+import 'package:apollodeliver/Screens/MakeColor/LoadingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:apollodeliver/Services/AuthService.dart';
 import 'package:apollodeliver/Widgets/AuthForm.dart';
-import 'package:apollodeliver/Screens/MainScreen/HomeScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -17,18 +17,27 @@ class LoginScreen extends StatelessWidget {
             child: AuthForm(
               onSubmit: (email, password) async {
                 try {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) => LoadingScreen(
+                      message: 'Logging in...',
+                    ),
+                  );
+
                   final token = await AuthService.login(email, password);
+                  await Future.delayed(Duration(seconds: 10));
+                  Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Login successful')),
                   );
-                  print('Login successful. Token: $token');
-                  // Navigate to Home Screen and pass the token and email
                   Navigator.pushReplacementNamed(
                     context,
                     '/home',
                     arguments: {'token': token, 'email': email},
                   );
                 } catch (e) {
+                  Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(e.toString())),
                   );
