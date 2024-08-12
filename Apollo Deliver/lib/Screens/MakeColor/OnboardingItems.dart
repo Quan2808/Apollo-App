@@ -5,17 +5,18 @@ class OnboardingItems{
     OnboardingInfo(
         title: "Welcome to Apollo",
         descriptions: "Apollo Delivery App from Apollo Company",
-        image: "assets/images/logoBlack.png"),
+        image: "assets/images/walkthrough/logoBlack.png"),
 
     OnboardingInfo(
         title: "Safe Packing",
-        descriptions: "There is little you can do to stop a tornado, a hurricane, "
-            "or a cancer diagnosis from changing your life in an instant.",
-        image: "assets/images/packing.gif"),
+        descriptions: "Ensure your items are packed securely to prevent damage during transit. "
+            "Proper packing techniques can make a significant difference in the safety of your shipments.",
+        image: "assets/images/walkthrough/packing.gif"),
 
     OnboardingInfo(
         title: "Fast Delivery",
-        descriptions: "A healthy heart is a key to happiness in life so put a stop to all of the problems related to your heart before it stops you.",
-        image: "assets/images/delivery-car.gif"),
+        descriptions: "Experience swift and reliable delivery services that ensure your packages arrive on time, every time. "
+            "We prioritize speed without compromising the safety of your shipments.",
+        image: "assets/images/walkthrough/delivery-car.gif"),
   ];
 }
