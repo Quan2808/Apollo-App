@@ -1,12 +1,14 @@
 import 'package:apolloshop/data/repositories/address/address_repository.dart';
 import 'package:apolloshop/data/repositories/cart/cart_repository.dart';
 import 'package:apolloshop/data/repositories/category/category_repository.dart';
+import 'package:apolloshop/data/repositories/order/order_repository.dart';
 import 'package:apolloshop/data/repositories/product/product_repository.dart';
 import 'package:apolloshop/data/repositories/store/store_repository.dart';
 import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
 import 'package:apolloshop/data/services/address/address_service.dart';
 import 'package:apolloshop/data/services/cart/cart_service.dart';
 import 'package:apolloshop/data/services/category/category_service.dart';
+import 'package:apolloshop/data/services/order/order_service.dart';
 import 'package:apolloshop/data/services/product/product_service.dart';
 import 'package:apolloshop/data/services/store/store_service.dart';
 import 'package:apolloshop/data/services/variant/variant_service.dart';
@@ -51,6 +53,10 @@ class GeneralBindings extends Bindings {
     Get.put(AddressService());
     Get.put(AddressRepository());
     Get.put(AddressController());
+
+    // Register OrderService and its corresponding repository.
+    Get.put(OrderService());
+    Get.put(OrderRepository());
 
     Get.put(CheckoutController());
   }

@@ -1,8 +1,13 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:apolloshop/common/widgets/loaders/animation_loader.dart';
+import 'package:apolloshop/features/shop/controllers/order/order_controller.dart';
+import 'package:apolloshop/navigation_menu.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
+import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class OrdersListItems extends StatelessWidget {
@@ -12,88 +17,125 @@ class OrdersListItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final theme = Theme.of(context).textTheme;
-    return ListView.separated(
-      itemCount: 5,
-      separatorBuilder: (_, __) => const SizedBox(height: TSizes.spaceBtwItems),
-      itemBuilder: (_, index) => RoundedContainer(
-        padding: const EdgeInsets.all(TSizes.md),
-        showBorder: true,
-        backgroundColor: dark ? TColors.dark : TColors.light,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Status & Date
-            Row(
-              children: [
-                const Icon(Iconsax.ship),
-                const SizedBox(width: TSizes.spaceBtwItems / 2),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    final ctrl = Get.put(OrderController());
+
+    return FutureBuilder(
+      future: ctrl.fetchUserOrders(),
+      builder: (context, snapshot) {
+        final emptyWidget = AnimationLoaderWidget(
+          text: 'Whoops! No orders yet',
+          animation: TImages.completeOrderAnimation,
+          showAction: true,
+          actionText: 'Let\'s fill it',
+          onActionPressed: () => Get.off(() => const NavigationMenu()),
+        );
+
+        final response = THelperFunctions.checkMultiRecordState(
+            snapshot: snapshot, nothingFound: emptyWidget);
+        if (response != null) return response;
+
+        final orders = snapshot.data!;
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: orders.length,
+          separatorBuilder: (_, index) =>
+              const SizedBox(height: TSizes.spaceBtwItems),
+          itemBuilder: (_, index) {
+            final order = orders[index];
+            return RoundedContainer(
+              showBorder: true,
+              padding: const EdgeInsets.all(TSizes.md),
+              backgroundColor: dark ? TColors.dark : TColors.light,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Status & Date
+                  Row(
                     children: [
-                      Text(
-                        'Status',
-                        style: theme.bodyLarge!
-                            .apply(color: TColors.primary, fontWeightDelta: 1),
-                      ),
-                      Text('28 Jul 2024', style: theme.headlineSmall),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Iconsax.arrow_right_34,
-                    size: TSizes.iconSm,
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: TSizes.spaceBtwItems),
-            Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(Iconsax.tag),
+                      const Icon(Iconsax.ship),
                       const SizedBox(width: TSizes.spaceBtwItems / 2),
                       Expanded(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Order ID', style: theme.labelMedium),
-                            Text('[#Example]', style: theme.titleMedium),
+                            Text(
+                              order.status,
+                              style: theme.bodyLarge!.apply(
+                                  color: TColors.primary, fontWeightDelta: 1),
+                            ),
+                            Text(order.formattedOrderDate,
+                                style: theme.headlineSmall),
                           ],
                         ),
                       ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Iconsax.arrow_right_34,
+                          size: TSizes.iconSm,
+                        ),
+                      )
                     ],
                   ),
-                ),
-                Expanded(
-                  child: Row(
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  Row(
                     children: [
-                      const Icon(Iconsax.calendar),
-                      const SizedBox(width: TSizes.spaceBtwItems / 2),
                       Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text('Shipping Date', style: theme.labelMedium),
-                            Text('29 Jul 2024', style: theme.titleMedium),
+                            const Icon(Iconsax.tag),
+                            const SizedBox(width: TSizes.spaceBtwItems / 2),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Order ID', style: theme.labelMedium),
+                                  Text(
+                                    '[#${order.id}]',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.titleMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const Icon(Iconsax.calendar),
+                            const SizedBox(width: TSizes.spaceBtwItems / 2),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Shipping Date',
+                                      style: theme.labelMedium),
+                                  Text(
+                                    order.formattedDeliveryDate,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.titleMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
+                  )
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

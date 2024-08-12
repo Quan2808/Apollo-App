@@ -211,7 +211,7 @@ class AddressController extends GetxController {
                 future: getUserAddresses(),
                 builder: (_, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -220,7 +220,7 @@ class AddressController extends GetxController {
                         return ListTile(
                           title: Text(address.street),
                           trailing: address.selectedAddress
-                              ? Icon(Icons.check, color: Colors.green)
+                              ? const Icon(Icons.check, color: Colors.green)
                               : null,
                           onTap: () async {
                             selectedAddress.value = address;
@@ -230,7 +230,7 @@ class AddressController extends GetxController {
                       }).toList(),
                     );
                   } else {
-                    return Center(child: Text('No addresses available.'));
+                    return const Center(child: Text('No addresses available.'));
                   }
                 },
               ),

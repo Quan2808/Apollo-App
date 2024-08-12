@@ -8,16 +8,19 @@ class OrderRepository extends GetxController {
 
   final OrderService _orderService = Get.find<OrderService>();
 
-  final Rx<OrderModel?> _currentCart = Rx<OrderModel?>(null);
-  OrderModel? get currentCart => _currentCart.value;
+  final RxList<OrderModel> _userOrders = <OrderModel>[].obs;
+  List<OrderModel> get userOrders => _userOrders;
 
   Future<void> fetchUserOrders() async {
     final userId = UserController.instance.user.value!.id;
-    final orderData = await _orderService.getShopOrder(userId);
-    if (orderData != null) {
-      _currentCart.value = OrderModel.fromSnapshot(orderData);
-    } else {
-      _currentCart.value = null;
-    }
+    final orders = await _orderService.getOrders(userId);
+    _userOrders.assignAll(orders);
+  }
+
+  Future<List<OrderModel>> createOrder(
+      List<Map<String, dynamic>> orders) async {
+    final createdOrders = await _orderService.createOrder(orders);
+    _userOrders.addAll(createdOrders);
+    return createdOrders;
   }
 }
