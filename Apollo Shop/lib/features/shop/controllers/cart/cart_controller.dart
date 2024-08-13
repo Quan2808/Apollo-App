@@ -86,7 +86,7 @@ class CartController extends GetxController {
       'id': variant.id,
       'name': variant.name,
       'skuCode': variant.skuCode,
-      'stockQuantity': variant.stockQuantity,
+      'stockQuantity': variant.quantity,
       'weight': variant.weight,
       'price': variant.price,
       'salePrice': variant.salePrice,

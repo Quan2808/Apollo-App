@@ -1,7 +1,7 @@
 import 'package:apolloshop/data/models/user/user_model.dart';
 
 class AddressModel {
-  String id;
+  final String id;
   final String street;
   final UserModel user;
   bool selectedAddress;

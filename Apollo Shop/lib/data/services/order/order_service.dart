@@ -1,8 +1,12 @@
 import 'dart:convert';
 
 import 'package:apolloshop/data/models/order/order_model.dart';
+import 'package:apolloshop/data/repositories/user/user_repository.dart';
 import 'package:apolloshop/data/request/order/order_request.dart';
+import 'package:apolloshop/data/services/authentication/authentication_service.dart';
 import 'package:apolloshop/utils/constants/api_constants.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,21 +15,27 @@ class OrderService extends GetxService {
 
   final String baseUrl = ApiConstants.baseApiUrl;
 
+  final AuthenticationService _authService =
+      AuthenticationService(ApiConstants.baseApiUrl);
+
+  final _secureStorage = const FlutterSecureStorage();
+  late final UserRepository _userRepository;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _userRepository = UserRepository(_authService, _secureStorage);
+  }
+
   Future<List<OrderModel>> getOrders(String userId) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/api/payments/orders/$userId'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+        Uri.parse('$baseUrl/payments/orders/$userId'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> decodedJson = jsonDecode(response.body);
-        return decodedJson.map((json) => OrderModel.fromJson(json)).toList();
-      } else {
-        throw Exception('Failed to load orders: ${response.body}');
-      }
+      final List decodedJson = jsonDecode(response.body);
+      return decodedJson.map((json) => OrderModel.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Failed to load orders: $e');
     }
@@ -33,32 +43,34 @@ class OrderService extends GetxService {
 
   Future<List<OrderModel>> createOrder(List<OrderRequest> orders) async {
     try {
+      _userRepository.initializeUser();
       final response = await http.post(
-        Uri.parse('$baseUrl/api/payments'),
-        headers: <String, String>{
+        Uri.parse('$baseUrl/payments'),
+        headers: {
           'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${_userRepository.accessToken.value}',
         },
         body: jsonEncode(orders.map((order) => order.toJson()).toList()),
       );
 
-      if (response.statusCode == 200) {
-        final decodedJson = jsonDecode(response.body);
-
-        if (decodedJson is List<dynamic>) {
-          return decodedJson.map((json) => OrderModel.fromJson(json)).toList();
-        } else if (decodedJson is Map<String, dynamic>) {
-          return [OrderModel.fromJson(decodedJson)];
-        } else {
-          throw Exception('Unexpected response format');
-        }
-      } else {
-        throw Exception('Failed to create order: ${response.body}');
+      if (kDebugMode) {
+        print('============== Begin Response to server ===================');
+        print('Access Token: ${_userRepository.accessToken.value}');
+        print('Response status: ${response.statusCode}');
+        print(
+            'Request body: ${jsonEncode(orders.map((order) => order.toJson()).toList())}');
+        print('============== End Response to server ===================');
       }
+
+      final List decodedJson = jsonDecode(response.body);
+      return decodedJson.map((json) => OrderModel.fromJson(json)).toList();
     } catch (e) {
-      // print('======================================= Begin Error');
-      // print(e.toString());
-      // print('======================================= End Error');
-      throw Exception('Failed to create order: $e');
+      if (kDebugMode) {
+        print('============== Begin Error to create ===================');
+        print(e.toString());
+        print('============== End Error to create ===================');
+      }
+      throw Exception('Failed to create order: ${e.toString()}');
     }
   }
 }

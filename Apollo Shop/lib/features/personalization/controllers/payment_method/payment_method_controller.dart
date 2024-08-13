@@ -17,14 +17,13 @@ class PaymentMethodController extends GetxController {
   static PaymentMethodController get instance => Get.find();
 
   final RxList<PaymentMethodModel> paymentMethods = <PaymentMethodModel>[].obs;
-
   final Rx<PaymentMethodModel> selectedPaymentMethod =
       PaymentMethodModel.empty().obs;
 
   final PaymentMethodRepository paymentMethodRepository =
       Get.put(PaymentMethodRepository());
-  RxBool refreshData = true.obs;
 
+  RxBool refreshData = true.obs;
   final cardNumberController = TextEditingController();
   final nameOnCardController = TextEditingController();
   final expirationDateController = TextEditingController();
@@ -76,6 +75,7 @@ class PaymentMethodController extends GetxController {
       }
 
       final paymentMethod = PaymentMethodModel(
+        id: 0,
         user: UserController.instance.user.value!,
         cardNumber: int.parse(cardNumberController.text),
         nameOnCard: nameOnCardController.text,

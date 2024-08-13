@@ -8,6 +8,7 @@ import 'package:apolloshop/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_payment_section.dart';
+import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_shipping_section.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
@@ -62,6 +63,10 @@ class CheckoutScreen extends StatelessWidget {
 
                     // Payment method
                     BillingPaymentSection(),
+                    SizedBox(height: TSizes.spaceBtwItems),
+
+                    // Shipping method
+                    BillingShippingSection(),
                     SizedBox(height: TSizes.spaceBtwItems),
 
                     // Address

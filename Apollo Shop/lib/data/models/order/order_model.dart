@@ -10,8 +10,7 @@ class OrderModel {
   final String status;
   final double orderTotal;
   final DateTime orderDate;
-  final DateTime? deliveryDate;
-  final AddressModel? address;
+  final AddressModel address;
   final PaymentMethodModel paymentMethod;
   final ShippingMethodModel shippingMethod;
   final List<OrderItemModel> orderItems;
@@ -22,8 +21,7 @@ class OrderModel {
     required this.status,
     required this.orderTotal,
     required this.orderDate,
-    this.deliveryDate,
-    this.address,
+    required this.address,
     required this.paymentMethod,
     required this.shippingMethod,
     required this.orderItems,
@@ -31,21 +29,17 @@ class OrderModel {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
-      id: json['id'],
-      user: UserModel.fromJson(json['user']),
-      status: json['status'],
-      orderTotal: json['orderTotal'],
-      orderDate: DateTime.parse(json['orderDate']),
-      deliveryDate: json['deliveryDate'] != null
-          ? DateTime.parse(json['deliveryDate'])
-          : null,
-      address: json['address'] != null
-          ? AddressModel.fromJson(json['address'])
-          : null,
-      paymentMethod: PaymentMethodModel.fromJson(json['paymentMethod']),
-      shippingMethod: ShippingMethodModel.fromJson(json['shippingMethod']),
-      orderItems: (json['orderItems'] as List)
-          .map((item) => OrderItemModel.fromJson(item))
+      id: json['id'] ?? 0,
+      user: UserModel.fromJson(json['user'] ?? {}),
+      status: json['status'] ?? '',
+      orderTotal: (json['orderTotal'] ?? 0.0).toDouble(),
+      orderDate: DateTime.tryParse(json['orderDate'] ?? '') ?? DateTime.now(),
+      address: AddressModel.fromJson(json['address'] ?? {}),
+      paymentMethod: PaymentMethodModel.fromJson(json['paymentMethod'] ?? {}),
+      shippingMethod:
+          ShippingMethodModel.fromJson(json['shippingMethod'] ?? {}),
+      orderItems: (json['orderItems'] as List<dynamic>? ?? [])
+          .map((item) => OrderItemModel.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -57,8 +51,7 @@ class OrderModel {
       'status': status,
       'orderTotal': orderTotal,
       'orderDate': orderDate.toIso8601String(),
-      'deliveryDate': deliveryDate?.toIso8601String(),
-      'address': address?.toJson(),
+      'address': address.toJson(),
       'paymentMethod': paymentMethod.toJson(),
       'shippingMethod': shippingMethod.toJson(),
       'orderItems': orderItems.map((item) => item.toJson()).toList(),

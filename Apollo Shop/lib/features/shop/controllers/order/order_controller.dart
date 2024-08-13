@@ -2,7 +2,9 @@ import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/common/widgets/success_screen/success_screen.dart';
 import 'package:apolloshop/data/models/order/order_model.dart';
 import 'package:apolloshop/data/repositories/order/order_repository.dart';
+import 'package:apolloshop/data/request/order/order_item_request.dart';
 import 'package:apolloshop/data/request/order/order_request.dart';
+import 'package:apolloshop/data/services/order/order_service.dart';
 import 'package:apolloshop/features/personalization/controllers/address/address_controller.dart';
 import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
@@ -26,6 +28,8 @@ class OrderController extends GetxController {
   final _paymentMethodController = PaymentMethodController.instance;
   final _shippingMethodController = ShippingMethodController.instance;
   final _userController = UserController.instance;
+
+  final _orderService = OrderService.instance;
 
   Future<List<OrderModel>> fetchUserOrders() async {
     try {
@@ -69,25 +73,21 @@ class OrderController extends GetxController {
         orderItems: orderItems,
         orderDate: DateTime.now().toIso8601String(),
         addressId: address.id,
-        paymentMethodId: paymentMethod.id ?? 0,
+        paymentMethodId: paymentMethod.id,
         shippingMethodId: shippingMethod.id,
         orderTotal: totalAmount,
       );
 
-      final createdOrders = await _orderRepo.createOrder([orderRequest]);
-      if (createdOrders.isNotEmpty) {
-        _cartController.clearCart();
-        Get.off(
-          () => SuccessScreen(
-            image: TImages.applePay,
-            title: 'Payment success',
-            subTitle: 'Your item will be shipped soon.',
-            onPressed: () => Get.offAll(() => const NavigationMenu()),
-          ),
-        );
-      } else {
-        throw Exception('Failed to create order');
-      }
+      await _orderService.createOrder([orderRequest]);
+      _cartController.clearCart();
+      Get.off(
+        () => SuccessScreen(
+          image: TImages.applePay,
+          title: 'Payment success',
+          subTitle: 'Your item will be shipped soon.',
+          onPressed: () => Get.offAll(() => const NavigationMenu()),
+        ),
+      );
     } catch (e) {
       TFullScreenLoader.stopLoading();
       Loaders.errorSnackBar(title: 'Error', message: e.toString());

@@ -64,8 +64,6 @@ class OrdersListItems extends StatelessWidget {
                               style: theme.bodyLarge!.apply(
                                   color: TColors.primary, fontWeightDelta: 1),
                             ),
-                            Text(order.deliveryDate?.toString() ?? '',
-                                style: theme.headlineSmall),
                           ],
                         ),
                       ),

@@ -15,10 +15,10 @@ class OrderItemModel {
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
     return OrderItemModel(
-      id: json['id'],
-      variant: VariantModel.fromJson(json['variant']),
-      quantity: json['quantity'],
-      price: json['price'],
+      id: json['id'] ?? 0,
+      variant: VariantModel.fromJson(json['variant'] ?? {}),
+      quantity: json['quantity'] ?? 0,
+      price: (json['price'] ?? 0.0)?.toDouble(),
     );
   }
 

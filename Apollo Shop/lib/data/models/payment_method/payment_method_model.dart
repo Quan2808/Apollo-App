@@ -1,7 +1,7 @@
 import 'package:apolloshop/data/models/user/user_model.dart';
 
 class PaymentMethodModel {
-  final int? id;
+  final int id;
   final UserModel? user;
   final int cardNumber;
   final String? nameOnCard;
@@ -11,7 +11,7 @@ class PaymentMethodModel {
   bool selectedPM;
 
   PaymentMethodModel({
-    this.id,
+    required this.id,
     required this.cardNumber,
     this.nameOnCard,
     this.expirationDate,
@@ -42,7 +42,6 @@ class PaymentMethodModel {
       'nameOnCard': nameOnCard,
       'expirationDate': expirationDate,
       'defaultPayment': defaultPayment,
-      'type': type,
     };
   }
 
