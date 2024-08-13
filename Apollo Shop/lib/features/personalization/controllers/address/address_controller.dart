@@ -3,7 +3,7 @@ import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/models/address/address_model.dart';
 import 'package:apolloshop/data/repositories/address/address_repository.dart';
 import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
-import 'package:apolloshop/features/personalization/screen/address/add_new_address.dart';
+import 'package:apolloshop/features/personalization/screen/address/widgets/add_new_address.dart';
 import 'package:apolloshop/features/personalization/screen/address/widgets/single_address.dart';
 import 'package:apolloshop/utils/constants/api_constants.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
@@ -210,10 +210,10 @@ class AddressController extends GetxController {
               FutureBuilder<List<AddressModel>>(
                 future: getUserAddresses(),
                 builder: (_, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
+                  final response = THelperFunctions.checkMultiRecordState(
+                      snapshot: snapshot);
+                  if (response != null) {
+                    return response;
                   } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return Column(
                       children: snapshot.data!.map((address) {

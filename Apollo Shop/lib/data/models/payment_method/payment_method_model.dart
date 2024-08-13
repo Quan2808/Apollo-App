@@ -1,10 +1,14 @@
+import 'package:apolloshop/data/models/user/user_model.dart';
+
 class PaymentMethodModel {
   final int? id;
+  final UserModel? user;
   final int cardNumber;
   final String? nameOnCard;
   final String? expirationDate;
   final bool? defaultPayment;
   final String type;
+  bool selectedPM;
 
   PaymentMethodModel({
     this.id,
@@ -13,15 +17,19 @@ class PaymentMethodModel {
     this.expirationDate,
     this.defaultPayment,
     required this.type,
+    this.selectedPM = true,
+    this.user,
   });
 
   factory PaymentMethodModel.fromJson(Map<String, dynamic> json) {
     return PaymentMethodModel(
       id: json['id'],
+      user: UserModel.fromJson(json['userId'] ?? {}),
       cardNumber: json['cartNumber'] ?? 0,
       nameOnCard: json['nameOnCard'],
       expirationDate: json['expirationDate'],
       defaultPayment: json['defaultPayment'],
+      selectedPM: json['defaultPayment'] as bool,
       type: _determineCardType(json['cartNumber'] ?? 0),
     );
   }
@@ -29,6 +37,7 @@ class PaymentMethodModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'userId': user!.toJson()['id'],
       'cartNumber': cardNumber,
       'nameOnCard': nameOnCard,
       'expirationDate': expirationDate,
@@ -45,6 +54,7 @@ class PaymentMethodModel {
       expirationDate: '',
       defaultPayment: false,
       type: '',
+      user: UserModel.empty(),
     );
   }
 

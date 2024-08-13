@@ -6,7 +6,7 @@ import 'package:apolloshop/data/request/order/order_request.dart';
 import 'package:apolloshop/features/personalization/controllers/address/address_controller.dart';
 import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
-import 'package:apolloshop/features/shop/controllers/payment_shipping/payment_method_controller.dart';
+import 'package:apolloshop/features/personalization/controllers/payment_method/payment_method_controller.dart';
 import 'package:apolloshop/features/shop/controllers/payment_shipping/shipping_method_controller.dart';
 import 'package:apolloshop/navigation_menu.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
@@ -16,14 +16,16 @@ import 'package:get/get.dart';
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
 
-  final OrderRepository _orderRepo = OrderRepository.instance;
-  final CartController _cartController = CartController.instance;
-  final AddressController _addressController = AddressController.instance;
-  final PaymentMethodController _paymentMethodController =
-      PaymentMethodController.instance;
-  final ShippingMethodController _shippingMethodController =
-      ShippingMethodController.instance;
-  final UserController _userController = UserController.instance;
+  final _orderRepo = OrderRepository.instance;
+  final _cartController = CartController.instance;
+  final _addressController = AddressController.instance;
+
+  final getPaymentMethodController = Get.put(PaymentMethodController());
+  final getShippingMethodController = Get.put(ShippingMethodController());
+
+  final _paymentMethodController = PaymentMethodController.instance;
+  final _shippingMethodController = ShippingMethodController.instance;
+  final _userController = UserController.instance;
 
   Future<List<OrderModel>> fetchUserOrders() async {
     try {
@@ -73,7 +75,6 @@ class OrderController extends GetxController {
       );
 
       final createdOrders = await _orderRepo.createOrder([orderRequest]);
-
       if (createdOrders.isNotEmpty) {
         _cartController.clearCart();
         Get.off(

@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:apolloshop/data/models/payment_method/payment_method_model.dart';
-import 'package:apolloshop/features/shop/controllers/payment_shipping/payment_method_controller.dart';
+import 'package:apolloshop/features/personalization/controllers/payment_method/payment_method_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';

@@ -2,6 +2,7 @@ import 'package:apolloshop/data/repositories/address/address_repository.dart';
 import 'package:apolloshop/data/repositories/cart/cart_repository.dart';
 import 'package:apolloshop/data/repositories/category/category_repository.dart';
 import 'package:apolloshop/data/repositories/order/order_repository.dart';
+import 'package:apolloshop/data/repositories/payment_method/payment_method_repository.dart';
 import 'package:apolloshop/data/repositories/product/product_repository.dart';
 import 'package:apolloshop/data/repositories/store/store_repository.dart';
 import 'package:apolloshop/data/repositories/variant/variant_repository.dart';
@@ -9,12 +10,12 @@ import 'package:apolloshop/data/services/address/address_service.dart';
 import 'package:apolloshop/data/services/cart/cart_service.dart';
 import 'package:apolloshop/data/services/category/category_service.dart';
 import 'package:apolloshop/data/services/order/order_service.dart';
+import 'package:apolloshop/data/services/payment_method/payment_method_service.dart';
 import 'package:apolloshop/data/services/product/product_service.dart';
 import 'package:apolloshop/data/services/store/store_service.dart';
 import 'package:apolloshop/data/services/variant/variant_service.dart';
 import 'package:apolloshop/features/personalization/controllers/address/address_controller.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
-import 'package:apolloshop/features/shop/controllers/payment_shipping/payment_method_controller.dart';
 import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
 import 'package:apolloshop/utils/helpers/network_manager.dart';
 import 'package:get/get.dart';
@@ -54,10 +55,12 @@ class GeneralBindings extends Bindings {
     Get.put(AddressRepository());
     Get.put(AddressController());
 
+    // Register PaymentMethodService and its corresponding repository.
+    Get.put(PaymentMethodService());
+    Get.put(PaymentMethodRepository());
+
     // Register OrderService and its corresponding repository.
     Get.put(OrderService());
     Get.put(OrderRepository());
-
-    Get.put(PaymentMethodController());
   }
 }

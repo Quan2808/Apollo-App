@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:apolloshop/data/models/address/address_model.dart';
 import 'package:apolloshop/data/services/address/address_service.dart';
 import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class AddressRepository extends GetxController {
@@ -22,11 +21,6 @@ class AddressRepository extends GetxController {
           .map((addressJson) => AddressModel.fromSnapshot(addressJson))
           .toList();
     } catch (e) {
-      if (kDebugMode) {
-        print('=========================== ERROR ============================');
-        print(e.toString());
-        print('=========================== ERROR ============================');
-      }
       throw 'Something went wrong while fetching addresses. Try again later.';
     }
   }
@@ -37,11 +31,6 @@ class AddressRepository extends GetxController {
       final response = await _addressService.createAddress(address);
       return json.decode(response.body);
     } catch (e) {
-      if (kDebugMode) {
-        print('=========================== ERROR ============================');
-        print(e.toString());
-        print('=========================== ERROR ============================');
-      }
       throw 'Unable to add new address. Try again later.';
     }
   }

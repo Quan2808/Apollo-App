@@ -24,7 +24,7 @@ class OrderRequest {
       'orderDate': orderDate,
       'addressId': addressId,
       'paymentMethodId': paymentMethodId,
-      'shippingMethodId': shippingMethodId,
+      'shippingMethodId': 2,
       'orderTotal': orderTotal,
     };
   }

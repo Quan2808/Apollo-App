@@ -22,38 +22,40 @@ class SingleAddress extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     final ctrl = AddressController.instance;
 
-    return Obx(() {
-      final selectedAddressId = ctrl.selectedAddress.value.id;
-      final selectedAddress = selectedAddressId == address.id;
-      return InkWell(
-        child: RoundedContainer(
-          width: double.infinity,
-          showBorder: true,
-          padding: const EdgeInsets.all(TSizes.md),
-          backgroundColor:
-              selectedAddress ? Colors.transparent : Colors.transparent,
-          borderColor: selectedAddress
-              ? Colors.transparent
-              : dark
-                  ? TColors.darkerGrey
-                  : TColors.grey,
-          margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    address.street,
-                    softWrap: true,
-                  ),
-                  const SizedBox(height: TSizes.sm / 2),
-                ],
-              )
-            ],
+    return Obx(
+      () {
+        final selectedAddressId = ctrl.selectedAddress.value.id;
+        final selectedAddress = selectedAddressId == address.id;
+        return InkWell(
+          child: RoundedContainer(
+            width: double.infinity,
+            showBorder: true,
+            padding: const EdgeInsets.all(TSizes.md),
+            backgroundColor:
+                selectedAddress ? Colors.transparent : Colors.transparent,
+            borderColor: selectedAddress
+                ? Colors.transparent
+                : dark
+                    ? TColors.darkerGrey
+                    : TColors.grey,
+            margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
+            child: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      address.street,
+                      softWrap: true,
+                    ),
+                    const SizedBox(height: TSizes.sm / 2),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

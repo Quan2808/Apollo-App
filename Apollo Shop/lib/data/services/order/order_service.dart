@@ -20,9 +20,12 @@ class OrderService extends GetxService {
         },
       );
 
-      return (response as List)
-          .map((json) => OrderModel.fromJson(json))
-          .toList();
+      if (response.statusCode == 200) {
+        final List<dynamic> decodedJson = jsonDecode(response.body);
+        return decodedJson.map((json) => OrderModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load orders: ${response.body}');
+      }
     } catch (e) {
       throw Exception('Failed to load orders: $e');
     }
@@ -37,10 +40,24 @@ class OrderService extends GetxService {
         },
         body: jsonEncode(orders.map((order) => order.toJson()).toList()),
       );
-      return (response as List)
-          .map((json) => OrderModel.fromJson(json))
-          .toList();
+
+      if (response.statusCode == 200) {
+        final decodedJson = jsonDecode(response.body);
+
+        if (decodedJson is List<dynamic>) {
+          return decodedJson.map((json) => OrderModel.fromJson(json)).toList();
+        } else if (decodedJson is Map<String, dynamic>) {
+          return [OrderModel.fromJson(decodedJson)];
+        } else {
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        throw Exception('Failed to create order: ${response.body}');
+      }
     } catch (e) {
+      // print('======================================= Begin Error');
+      // print(e.toString());
+      // print('======================================= End Error');
       throw Exception('Failed to create order: $e');
     }
   }
