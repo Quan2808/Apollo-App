@@ -85,7 +85,7 @@ class CheckoutScreen extends StatelessWidget {
               title: 'Payment Success',
               subTitle: 'Your item will be shipped soon!',
               onPressed: subtotal > 0
-                  ? () => orderCtrl.processOrder(totalAmount)
+                  ? () => orderCtrl.processOrder()
                   : () => Loaders.warningSnackBar(
                         title: 'Empty Cart',
                         message:

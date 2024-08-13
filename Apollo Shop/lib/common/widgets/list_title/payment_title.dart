@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:apolloshop/data/models/payment_method/payment_method_model.dart';
-import 'package:apolloshop/features/shop/controllers/checkout/checkout_controller.dart';
+import 'package:apolloshop/features/shop/controllers/payment_shipping/payment_method_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
@@ -18,7 +18,7 @@ class PaymentTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CheckoutController.instance;
+    final controller = PaymentMethodController.instance;
     return ListTile(
       contentPadding: const EdgeInsets.all(0),
       onTap: () {
@@ -32,12 +32,12 @@ class PaymentTitle extends StatelessWidget {
             ? TColors.light
             : TColors.white,
         padding: const EdgeInsets.all(TSizes.sm),
-        child: Image(
-          image: AssetImage(paymentMethod.image),
-          fit: BoxFit.contain,
-        ),
+        // child: Image(
+        //   image: AssetImage(paymentMethod.image),
+        //   fit: BoxFit.contain,
+        // ),
       ),
-      title: Text(paymentMethod.name),
+      title: Text(paymentMethod.type),
       trailing: const Icon(Iconsax.arrow_right_34),
     );
   }

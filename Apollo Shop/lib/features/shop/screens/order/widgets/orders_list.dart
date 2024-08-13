@@ -64,7 +64,7 @@ class OrdersListItems extends StatelessWidget {
                               style: theme.bodyLarge!.apply(
                                   color: TColors.primary, fontWeightDelta: 1),
                             ),
-                            Text(order.formattedOrderDate,
+                            Text(order.deliveryDate?.toString() ?? '',
                                 style: theme.headlineSmall),
                           ],
                         ),
@@ -104,30 +104,30 @@ class OrdersListItems extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            const Icon(Iconsax.calendar),
-                            const SizedBox(width: TSizes.spaceBtwItems / 2),
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Shipping Date',
-                                      style: theme.labelMedium),
-                                  Text(
-                                    order.formattedDeliveryDate,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.titleMedium,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Row(
+                      //     children: [
+                      //       const Icon(Iconsax.calendar),
+                      //       const SizedBox(width: TSizes.spaceBtwItems / 2),
+                      //       Expanded(
+                      //         child: Column(
+                      //           mainAxisSize: MainAxisSize.min,
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: [
+                      //             Text('Shipping Date',
+                      //                 style: theme.labelMedium),
+                      //             Text(
+                      //               order.formattedDeliveryDate,
+                      //               maxLines: 1,
+                      //               overflow: TextOverflow.ellipsis,
+                      //               style: theme.titleMedium,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   )
                 ],

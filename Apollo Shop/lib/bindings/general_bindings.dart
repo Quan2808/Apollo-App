@@ -13,10 +13,10 @@ import 'package:apolloshop/data/services/product/product_service.dart';
 import 'package:apolloshop/data/services/store/store_service.dart';
 import 'package:apolloshop/data/services/variant/variant_service.dart';
 import 'package:apolloshop/features/personalization/controllers/address/address_controller.dart';
-import 'package:apolloshop/features/shop/controllers/checkout/checkout_controller.dart';
-import 'package:apolloshop/utils/helpers/network_manager.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
+import 'package:apolloshop/features/shop/controllers/payment_shipping/payment_method_controller.dart';
 import 'package:apolloshop/features/shop/controllers/product/variant_controller.dart';
+import 'package:apolloshop/utils/helpers/network_manager.dart';
 import 'package:get/get.dart';
 
 /// The `GeneralBindings` class is responsible for setting up dependency injection
@@ -58,6 +58,6 @@ class GeneralBindings extends Bindings {
     Get.put(OrderService());
     Get.put(OrderRepository());
 
-    Get.put(CheckoutController());
+    Get.put(PaymentMethodController());
   }
 }
