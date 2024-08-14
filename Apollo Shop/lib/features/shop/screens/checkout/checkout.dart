@@ -1,7 +1,5 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:apolloshop/common/widgets/loaders/loaders.dart';
-import 'package:apolloshop/common/widgets/success_screen/success_screen.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
 import 'package:apolloshop/features/shop/controllers/order/order_controller.dart';
 import 'package:apolloshop/features/shop/screens/cart/widgets/cart_items.dart';
@@ -10,7 +8,6 @@ import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_amount
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_payment_section.dart';
 import 'package:apolloshop/features/shop/screens/checkout/widgets/billing_shipping_section.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
-import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:apolloshop/utils/helpers/pricing_calculator.dart';
@@ -84,21 +81,8 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: () => Get.to(
-            () => SuccessScreen(
-              image: TImages.successfulPaymentIcon,
-              title: 'Payment Success',
-              subTitle: 'Your item will be shipped soon!',
-              onPressed: subtotal > 0
-                  ? () => orderCtrl.processOrder()
-                  : () => Loaders.warningSnackBar(
-                        title: 'Empty Cart',
-                        message:
-                            'Please add items to your cart to process order',
-                      ),
-            ),
-          ),
-          child: Text('Checkout \$$totalAmount'),
+          onPressed: () => orderCtrl.processOrder(),
+          child: Text('Checkout \$${totalAmount.toStringAsFixed(1)}'),
         ),
       ),
     );

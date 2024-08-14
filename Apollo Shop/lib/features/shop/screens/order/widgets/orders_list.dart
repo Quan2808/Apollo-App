@@ -24,7 +24,7 @@ class OrdersListItems extends StatelessWidget {
       builder: (context, snapshot) {
         final emptyWidget = AnimationLoaderWidget(
           text: 'Whoops! No orders yet',
-          animation: TImages.completeOrderAnimation,
+          animation: TImages.emptyListingOrderAnimation,
           showAction: true,
           actionText: 'Let\'s fill it',
           onActionPressed: () => Get.off(() => const NavigationMenu()),

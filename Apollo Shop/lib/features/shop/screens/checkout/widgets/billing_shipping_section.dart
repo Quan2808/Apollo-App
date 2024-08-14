@@ -22,24 +22,26 @@ class BillingShippingSection extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
         Obx(
-          () => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(Iconsax.card, color: Colors.grey, size: 16),
-                  const SizedBox(width: TSizes.spaceBtwItems / 2),
-                  Expanded(
-                    child: Text(
-                      ctrl.selectedShippingMethod.value.name.toString(),
-                      style: theme.bodyMedium,
-                      softWrap: true,
+          () => ctrl.selectedShippingMethod.value.id != 0
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Iconsax.card, color: Colors.grey, size: 16),
+                        const SizedBox(width: TSizes.spaceBtwItems / 2),
+                        Expanded(
+                          child: Text(
+                            ctrl.selectedShippingMethod.value.name.toString(),
+                            style: theme.bodyMedium,
+                            softWrap: true,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                )
+              : Text('Select Shipping Method', style: theme.bodyMedium),
         ),
       ],
     );
