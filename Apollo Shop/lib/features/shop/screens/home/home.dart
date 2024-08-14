@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:apolloshop/common/widgets/custom_shapes/containers/primary_header_container.dart';
-import 'package:apolloshop/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:apolloshop/common/widgets/shimmers/vertical_product_shimmer.dart';
@@ -34,13 +33,6 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   /// App bar
                   HomeAppBar(),
-                  SizedBox(height: TSizes.spaceBtwSections),
-
-                  /// Search bar
-                  SearchContainer(
-                    text: 'Search in Store',
-                    showBorder: false,
-                  ),
                   SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Categories

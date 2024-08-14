@@ -5,6 +5,7 @@ import 'package:apolloshop/common/widgets/list_title/user_profile_title.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/data/repositories/authentication/authentication_repository.dart';
 import 'package:apolloshop/features/personalization/screen/address/address.dart';
+import 'package:apolloshop/features/personalization/screen/payment_method/payment_method.dart';
 import 'package:apolloshop/features/personalization/screen/profile/profile.dart';
 import 'package:apolloshop/features/shop/screens/cart/cart.dart';
 import 'package:apolloshop/features/shop/screens/order/order.dart';
@@ -66,6 +67,12 @@ class SettingsScreen extends StatelessWidget {
                     title: 'My Addresses',
                     subtitle: 'Set shopping delivery address',
                     onTap: () => Get.to(() => const UserAddressScreen()),
+                  ),
+                  SettingsMenuTitle(
+                    icon: Iconsax.card_tick,
+                    title: 'My Payment Methods',
+                    subtitle: 'Manage payment options',
+                    onTap: () => Get.to(() => const PaymentMethodScreen()),
                   ),
                   SettingsMenuTitle(
                     icon: Iconsax.shopping_cart,

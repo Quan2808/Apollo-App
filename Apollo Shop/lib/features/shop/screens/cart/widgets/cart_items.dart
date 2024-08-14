@@ -24,7 +24,7 @@ class CartItems extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: cartController.cartItems.length,
         separatorBuilder: (_, index) =>
-        const SizedBox(height: TSizes.spaceBtwSections),
+            const SizedBox(height: TSizes.spaceBtwSections),
         itemBuilder: (_, index) {
           final item = cartController.cartItems[index];
 
@@ -36,6 +36,7 @@ class CartItems extends StatelessWidget {
                 const SizedBox(height: TSizes.spaceBtwItems),
 
               // Adjust the quantity & display the price of the product
+              if (showAdjustButton)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

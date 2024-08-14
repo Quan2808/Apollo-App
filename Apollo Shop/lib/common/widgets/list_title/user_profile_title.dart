@@ -1,4 +1,4 @@
-import 'package:apolloshop/features/personalization/controllers/user_controller.dart';
+import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
 import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';

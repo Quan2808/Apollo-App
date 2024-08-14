@@ -44,7 +44,6 @@ class UserRepository extends GetxController {
   Future<void> signOut() async {
     _currentUser.value = null;
     accessToken.value = '';
-
     await _secureStorage.delete(key: 'user');
     await _secureStorage.delete(key: 'accessToken');
   }

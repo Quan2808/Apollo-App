@@ -16,13 +16,13 @@ class CartItemModel {
   CartItemModel({
     this.id,
     required this.quantity,
-    this.price = 0.0,
+    double? price,
     this.product,
     this.store,
     this.cart,
     this.variant,
     this.selectedVariants,
-  });
+  }) : price = price ?? variant?.price ?? 0.0;
 
   static CartItemModel empty() {
     return CartItemModel(
@@ -32,10 +32,14 @@ class CartItemModel {
   }
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    VariantModel? variant = json['variantDto'] != null
+        ? VariantModel.fromJson(json['variantDto'])
+        : null;
+
     return CartItemModel(
       id: json['id'] ?? 0,
       quantity: json['quantity'] ?? 0,
-      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      price: (json['price'] as num?)?.toDouble() ?? variant?.price ?? 0.0,
       cart:
           json['cartDto'] != null ? CartModel.fromJson(json['cartDto']) : null,
       product: json['productDto'] != null
@@ -44,9 +48,7 @@ class CartItemModel {
       store: json['storeDto'] != null
           ? StoreModel.fromJson(json['storeDto'])
           : null,
-      variant: json['variantDto'] != null
-          ? VariantModel.fromJson(json['variantDto'])
-          : null,
+      variant: variant,
       selectedVariants: json['selectedVariants'] as Map<String, dynamic>?,
     );
   }
@@ -55,7 +57,7 @@ class CartItemModel {
     return {
       'id': id,
       'quantity': quantity,
-      'price': price,
+      'price': variant?.price ?? price,
       'cartDto': cart?.toJson(),
       'productDto': product?.toJson(),
       'storeDto': store?.toJson(),
@@ -77,7 +79,7 @@ class CartItemModel {
     return CartItemModel(
       id: id ?? this.id,
       quantity: quantity ?? this.quantity,
-      price: price ?? this.price,
+      price: price ?? variant?.price ?? this.price,
       cart: cart ?? this.cart,
       product: product ?? this.product,
       store: store ?? this.store,

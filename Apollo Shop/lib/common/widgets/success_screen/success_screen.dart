@@ -10,11 +10,11 @@ class SuccessScreen extends StatelessWidget {
     required this.image,
     required this.title,
     required this.subTitle,
-    required this.onPressed,
+    this.onPressed,
   });
 
   final String image, title, subTitle;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

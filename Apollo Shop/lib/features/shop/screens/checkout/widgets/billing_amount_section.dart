@@ -1,4 +1,6 @@
+import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
+import 'package:apolloshop/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
 
 class BillingAmountSection extends StatelessWidget {
@@ -6,6 +8,8 @@ class BillingAmountSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ctrl = CartController.instance;
+    final subtotal = ctrl.totalCartPrice.value;
     final theme = Theme.of(context).textTheme;
     return Column(
       children: [
@@ -14,7 +18,7 @@ class BillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Subtotal', style: theme.bodyMedium),
-            Text('\$25', style: theme.bodyMedium),
+            Text('\$$subtotal', style: theme.bodyMedium),
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
@@ -24,7 +28,10 @@ class BillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Shipping fee', style: theme.bodyMedium),
-            Text('\$5', style: theme.labelLarge),
+            Text(
+              '\$${PricingCalculator.getFormattedShippingCost('US')}',
+              style: theme.labelLarge,
+            ),
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
@@ -34,7 +41,8 @@ class BillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Order total', style: theme.bodyMedium),
-            Text('\$30', style: theme.titleMedium),
+            Text('\$${PricingCalculator.calculateTotalPrice(subtotal, 's')}',
+                style: theme.titleMedium),
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),

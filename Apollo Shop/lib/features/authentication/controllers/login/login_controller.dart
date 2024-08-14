@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/data/repositories/authentication/authentication_repository.dart';
-import 'package:apolloshop/features/authentication/network/network_manager.dart';
+import 'package:apolloshop/utils/helpers/network_manager.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
 import 'package:apolloshop/utils/popups/full_screen_loader.dart';
 import 'package:flutter/cupertino.dart';
