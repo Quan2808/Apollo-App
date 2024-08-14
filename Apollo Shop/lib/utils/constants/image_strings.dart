@@ -29,6 +29,8 @@ class TImages {
       "assets/images/animations/120978-payment-successful.json";
   static const String emptyListingOrderAnimation =
       "assets/images/animations/order-complete-car-delivery-animation.json";
+  static const String successfulPaymentIcon =
+      "assets/icons/animations/successful_payment_icon.png";
 
   // -- OnBoarding Texts
   static const String onBoardingSearching =
@@ -39,14 +41,6 @@ class TImages {
       "assets/images/on_boarding_images/sammy-line-delivery.gif";
 
   //Banners
-  static const String promoBanner1 =
-      "assets/images/products/promo-banner-1.png";
-  static const String promoBanner2 =
-      "assets/images/products/promo-banner-2.png";
-  static const String promoBanner3 =
-      "assets/images/products/promo-banner-3.png";
-
-  // -- Payment Methods
-  static const String successfulPaymentIcon =
-      "assets/icons/payment_methods/successful_payment_icon.png";
+  static const String promoBanner1 = "assets/images/banners/banner_1.png";
+  static const String promoBanner2 = "assets/images/banners/banner_2.png";
 }
