@@ -4,11 +4,12 @@ import 'package:apolloshop/data/models/order/order_model.dart';
 import 'package:apolloshop/data/repositories/order/order_repository.dart';
 import 'package:apolloshop/data/request/order/order_item_request.dart';
 import 'package:apolloshop/data/request/order/order_request.dart';
+import 'package:apolloshop/data/response/order/order_response.dart';
 import 'package:apolloshop/data/services/order/order_service.dart';
 import 'package:apolloshop/features/personalization/controllers/address/address_controller.dart';
+import 'package:apolloshop/features/personalization/controllers/payment_method/payment_method_controller.dart';
 import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
 import 'package:apolloshop/features/shop/controllers/cart/cart_controller.dart';
-import 'package:apolloshop/features/personalization/controllers/payment_method/payment_method_controller.dart';
 import 'package:apolloshop/features/shop/controllers/payment_shipping/shipping_method_controller.dart';
 import 'package:apolloshop/navigation_menu.dart';
 import 'package:apolloshop/utils/constants/image_strings.dart';
@@ -78,16 +79,21 @@ class OrderController extends GetxController {
         orderTotal: totalAmount,
       );
 
-      await _orderService.createOrder([orderRequest]);
-      _cartController.clearCart();
-      Get.off(
-        () => SuccessScreen(
-          image: TImages.applePay,
-          title: 'Payment success',
-          subTitle: 'Your item will be shipped soon.',
-          onPressed: () => Get.offAll(() => const NavigationMenu()),
-        ),
-      );
+      final List<OrderResponse> responses =
+          await _orderService.createOrder([orderRequest]);
+
+      if (responses.isNotEmpty) {
+        TFullScreenLoader.stopLoading();
+        _cartController.clearCart();
+        Get.off(
+          () => SuccessScreen(
+            image: TImages.applePay,
+            title: 'Payment success',
+            subTitle: 'Your item will be shipped soon.',
+            onPressed: () => Get.offAll(() => const NavigationMenu()),
+          ),
+        );
+      }
     } catch (e) {
       TFullScreenLoader.stopLoading();
       Loaders.errorSnackBar(title: 'Error', message: e.toString());

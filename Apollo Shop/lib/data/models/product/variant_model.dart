@@ -41,6 +41,12 @@ class VariantModel {
   }
 
   factory VariantModel.fromJson(Map<String, dynamic> json) {
+    String img = json['img'] ?? '';
+
+    if (img.contains('localhost')) {
+      img = img.replaceFirst('localhost', '10.0.2.2');
+    }
+
     return VariantModel(
       id: json['id'] ?? 0,
       name: json['name'] ?? '',
@@ -49,7 +55,7 @@ class VariantModel {
       weight: (json['weight'] ?? 0.0).toDouble(),
       price: (json['price'] ?? 0.0).toDouble(),
       salePrice: (json['salePrice'] ?? 0.0).toDouble(),
-      img: json['img'] ?? '',
+      img: img,
       isDeleted: json['isDeleted'] ?? false,
       product: json['product'] != null
           ? ProductModel.fromJson(json['product'])

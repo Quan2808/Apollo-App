@@ -41,11 +41,17 @@ class ProductModel {
   }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    String thumbnail = json['mainPicture'] ?? '';
+
+    if (thumbnail.contains('localhost')) {
+      thumbnail = thumbnail.replaceFirst('localhost', '10.0.2.2');
+    }
+
     return ProductModel(
       id: json['id'] ?? 0,
       title: json['title'] ?? '',
       description: json['description'] ?? '',
-      thumbnail: json['mainPicture'] ?? '',
+      thumbnail: thumbnail,
       status: json['status'] ?? '',
       category: json['category'] != null
           ? CategoryModel.fromJson(json['category'])
