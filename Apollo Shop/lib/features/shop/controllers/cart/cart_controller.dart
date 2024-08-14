@@ -151,9 +151,9 @@ class CartController extends GetxController {
         .quantity;
   }
 
-  void clearCart() {
+  void clearCart() async {
     productQuantityInCart.value = 0;
-    cartItems.clear();
+    cartRepo.clearCart();
     updateCart();
   }
 

@@ -50,7 +50,9 @@ class CartRepository extends GetxService {
     _cartItems.assignAll(items);
   }
 
-  void clearCartItems() {
+  void clearCart() async {
+    final userId = UserController.instance.user.value!.id;
+    await _cartService.deleteAllCartItems(userId);
     _cartItems.clear();
   }
 

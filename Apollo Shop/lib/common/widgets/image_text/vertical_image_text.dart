@@ -2,6 +2,7 @@ import 'package:apolloshop/utils/constants/colors.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class VerticalImageText extends StatelessWidget {
   const VerticalImageText({
@@ -49,7 +50,7 @@ class VerticalImageText extends StatelessWidget {
                         fit: BoxFit.cover,
                         color: TColors.dark,
                       )
-                    : const Icon(Icons.error, color: TColors.dark),
+                    : const Icon(Iconsax.category, color: TColors.dark),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),

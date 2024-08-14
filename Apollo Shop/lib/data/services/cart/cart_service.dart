@@ -9,7 +9,6 @@ class CartService extends GetxService {
 
   final String baseUrl = ApiConstants.baseApiUrl;
 
-  /// Post a new cart for the user based on the provided user details.
   Future<void> postCart({
     required String clientName,
     required String email,
@@ -37,7 +36,6 @@ class CartService extends GetxService {
     }
   }
 
-  /// Get the cart associated with a specific user ID.
   Future<Map<String, dynamic>?> getCart({
     required String user,
   }) async {
@@ -87,6 +85,20 @@ class CartService extends GetxService {
         response.statusCode != 405) {
       throw Exception(
           'Failed to manage cart line. Status code: ${response.statusCode}, Response body: ${response.body}');
+    }
+  }
+
+  Future<void> deleteAllCartItems(String userId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/cart-lines/delete-all/$userId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+          'Failed to delete all cart lines. Status code: ${response.statusCode}, Response body: ${response.body}');
     }
   }
 }
