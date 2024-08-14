@@ -9,6 +9,7 @@ import 'package:apolloshop/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class OrdersListItems extends StatelessWidget {
   const OrdersListItems({super.key});
@@ -18,6 +19,15 @@ class OrdersListItems extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     final theme = Theme.of(context).textTheme;
     final ctrl = Get.put(OrderController());
+
+    String formatOrderDate(String orderDate) {
+      DateTime dateTime = DateTime.parse(orderDate);
+      return DateFormat('dd/MM/yyyy').format(dateTime);
+    }
+
+    String formatStatus(String text) {
+      return text.toUpperCase();
+    }
 
     return FutureBuilder(
       future: ctrl.fetchUserOrders(),
@@ -60,20 +70,20 @@ class OrdersListItems extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              order.status,
+                              formatStatus(order.status),
                               style: theme.bodyLarge!.apply(
                                   color: TColors.primary, fontWeightDelta: 1),
                             ),
                           ],
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Iconsax.arrow_right_34,
-                          size: TSizes.iconSm,
-                        ),
-                      )
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   icon: const Icon(
+                      //     Iconsax.arrow_right_34,
+                      //     size: TSizes.iconSm,
+                      //   ),
+                      // )
                     ],
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
@@ -102,30 +112,29 @@ class OrdersListItems extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Expanded(
-                      //   child: Row(
-                      //     children: [
-                      //       const Icon(Iconsax.calendar),
-                      //       const SizedBox(width: TSizes.spaceBtwItems / 2),
-                      //       Expanded(
-                      //         child: Column(
-                      //           mainAxisSize: MainAxisSize.min,
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Text('Shipping Date',
-                      //                 style: theme.labelMedium),
-                      //             Text(
-                      //               order.formattedDeliveryDate,
-                      //               maxLines: 1,
-                      //               overflow: TextOverflow.ellipsis,
-                      //               style: theme.titleMedium,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const Icon(Iconsax.calendar),
+                            const SizedBox(width: TSizes.spaceBtwItems / 2),
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Order Date', style: theme.labelMedium),
+                                  Text(
+                                    formatOrderDate(order.orderDate.toString()),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: theme.titleMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   )
                 ],
