@@ -4,7 +4,7 @@ class VariantModel {
   int id;
   String name;
   String skuCode;
-  int stockQuantity;
+  int quantity;
   double weight;
   double price;
   double salePrice;
@@ -16,7 +16,7 @@ class VariantModel {
     required this.id,
     required this.name,
     required this.skuCode,
-    required this.stockQuantity,
+    required this.quantity,
     required this.weight,
     required this.price,
     required this.salePrice,
@@ -30,7 +30,7 @@ class VariantModel {
       id: 0,
       name: '',
       skuCode: '',
-      stockQuantity: 0,
+      quantity: 0,
       weight: 0.0,
       price: 0.0,
       salePrice: 0.0,
@@ -41,15 +41,21 @@ class VariantModel {
   }
 
   factory VariantModel.fromJson(Map<String, dynamic> json) {
+    String img = json['img'] ?? '';
+
+    if (img.contains('localhost')) {
+      img = img.replaceFirst('localhost', '10.0.2.2');
+    }
+
     return VariantModel(
       id: json['id'] ?? 0,
       name: json['name'] ?? '',
       skuCode: json['skuCode'] ?? '',
-      stockQuantity: json['stockQuantity'] ?? 0,
+      quantity: json['stockQuantity'] ?? 0,
       weight: (json['weight'] ?? 0.0).toDouble(),
       price: (json['price'] ?? 0.0).toDouble(),
       salePrice: (json['salePrice'] ?? 0.0).toDouble(),
-      img: json['img'] ?? '',
+      img: img,
       isDeleted: json['isDeleted'] ?? false,
       product: json['product'] != null
           ? ProductModel.fromJson(json['product'])
@@ -62,7 +68,7 @@ class VariantModel {
       'id': id,
       'name': name,
       'skuCode': skuCode,
-      'stockQuantity': stockQuantity,
+      'stockQuantity': quantity,
       'weight': weight,
       'price': price,
       'salePrice': salePrice,

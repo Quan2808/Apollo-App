@@ -1,10 +1,9 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/appbar/tabbar.dart';
-import 'package:apolloshop/common/widgets/stores/store_card.dart';
-import 'package:apolloshop/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:apolloshop/common/widgets/layouts/grid_layout.dart';
 import 'package:apolloshop/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:apolloshop/common/widgets/shimmers/store_shimmer.dart';
+import 'package:apolloshop/common/widgets/stores/store_card.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
 import 'package:apolloshop/features/shop/controllers/category/category_controller.dart';
 import 'package:apolloshop/features/shop/controllers/store/store_controller.dart';
@@ -44,23 +43,13 @@ class StoreScreen extends StatelessWidget {
               pinned: true,
               floating: true,
               backgroundColor: dark ? TColors.black : TColors.white,
-              expandedHeight: 440,
+              expandedHeight: 340,
               flexibleSpace: Padding(
                 padding: const EdgeInsets.all(TSizes.defaultSpace),
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    /// Search
-                    const SizedBox(height: TSizes.spaceBtwItems),
-                    const SearchContainer(
-                      text: 'Search in Store',
-                      showBorder: true,
-                      showBackground: false,
-                      padding: EdgeInsets.zero,
-                    ),
-                    const SizedBox(height: TSizes.spaceBtwSections),
-
                     /// Featured Stores
                     SectionHeading(
                       title: 'Featured Stores',

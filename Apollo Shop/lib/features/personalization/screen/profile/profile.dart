@@ -1,6 +1,6 @@
 import 'package:apolloshop/common/widgets/appbar/appbar.dart';
 import 'package:apolloshop/common/widgets/texts/section_heading.dart';
-import 'package:apolloshop/features/personalization/controllers/user_controller.dart';
+import 'package:apolloshop/features/personalization/controllers/user/user_controller.dart';
 import 'package:apolloshop/features/personalization/screen/profile/widgets/profile_menu.dart';
 import 'package:apolloshop/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,7 @@ class ProfileScreen extends StatelessWidget {
               value: controller.user.value?.fullName ?? '',
               onPressed: () {},
             ),
+            const Divider(),
 
             // const SizedBox(height: TSizes.spaceBtwItems),
             // const Divider(),
@@ -52,12 +53,13 @@ class ProfileScreen extends StatelessWidget {
               value: controller.user.value?.email ?? '',
               onPressed: () {},
             ),
-
+            const Divider(),
             ProfileMenu(
               title: 'Phone Number',
               value: controller.user.value?.phoneNumber ?? '',
               onPressed: () {},
             ),
+            const Divider(),
 
             // const Divider(),
             // const SizedBox(height: TSizes.spaceBtwItems),

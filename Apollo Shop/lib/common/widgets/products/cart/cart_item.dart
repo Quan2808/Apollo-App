@@ -40,8 +40,9 @@ class CartItem extends StatelessWidget {
             children: [
               // StoreTitleWithVerifiedIcon(title: 'All Store'),
               Flexible(
-                  child: ProductTitleText(
-                      title: cartItem.variant!.name, maxLines: 1)),
+                child: ProductTitleText(
+                    title: cartItem.variant!.name, maxLines: 1),
+              ),
               Flexible(
                 child: ProductAttributeText(title: cartItem.variant!.name),
               ),
