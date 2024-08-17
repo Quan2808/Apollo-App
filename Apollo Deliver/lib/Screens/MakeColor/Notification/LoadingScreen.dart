@@ -15,7 +15,7 @@ class LoadingScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          color: Colors.white, // Nền trắng
+          color: Colors.white,
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -25,10 +25,9 @@ class LoadingScreen extends StatelessWidget {
                   children: [
                     Image.asset(
                       gifPath,
-                      width: 190, // Kích thước hình GIF
+                      width: 190,
                       height: 190,
                     ),
-                    // CircularProgressIndicator được đặt sau hình GIF để đè lên
                     Positioned(
                       top: 0,
                       left: 0,
@@ -36,11 +35,11 @@ class LoadingScreen extends StatelessWidget {
                       bottom: 0,
                       child: Center(
                         child: SizedBox(
-                          width: 200, // Kích thước vòng tròn to hơn để đè lên GIF
+                          width: 200,
                           height: 200,
                           child: CircularProgressIndicator(
-                            strokeWidth: 6.0, // Độ dày của đường viền loading
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.black), // Màu sắc của loading
+                            strokeWidth: 8.0,
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.black45),
                           ),
                         ),
                       ),
@@ -52,7 +51,7 @@ class LoadingScreen extends StatelessWidget {
                   message,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 13, // Kích thước nhỏ hơn cho message
+                    fontSize: 13,
                   ),
                 ),
               ],

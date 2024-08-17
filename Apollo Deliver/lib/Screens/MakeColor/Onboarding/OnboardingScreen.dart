@@ -1,5 +1,5 @@
 import 'package:apollodeliver/Screens/MainScreen/LoginScreen.dart';
-import 'package:apollodeliver/Screens/MakeColor/OnboardingItems.dart';
+import 'package:apollodeliver/Screens/MakeColor/Onboarding/OnboardingItems.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,13 +26,9 @@ class _OnboardingViewState extends State<OnboardingView> {
         child: isLastPage? getStarted() : Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
-            //Skip Button
             TextButton(
                 onPressed: ()=>pageController.jumpToPage(controller.items.length-1),
                 child: const Text("Skip")),
-
-            //Indicator
             SmoothPageIndicator(
               controller: pageController,
               count: controller.items.length,
@@ -44,14 +40,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                 activeDotColor: primaryColor,
               ),
             ),
-
-            //Next Button
             TextButton(
                 onPressed: ()=>pageController.nextPage(
                     duration: const Duration(milliseconds: 600), curve: Curves.easeIn),
                 child: const Text("Next")),
-
-
           ],
         ),
       ),

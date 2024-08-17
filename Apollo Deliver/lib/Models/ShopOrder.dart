@@ -9,7 +9,7 @@ class ShopOrder {
   final int? id;
   late String status;
   final String orderDate;
-  // final DateTime deliveryDate;
+  final DateTime deliveryDate;
   final int quantity;
   final double? orderTotal;
   final User user;
@@ -23,7 +23,7 @@ class ShopOrder {
     this.id,
     required this.status,
     required this.orderDate,
-    // required this.deliveryDate,
+    required this.deliveryDate,
     required this.quantity,
     this.orderTotal,
     required this.user,
@@ -39,7 +39,7 @@ class ShopOrder {
       id: json['id'],
       status: json['status'],
       orderDate: json['orderDate'],
-      // deliveryDate: DateTime.parse(json['deliveryDate']),
+      deliveryDate: DateTime.fromMillisecondsSinceEpoch(json['deliveryDate']),
       quantity: json['quantity'],
       orderTotal: json['orderTotal']?.toDouble(),
       user: User.fromJson(json['user']),
@@ -57,7 +57,7 @@ class ShopOrder {
     'id': id,
     'status': status,
     'orderDate': orderDate,
-    // 'deliveryDate': deliveryDate.toIso8601String(),
+    'deliveryDate': deliveryDate.toIso8601String(),
     'quantity': quantity,
     'orderTotal': orderTotal,
     'user': user.toJson(),

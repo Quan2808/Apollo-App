@@ -1,4 +1,4 @@
-import 'package:apollodeliver/Screens/MakeColor/OnboardingScreen.dart';
+import 'package:apollodeliver/Screens/MakeColor/Onboarding/OnboardingScreen.dart';
 import 'package:flutter/material.dart';
 import 'Screens/MainScreen/LoginScreen.dart';
 import 'Screens/MainScreen/RegisterScreen.dart';
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Delivery App',
       theme: ThemeData(
         primarySwatch: Colors.blue,

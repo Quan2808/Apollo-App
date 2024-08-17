@@ -1,4 +1,4 @@
-import 'package:apollodeliver/Screens/MakeColor/OnboardingInfo.dart';
+import 'package:apollodeliver/Screens/MakeColor/Onboarding/OnboardingInfo.dart';
 
 class OnboardingItems{
   List<OnboardingInfo> items = [
