@@ -30,7 +30,7 @@ class TImages {
   static const String emptyListingOrderAnimation =
       "assets/images/animations/order-complete-car-delivery-animation.json";
   static const String successfulPaymentIcon =
-      "assets/icons/animations/successful_payment_icon.png";
+      "assets/images/animations/successful_payment_icon.png";
 
   // -- OnBoarding Texts
   static const String onBoardingSearching =
