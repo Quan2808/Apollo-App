@@ -36,22 +36,25 @@ class ShopOrder {
 
   factory ShopOrder.fromJson(Map<String, dynamic> json) {
     return ShopOrder(
-      id: json['id'],
-      status: json['status'],
-      orderDate: json['orderDate'],
-      deliveryDate: DateTime.fromMillisecondsSinceEpoch(json['deliveryDate']),
-      quantity: json['quantity'],
-      orderTotal: json['orderTotal']?.toDouble(),
-      user: User.fromJson(json['user']),
-      variant: Variant.fromJson(json['variant']),
-      address: Address.fromJson(json['address']),
-      paymentMethod: PaymentMethod.fromJson(json['paymentMethod']),
-      shippingMethod: ShippingMethod.fromJson(json['shippingMethod']),
+      id: json['id'] as int?,  // Add `as int?` to allow null
+      status: json['status'] ?? 'UNKNOWN',  // Provide a default value if status is null
+      orderDate: json['orderDate'] ?? '',  // Provide a default value
+      deliveryDate: json['deliveryDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['deliveryDate'])
+          : DateTime.now(),  // Handle null for deliveryDate
+      quantity: json['quantity'] ?? 0,  // Provide a default value if quantity is null
+      orderTotal: json['orderTotal']?.toDouble(),  // Handle null conversion to double
+      user: User.fromJson(json['user'] ?? {}),
+      variant: Variant.fromJson(json['variant'] ?? {}),
+      address: Address.fromJson(json['address'] ?? {}),
+      paymentMethod: PaymentMethod.fromJson(json['paymentMethod'] ?? {}),
+      shippingMethod: ShippingMethod.fromJson(json['shippingMethod'] ?? {}),
       orderDeliveries: (json['orderDeliveries'] as List<dynamic>?)
           ?.map((item) => OrderDelivery.fromJson(item as Map<String, dynamic>))
           .toSet(),
     );
   }
+
 
   Map<String, dynamic> toJson() => {
     'id': id,
