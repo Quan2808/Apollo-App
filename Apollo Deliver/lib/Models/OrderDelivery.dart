@@ -5,7 +5,7 @@ class OrderDelivery {
   int? id;
   ShopOrder? order;
   Shipper? shipper;
-  // DateTime? assignedDate;
+  DateTime? assignedDate;
   String? status;
   String? inducement;
 
@@ -13,7 +13,7 @@ class OrderDelivery {
     this.id,
     this.order,
     this.shipper,
-    // this.assignedDate,
+    this.assignedDate,
     this.status,
     this.inducement,
   });
@@ -23,9 +23,9 @@ class OrderDelivery {
       id: json['id'],
       order: json['order'] != null ? ShopOrder.fromJson(json['order']) : null,
       shipper: json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null,
-      // assignedDate: json['assignedDate'] != null
-      //     ? DateTime.parse(json['assignedDate'])
-      //     : null,
+      assignedDate: json['assignedDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['assignedDate'])
+          : null,
       status: json['status'],
       inducement: json['inducement'],
     );
@@ -35,7 +35,7 @@ class OrderDelivery {
     'id': id,
     'order': order?.toJson(),
     'shipper': shipper?.toJson(),
-    // 'assignedDate': assignedDate?.toIso8601String(),
+    'assignedDate': assignedDate?.toIso8601String(),
     'status': status,
     'inducement': inducement,
   };

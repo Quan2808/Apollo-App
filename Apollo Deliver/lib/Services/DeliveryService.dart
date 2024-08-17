@@ -18,7 +18,7 @@ class DeliveryService {
     );
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      print('Data from API: $data'); // In dữ liệu JSON nhận được
+      print('Data from API: $data');
       return data.map((item) => ShopOrder.fromJson(item)).toList();
     } else {
       throw Exception('Failed to load orders');

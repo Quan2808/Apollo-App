@@ -11,6 +11,7 @@ class User {
   bool? enabled;
   Set<Address>? address;
   String? email;
+  String? phoneNumber;
   String? role;
   Cart? cart;
   Set<ShopOrder>? shopOrders;
@@ -24,6 +25,7 @@ class User {
     this.enabled,
     this.address,
     this.email,
+    this.phoneNumber,
     this.role,
     this.cart,
     this.shopOrders,
@@ -41,6 +43,7 @@ class User {
           ?.map((item) => Address.fromJson(item))
           .toSet(),
       email: json['email'],
+      phoneNumber: json['phoneNumber'],
       role: json['role'],
       cart: json['cart'] != null ? Cart.fromJson(json['cart']) : null,
       shopOrders: (json['shopOrders'] as List?)
@@ -62,6 +65,7 @@ class User {
     'enabled': enabled,
     'address': address?.map((item) => item.toJson()).toList(),
     'email': email,
+    'phoneNumber': phoneNumber,
     'role': role,
     'cart': cart?.toJson(),
     'shopOrders': shopOrders?.map((item) => item.toJson()).toList(),
