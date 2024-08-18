@@ -66,19 +66,15 @@ class OrderService extends GetxService {
         body: jsonEncode(orders.map((order) => order.toJson()).toList()),
       );
 
-      if (response.statusCode == 201) {
-        final List<dynamic> decodedJson = jsonDecode(response.body);
-        return decodedJson.map((json) => OrderResponse.fromJson(json)).toList();
-      } else {
-        throw Exception('Failed to create order: ${response.statusCode}');
-      }
+      final List<dynamic> decodedJson = jsonDecode(response.body);
+      return decodedJson.map((json) => OrderResponse.fromJson(json)).toList();
     } catch (e) {
       if (kDebugMode) {
         print('============== Begin Error to create ===================');
         print(e.toString());
         print('============== End Error to create ===================');
       }
-      throw Exception('Failed to create order: ${e.toString()}');
+      throw ('An error occurred. Please try again.');
     }
   }
 }

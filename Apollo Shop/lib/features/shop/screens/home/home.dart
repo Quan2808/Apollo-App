@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                       }
                       return GridLayout(
                         mainAxisExtent: 271,
-                        itemCount: controller.products.length,
+                        itemCount: 6,
                         itemBuilder: (_, index) => ProductCardVertical(
                           product: controller.products[index],
                         ),

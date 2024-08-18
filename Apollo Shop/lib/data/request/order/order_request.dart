@@ -1,49 +1,45 @@
-import 'package:apolloshop/data/request/order/order_item_request.dart';
+
 
 class OrderRequest {
   final String userId;
-  final List<OrderItemRequest> orderItems;
+  final String variant;
   final String orderDate;
   final String addressId;
   final int paymentMethodId;
   final int shippingMethodId;
-  final double orderTotal;
+  final int quantity;
 
   OrderRequest({
     required this.userId,
-    required this.orderItems,
+    required this.variant,
     required this.orderDate,
     required this.addressId,
     required this.paymentMethodId,
     required this.shippingMethodId,
-    required this.orderTotal,
+    required this.quantity,
   });
 
   factory OrderRequest.fromJson(Map<String, dynamic> json) {
     return OrderRequest(
       userId: json['userId'] ?? '',
-      orderItems: (json['orderItems'] as List<dynamic>?)
-              ?.map((item) =>
-                  OrderItemRequest.fromJson(item as Map<String, dynamic>))
-              .toList() ??
-          [],
+      variant: json['variantId'] ?? '',
       orderDate: json['orderDate'] ?? '',
       addressId: json['addressId'] ?? '',
-      paymentMethodId: json['paymentMethod'] ?? 0,
-      shippingMethodId: json['shippingMethod'] ?? 0,
-      orderTotal: (json['orderTotal'] as num?)?.toDouble() ?? 0.0,
+      paymentMethodId: json['paymentMethodId'] ?? 0,
+      shippingMethodId: json['shippingMethodId'] ?? 0,
+      quantity: json['quantity'] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
-      'orderItems': orderItems.map((item) => item.toJson()).toList(),
+      'variantId': variant,
       'orderDate': orderDate,
       'addressId': addressId,
       'paymentMethodId': paymentMethodId,
       'shippingMethodId': shippingMethodId,
-      'orderTotal': orderTotal,
+      'quantity': quantity,
     };
   }
 }

@@ -2,7 +2,6 @@ import 'package:apolloshop/common/widgets/loaders/loaders.dart';
 import 'package:apolloshop/common/widgets/success_screen/success_screen.dart';
 import 'package:apolloshop/data/models/order/order_model.dart';
 import 'package:apolloshop/data/repositories/order/order_repository.dart';
-import 'package:apolloshop/data/request/order/order_item_request.dart';
 import 'package:apolloshop/data/request/order/order_request.dart';
 import 'package:apolloshop/data/response/order/order_response.dart';
 import 'package:apolloshop/data/services/order/order_service.dart';
@@ -58,29 +57,22 @@ class OrderController extends GetxController {
       final shippingMethod =
           _shippingMethodController.selectedShippingMethod.value;
 
-      final orderItems = _cartController.cartItems
-          .map((item) => OrderItemRequest(
-                variantId: item.variant!.id,
-                quantity: item.quantity,
-                price: item.variant!.price,
-              ))
-          .toList();
-
-      final totalAmount =
-          _cartController.totalCartPrice.value + shippingMethod.price;
-
-      final orderRequest = OrderRequest(
-        userId: user.id,
-        orderItems: orderItems,
-        orderDate: DateTime.now().toIso8601String(),
-        addressId: address.id,
-        paymentMethodId: paymentMethod.id,
-        shippingMethodId: shippingMethod.id,
-        orderTotal: totalAmount,
-      );
+      // Create a list of OrderRequest objects, one for each cart item
+      final List<OrderRequest> orderRequests =
+          _cartController.cartItems.map((item) {
+        return OrderRequest(
+          userId: user.id,
+          variant: item.variant!.id.toString(),
+          orderDate: DateTime.now().toIso8601String(),
+          addressId: address.id,
+          paymentMethodId: paymentMethod.id,
+          shippingMethodId: shippingMethod.id,
+          quantity: item.quantity,
+        );
+      }).toList();
 
       final List<OrderResponse> responses =
-          await _orderService.createOrder([orderRequest]);
+          await _orderService.createOrder(orderRequests);
 
       if (responses.isNotEmpty) {
         TFullScreenLoader.stopLoading();
